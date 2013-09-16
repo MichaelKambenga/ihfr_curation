@@ -9,8 +9,7 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h3 class="btn-info">Login</h3>
-
+<?php echo TbHtml::pageHeader('Login',''); ?>
 <p>Please fill out the following form with your login credentials:</p>
 
 <div class="well">

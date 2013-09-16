@@ -1,0 +1,18 @@
+2013/09/16 14:52:08 [error] [php] Missing argument 2 for TbHtml::pageHeader(), called in /var/www/ihfr_curation/protected/views/site/login.php on line 12 and defined (/var/www/ihfr_curation/protected/extensions/bootstrap/helpers/TbHtml.php:3541)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CBaseController.php(95): SiteController->renderInternal()
+#1 /var/www/ihfr_curation/framework/web/CController.php(869): SiteController->renderFile()
+#2 /var/www/ihfr_curation/framework/web/CController.php(782): SiteController->renderPartial()
+#3 /var/www/ihfr_curation/protected/controllers/SiteController.php(98): SiteController->render()
+#4 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): SiteController->actionLogin()
+#5 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams()
+#6 /var/www/ihfr_curation/framework/web/CController.php(286): SiteController->runAction()
+#7 /var/www/ihfr_curation/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#8 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): SiteController->run()
+#9 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#10 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#11 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=site/login
+in /var/www/ihfr_curation/protected/extensions/bootstrap/helpers/TbHtml.php (3541)
+in /var/www/ihfr_curation/protected/views/site/login.php (12)
+in /var/www/ihfr_curation/protected/controllers/SiteController.php (98)

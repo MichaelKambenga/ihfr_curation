@@ -32,7 +32,7 @@
             
              <?php $this->widget('bootstrap.widgets.TbNavbar',array(
             
-                    'brandLabel'=>'MFL Curation Tool',
+                    'brandLabel'=>'<strong><span style="color:#005DCC">MFL</span>Curation Tool</strong>',
                     'display'=>null,
                     'items'=>array(
                         array(
