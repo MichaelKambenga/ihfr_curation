@@ -13,6 +13,7 @@ $this->breadcrumbs=array(
 
 <p>Please fill out the following form with your login credentials:</p>
 
+<div class="well">
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'login-form',
@@ -46,8 +47,11 @@ $this->breadcrumbs=array(
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton('Login'); ?>
+		<?php echo CHtml::submitButton('Login',array('class'=>'btn'));
+ ?>
 	</div>
 
 <?php $this->endWidget(); ?>
 </div><!-- form -->
+    
+</div><!-- well -->

@@ -7,31 +7,41 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',
+	'name'=>'MFL Curation Tool',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
 
+        'aliases'=>array(
+            'bootstrap'=>  realpath(__DIR__.'/../extensions/bootstrap')
+        ),
+        
 	// autoloading model and component classes
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+                'bootstrap.helpers.TbHtml',
 	),
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
-		/*
+		
 		'gii'=>array(
+                        'generatorPaths'=>array('bootstrap.gii'),
 			'class'=>'system.gii.GiiModule',
 			'password'=>'Enter Your Password Here',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
+                        
 		),
-		*/
+		
 	),
 
 	// application components
 	'components'=>array(
+                'bootstrap'=>array(
+                    'class'=>'bootstrap.components.TbApi',
+                ),
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
@@ -86,5 +96,11 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
+            
+                'resourceMapConfig'=>array(
+                    'public_collection_id'=>'',
+                    'curation_collection_id'=>''
+                    
+                ),
 	),
 );
