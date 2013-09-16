@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Login</h1>
+<h3 class="btn-info">Login</h3>
 
 <p>Please fill out the following form with your login credentials:</p>
 
