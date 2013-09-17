@@ -21,7 +21,7 @@ class UserIdentity extends CUserIdentity
         
         $exists = $this->resourceMapAuthenticate();
         $exists = CJSON::decode($exists);
-        
+      
         if(array_key_exists('error', $exists)){
             
             $this->errorCode = self::ERROR_UNKNOWN_IDENTITY;
