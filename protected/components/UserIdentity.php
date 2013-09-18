@@ -29,6 +29,9 @@ class UserIdentity extends CUserIdentity
         else{
             
             $this->errorCode = self::ERROR_NONE;
+             //Run This Only Once To Generate The Access Roles
+//            $wow = new Rbac();
+//            $wow->privilegesAuthorization();
         }
         
         return !$this->errorCode;
