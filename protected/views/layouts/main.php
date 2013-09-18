@@ -69,7 +69,7 @@ Yii::app()->bootstrap->register();
 
             <div class="clear"></div>
 
-            <div id="footer">
+            <div id="footer" class="well">
                 Copyright &copy; <?php echo date('Y'); ?> by UCC.<br/>
                 All Rights Reserved.<br/>
                 <?php echo Yii::powered(); ?>

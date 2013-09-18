@@ -101,9 +101,7 @@ class AuthItemChild extends CActiveRecord
             $criteria = new CDbCriteria;
             $criteria->compare('parent', $groupname);
             return self::model()->deleteAll($criteria);
-            die;
-            //$criteria->compare('userid ', $username);
-            //return self::model()->exists($criteria)?'checked':'';
+            
         
     }
 }

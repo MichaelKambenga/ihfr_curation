@@ -33,6 +33,6 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
 
 ?>
     
-<?php echo TbHtml::link('Add Privileges To This User',  $this->createUrl('/user/assignRoles', array('id' => $model->id, 'email' => $model->email)), array('class'=>'btn btn-primary')); ?>
+<?php echo TbHtml::link('Add privileges to this user',  $this->createUrl('/user/assignRoles', array('id' => $model->id, 'email' => $model->email)), array('class'=>'btn btn-primary')); ?>
 
 </div>

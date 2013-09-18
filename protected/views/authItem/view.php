@@ -1,26 +1,26 @@
 <?php
-$this->breadcrumbs=array(
-	'Groups'=>array('index'),
-	$model->name,
+$this->breadcrumbs = array(
+    'Groups' => array('index'),
+    $model->name,
 );
 ?>
 
-<h1>View Group/Role:-<?php echo $model->name; ?></h1>
+<?php echo TbHtml::pageHeader('', 'View Group/Role'); ?>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'name',
-		//'type',
-		'description',
-		//'bizrule',
-		//'data',
-	),
-)); 
+<div class="well">
+    <?php
+    $this->widget('bootstrap.widgets.TbDetailView', array(
+        'type' => TbHtml::DETAIL_TYPE_BORDERED,
+        'data' => $model,
+        'attributes' => array(
+            'name',
+            //'type',
+            'description',
+        //'bizrule',
+        //'data',
+        ),
+    ));
 
-echo '<div class="submenu">';
-echo CHtml::link('[Back]|', $this->createUrl('authItem/admin'));
-echo CHtml::link('[Add Privileges To The Group]', $this->createUrl('/authItem/assignItems',array('name' => $model->name)));
-//echo CHtml::link('[Add Privileges To The Group]', $this->createUrl('/group/assignItems',array('id' => $model->id,'groupname' => $model->name,'description' => $model->description )));
-echo "</div>";
-?>
+    ?>
+    <?php echo TbHtml::link('Add access items to this group', $this->createUrl('/authItem/assignItems', array('name' => $model->name)), array('class' => 'btn btn-primary')); ?>
+</div>

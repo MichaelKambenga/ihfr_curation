@@ -176,29 +176,32 @@ class UserController extends Controller
      * Assigning Roles to the Users of the Sysytem
      */
     public function actionAssignRoles($id, $email) {
-      $model = $this->loadModel($id);  
-      if(isset($_POST['name'])){
+      
         $criteria = new CDbCriteria;
-        $criteria->compare('userid', $email);
-        AuthAssignment::model()->deleteAll($criteria);
-        //if($_POST['name'][0]!=$_POST['name'][1])
-          {
-            foreach ($_POST['name'] as $var){
-              if($var!=1){
-//              echo '<pre>';print_r($var);
-                $auth=Yii::app()->authManager;//Initialing The Authentication Manager
-                $auth->assign($var,$email);
-            }
+        $criteria->compare('userid', $id);
+        
+      if(isset($_POST['submit'])){
+          
+           AuthAssignment::model()->deleteAll($criteria);
+           
+           if(isset($_POST['name'])){
+                foreach ($_POST['name'] as $var){
+                   if($var!=1){
+                     $auth=Yii::app()->authManager;//Initialing The Authentication Manager
+                     $auth->assign($var,$id);
+
+                   }
+                }
            }
-         }
-           $success = "<div class='success'><p class='success'>Roles were Added Successfully!!</p></div>";
+           
+           $success = "Roles were assigned/revoked successfully...";
            Yii::app()->user->setFlash('success',$success);
       }
-      else
+      else 
       {
-          //AuthAssignment::model()->deleteAll($id);
-          $success = "<div class='failure'><p class='failure'>Please,Select atleast One Role for the User!!!</p></div>";
-          Yii::app()->user->setFlash('success',$success);
+          //AuthAssignment::model()->deleteAll($criteria);
+          $info = "Please, select at least one role for the user.";
+          Yii::app()->user->setFlash('info',$info);
       }
       
       $dataProvider = AuthItem::getRoles();

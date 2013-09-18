@@ -199,21 +199,28 @@ class AuthItemController extends Controller
      */
     public function actionAssignItems($name) {
         
-    if(isset($_POST['name'])){
-          $clear= AuthItemChild::clearAll($name);
-          $auth=Yii::app()->authManager;//Initialing The Authentication Manager
-             $role = $auth->getAuthItem($name);
-          foreach ($_POST['name'] as $var){
-              if($var!=1)
-               $role->addChild($var);//Elements Checked
+    if(isset($_POST['submit'])){
+        
+        AuthItemChild::clearAll($name);
+        
+        if(isset($_POST['name'])){
+              
+              $auth=Yii::app()->authManager;//Initialing The Authentication Manager
+                 $role = $auth->getAuthItem($name);
+              foreach ($_POST['name'] as $var){
+                  if($var!=1)
+                   $role->addChild($var);//Elements Checked
+              }
+             
           }
-          $success = "<div class='success'><p class='success'>Actions were Added Successfully!!</p></div>";
-          Yii::app()->user->setFlash('success',$success);
-      }
+          
+           $success = "Actions were added successfully...";
+           Yii::app()->user->setFlash('success',$success);
+    }
     else
       {
-          $success = "<div class='failure'><p class='failure'>Please,Select atleast One Action for the Group!!!</p></div>";
-          Yii::app()->user->setFlash('success',$success);
+          $success = "Please, select at least one action for the group";
+          Yii::app()->user->setFlash('info',$success);
       }
       
       $dataProvider = AuthItem::getItems();

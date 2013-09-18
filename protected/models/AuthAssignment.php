@@ -92,10 +92,10 @@ class AuthAssignment extends CActiveRecord {
                 ));
     }
 
-    public static function isAssigned($data, $email) {
+    public static function isAssigned($data, $id) {
             $criteria = new CDbCriteria;
             $criteria->compare('itemname', $data);
-            $criteria->compare('userid ', $email);
+            $criteria->compare('userid ', $id);
             return self::model()->exists($criteria)?'checked':'';
         
     }
