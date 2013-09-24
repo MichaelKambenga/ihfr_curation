@@ -19,20 +19,23 @@ class UserIdentity extends CUserIdentity
     
     public function authenticate() {
         
-        $exists = $this->resourceMapAuthenticate();
-        $exists = CJSON::decode($exists);
+        //$exists = $this->resourceMapAuthenticate();
+        //$exists = CJSON::decode($exists);
       
-        if(array_key_exists('error', $exists)){
+        //if(array_key_exists('error', $exists)){
             
-            $this->errorCode = self::ERROR_UNKNOWN_IDENTITY;
-        }
-        else{
+           // $this->errorCode = self::ERROR_UNKNOWN_IDENTITY;
+        //}
+       // else{
             
             $this->errorCode = self::ERROR_NONE;
-        }
+             //Run This Only Once To Generate The Access Roles
+           //$wow = new Rbac();
+           //$wow->privilegesAuthorization();
+        //}
         
-        return !$this->errorCode;
-
+        //return !$this->errorCode;
+return 1;
     }
     
     private function resourceMapAuthenticate(){

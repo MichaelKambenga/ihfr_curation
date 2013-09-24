@@ -19,5 +19,10 @@ class CurationController extends Controller
                 $this->render('exploreFacilities');
         }
 
+        public function actionPendingRequests(){
+                
+                $this->render('pending_requests');
+        }
+
 	
 }

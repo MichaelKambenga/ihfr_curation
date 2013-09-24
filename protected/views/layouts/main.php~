@@ -51,7 +51,6 @@ Yii::app()->bootstrap->register();
                     )
                         )
                 );
-                
                 ?>
             </div><!-- mainmenu -->
 
@@ -65,14 +64,12 @@ Yii::app()->bootstrap->register();
                 ?><!-- breadcrumbs -->
 
             <?php endif ?>
-                
-            <div class="clear"></div>
-                
+
             <?php echo $content; ?>
 
             <div class="clear"></div>
 
-            <div id="footer" class="well" style="clear: both;">
+            <div id="footer" class="well">
                 Copyright &copy; <?php echo date('Y'); ?> by UCC.<br/>
                 All Rights Reserved.<br/>
                 <?php echo Yii::powered(); ?>

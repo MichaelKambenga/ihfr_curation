@@ -8,8 +8,25 @@
 
 <?php echo TbHtml::pageHeader('', 'Explore Facilities')?>
 
-<div class="well">
-    <?php echo TbHtml::beginFormTb(TbHtml::FORM_LAYOUT_SEARCH); ?>
+<div class="well" style="float: left;width:100%; clear: both; padding: 0" >
+    
+    <div id="left-panel" style="width: 20%;clear: left;float: left; min-height: 300px;">
+        <br />
+       <?php $this->widget('CTreeView',array(
+             'id'=>'menu-treeview',
+             'data'=>array(array('text'=>'one','children'=>array(array('text'=>'two'),array('text'=>'three'))),array('text'=>'two'),array('text'=>'three')),
+             'control'=>'#treecontrol',
+             'animated'=>'fast',
+             'collapsed'=>true,
+             'htmlOptions'=>array(
+             'class'=>'treeview-gray'
+   )
+       ) );
+       
+       ?>
+    </div>
+    <div id="right-panel" style="padding: 1%;padding-left: 2%;width: 70%;clear:right;float:left;min-height: 300px; border-left: 1px solid #D9DEE4;">
+        <?php echo TbHtml::beginFormTb(TbHtml::FORM_LAYOUT_SEARCH); ?>
     <?php echo TbHtml::searchQueryField('search'); ?>
     <?php echo TbHtml::submitButton('Search'); ?>
     <?php echo TbHtml::endForm(); ?>
@@ -26,6 +43,58 @@
                    ),
                    
                    array(
+                       'id'=>'1',
+                       'name'=>'Robert',
+                       'psc'=>'1-234-46859',
+                       'location'=>'Dar es salaam',
+                       'ownership'=>'Government',
+                       'type'=>'Referral Hospital'
+                   ),
+                   
+                   array(
+                       'id'=>'1',
+                       'name'=>'Robert',
+                       'psc'=>'1-234-46859',
+                       'location'=>'Dar es salaam',
+                       'ownership'=>'Government',
+                       'type'=>'Referral Hospital'
+                   ),
+                   array(
+                       'id'=>'1',
+                       'name'=>'Robert',
+                       'psc'=>'1-234-46859',
+                       'location'=>'Dar es salaam',
+                       'ownership'=>'Government',
+                       'type'=>'Referral Hospital'
+                   ),
+                   
+                     array(
+                       'id'=>'1',
+                       'name'=>'Robert',
+                       'psc'=>'1-234-46859',
+                       'location'=>'Dar es salaam',
+                       'ownership'=>'Government',
+                       'type'=>'Referral Hospital'
+                   ),
+                   
+                   array(
+                       'id'=>'1',
+                       'name'=>'Robert',
+                       'psc'=>'1-234-46859',
+                       'location'=>'Dar es salaam',
+                       'ownership'=>'Government',
+                       'type'=>'Referral Hospital'
+                   ),
+                   array(
+                       'id'=>'1',
+                       'name'=>'Robert',
+                       'psc'=>'1-234-46859',
+                       'location'=>'Dar es salaam',
+                       'ownership'=>'Government',
+                       'type'=>'Referral Hospital'
+                   ),
+                   
+                     array(
                        'id'=>'1',
                        'name'=>'Robert',
                        'psc'=>'1-234-46859',
@@ -99,5 +168,6 @@
     ),
     ),
     )); ?>
+    </div>
     
 </div>
