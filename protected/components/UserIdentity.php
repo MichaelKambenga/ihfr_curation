@@ -7,47 +7,43 @@
  */
 class UserIdentity extends CUserIdentity
 {
-	/**
-	 * Authenticates a user.
-	 * The example implementation makes sure if the username and password
-	 * are both 'demo'.
-	 * In practical applications, this should be changed to authenticate
-	 * against some persistent user identity storage (e.g. database).
-	 * @return boolean whether authentication succeeds.
-	 */
+    const VALID_CREDENTIALS_HTTP_CODE = 200;
+    
     
     
     public function authenticate() {
         
-        $exists = $this->resourceMapAuthenticate();
-        $exists = CJSON::decode($exists);
+        $result = $this->resourceMapAuthenticate();
       
-        if(array_key_exists('error', $exists)){
+        if($result['status']==self::VALID_CREDENTIALS_HTTP_CODE){
             
-            $this->errorCode = self::ERROR_UNKNOWN_IDENTITY;
+                $this->errorCode = self::ERROR_NONE;
         }
         else{
-            
-            $this->errorCode = self::ERROR_NONE;
+                $this->errorCode = self::ERROR_UNKNOWN_IDENTITY;
         }
+        
         
         return !$this->errorCode;
 
     }
     
+    
+    
     private function resourceMapAuthenticate(){
          
             $login_data = $this->username .":". $this->password; 
-            //To be changed to another login end-point at resourceMap
-            $login_url = "http://resourcemap.instedd.org/collections.json";
-            
+            $login_url = "http://resmap-stg.instedd.org/users/validate_credentials?user=$this->username&password=$this->password";
             $ch = curl_init(); 
             curl_setopt ($ch, CURLOPT_URL, $login_url);             
             curl_setopt($ch, CURLOPT_USERPWD, $login_data);
             curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
 
-            $result = curl_exec($ch);
+            $result = array();
+            $result['content'] = curl_exec($ch);
+            $result['status'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+           
             curl_close($ch);
             
             return $result;

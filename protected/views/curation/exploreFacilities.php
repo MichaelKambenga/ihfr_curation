@@ -10,16 +10,22 @@
 
 <div class="well" style="float: left;width:100%; clear: both; padding: 0" >
     
-    <div id="left-panel" style="width: 20%;clear: left;float: left; min-height: 300px;">
-        <br />
+    <div id="left-panel" style="width: 20%;clear: left;float: left; min-height: 300px;height: 600px;overflow-y: scroll">
+        <?php 
+            echo TbHtml::button('',
+            array('block' => true, 
+            'color' => TbHtml::BUTTON_COLOR_DEFAULT, 
+            'size'=>TbHtml::BUTTON_SIZE_LARGE)); 
+        ?>
        <?php $this->widget('CTreeView',array(
              'id'=>'menu-treeview',
-             'data'=>array(array('text'=>'one','children'=>array(array('text'=>'two'),array('text'=>'three'))),array('text'=>'two'),array('text'=>'three')),
+             'data'=>$data,
              'control'=>'#treecontrol',
              'animated'=>'fast',
              'collapsed'=>true,
              'htmlOptions'=>array(
-             'class'=>'treeview-gray'
+                'class'=>'treeview-gray',
+               
    )
        ) );
        

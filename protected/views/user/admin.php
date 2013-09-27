@@ -36,7 +36,7 @@ $('.search-form form').submit(function(){
                 'header' => 'Number',
                 'value' => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
             ),
-            //'id',
+            
             // 'position_id',
             array('name' => 'position_id',
                 'value' => '$data->position->position_name',
@@ -54,22 +54,39 @@ $('.search-form form').submit(function(){
                 'header' => 'Options',
                 'buttons' => array(
                     'view' => array(
-                    // 'visible' => '(Yii::app()->user->getState("SSPerson") || Yii::app()->user->getState("CManager") || Yii::app()->user->getState("CAccountant"))?TRUE:FALSE',
                     ),
                     'update' => array(
-                        //'visible' => '(Yii::app()->user->getState("SSPerson"))?TRUE:FALSE',
-                        'url' => '$this->grid->controller->createUrl("user/update", array("id"=>$data->primaryKey,"asDialog"=>1,"gridId"=>$this->grid->id))',
-                        'click' => 'function(){$("#edit-frame").attr("src",$(this).attr("href")); $("#edit-dialog").dialog("open");  return false;}',
-                    ),
+                        'url' =>'#' ,
+                        'click'=>'js: function(){$("#myModal").modal();}',
+                        
+                        
+                     ),
                     'delete' => array(
-                    // 'visible' => '(Yii::app()->user->getState("SSPerson"))?TRUE:FALSE',
-                    ),
+                   ),
                 ),
             ),
         ),
     ));
     ?>
 
+    <?php $this->widget('bootstrap.widgets.TbModal', array(
+'id' => 'myModal',
+'header' => 'Modal Heading',
+'content' => '<p>One fine body...</p>',
+'footer' => array(
+TbHtml::button('Save Changes', array('data-dismiss' => 'modal', 'color' => TbHtml::BUTTON_COLOR_PRIMARY)),
+TbHtml::button('Close', array('data-dismiss' => 'modal')),
+),
+)); ?>
+ 
+   
+<?php echo TbHtml::button('Click me to open modal', array(
+'style' => TbHtml::BUTTON_COLOR_PRIMARY,
+'size' => TbHtml::BUTTON_SIZE_LARGE,
+'data-toggle' => 'modal',
+'data-target' => '#myModal',
+)); ?>
+    
     <?php
     $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
         'id' => 'edit-dialog',
@@ -82,7 +99,7 @@ $('.search-form form').submit(function(){
         ),
     ));
     ?>
-    <iframe id="edit-frame" width="91%" height="92%"></iframe>
+    <!--<iframe id="edit-frame" width="91%" height="92%"></iframe>-->
 
     <?php
     $this->endWidget();
