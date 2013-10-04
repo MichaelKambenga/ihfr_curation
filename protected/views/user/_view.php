@@ -9,6 +9,14 @@
 	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
 	<br />
 
+        <b><?php echo CHtml::encode($data->getAttributeLabel('email')); ?>:</b>
+	<?php echo CHtml::encode($data->email); ?>
+	<br />
+        
+        <b><?php echo CHtml::encode($data->getAttributeLabel('node_id')); ?>:</b>
+	<?php echo CHtml::encode($data->node_id); ?>
+	<br />
+        
 	<b><?php echo CHtml::encode($data->getAttributeLabel('position_id')); ?>:</b>
 	<?php echo CHtml::encode($data->position_id); ?>
 	<br />
@@ -16,9 +24,9 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('organization_id')); ?>:</b>
 	<?php echo CHtml::encode($data->organization_id); ?>
 	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('email')); ?>:</b>
-	<?php echo CHtml::encode($data->email); ?>
+        
+        <b><?php echo CHtml::encode($data->getAttributeLabel('phone_number')); ?>:</b>
+	<?php echo CHtml::encode($data->phone_number); ?>
 	<br />
 
 

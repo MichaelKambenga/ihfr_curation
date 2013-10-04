@@ -16,18 +16,18 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
     'type'=>  TbHtml::DETAIL_TYPE_BORDERED,
     'data' => $model,
     'attributes' => array(
-       // 'id',
-       // 'position_id',
+      //  'id',
+        'email',
+        'node_id',
         array(
             'label' => 'position_id',
             'value' => $model->position->position_name,
         ),
-       // 'organization_id',
         array(
             'label' => 'organization_id',
             'value' => $model->organization->organization_name,
         ),
-        'email',
+        'phone_number',
     ),
 ));
 

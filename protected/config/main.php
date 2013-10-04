@@ -57,7 +57,7 @@ return array(
             'connectionString' => 'mysql:host=localhost;dbname=ihfr_curation',
             'emulatePrepare' => true,
             'username' => 'root',
-            'password' => 'drobyg3',
+            'password' => 'Michael',
             'charset' => 'utf8',
         ),
         /* Using the Database Authorization Manager */

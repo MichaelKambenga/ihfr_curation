@@ -36,7 +36,11 @@ $('.search-form form').submit(function(){
                 'header' => 'Number',
                 'value' => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
             ),
-            
+             'email',
+            array('name' => 'node_id',
+                'value' => '$data->node_id',
+                'htmlOptions' => array('id' => 'text', 'class' => 'name_text', 'size' => 30),
+            ),
             // 'position_id',
             array('name' => 'position_id',
                 'value' => '$data->position->position_name',
@@ -47,7 +51,10 @@ $('.search-form form').submit(function(){
                 'htmlOptions' => array('id' => 'text', 'class' => 'name_text', 'size' => 30),
             ),
             //'organization_id',
-            'email',
+            array('name' => 'phone_number',
+                'value' => '$data->phone_number',
+                'htmlOptions' => array('id' => 'text', 'class' => 'name_text', 'size' => 30),
+            ),
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
                 'template' => '{view} {update} {delete}',
@@ -56,37 +63,39 @@ $('.search-form form').submit(function(){
                     'view' => array(
                     ),
                     'update' => array(
-                        'url' =>'#' ,
-                        'click'=>'js: function(){$("#myModal").modal();}',
-                        
-                        
-                     ),
+                        'url' => '#',
+                        'click' => 'js: function(){$("#myModal").modal();}',
+                    ),
                     'delete' => array(
-                   ),
+                    ),
                 ),
             ),
         ),
     ));
     ?>
 
-    <?php $this->widget('bootstrap.widgets.TbModal', array(
-'id' => 'myModal',
-'header' => 'Modal Heading',
-'content' => '<p>One fine body...</p>',
-'footer' => array(
-TbHtml::button('Save Changes', array('data-dismiss' => 'modal', 'color' => TbHtml::BUTTON_COLOR_PRIMARY)),
-TbHtml::button('Close', array('data-dismiss' => 'modal')),
-),
-)); ?>
- 
-   
-<?php echo TbHtml::button('Click me to open modal', array(
-'style' => TbHtml::BUTTON_COLOR_PRIMARY,
-'size' => TbHtml::BUTTON_SIZE_LARGE,
-'data-toggle' => 'modal',
-'data-target' => '#myModal',
-)); ?>
-    
+    <?php
+    $this->widget('bootstrap.widgets.TbModal', array(
+        'id' => 'myModal',
+        'header' => 'Modal Heading',
+        'content' => '<p>One fine body...</p>',
+        'footer' => array(
+            TbHtml::button('Save Changes', array('data-dismiss' => 'modal', 'color' => TbHtml::BUTTON_COLOR_PRIMARY)),
+            TbHtml::button('Close', array('data-dismiss' => 'modal')),
+        ),
+    ));
+    ?>
+
+
+    <?php
+    echo TbHtml::button('Click me to open modal', array(
+        'style' => TbHtml::BUTTON_COLOR_PRIMARY,
+        'size' => TbHtml::BUTTON_SIZE_LARGE,
+        'data-toggle' => 'modal',
+        'data-target' => '#myModal',
+    ));
+    ?>
+
     <?php
     $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
         'id' => 'edit-dialog',
@@ -99,7 +108,6 @@ TbHtml::button('Close', array('data-dismiss' => 'modal')),
         ),
     ));
     ?>
-    <!--<iframe id="edit-frame" width="91%" height="92%"></iframe>-->
 
     <?php
     $this->endWidget();

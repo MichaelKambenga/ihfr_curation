@@ -42,12 +42,12 @@ class User extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('position_id, organization_id, email', 'required'),
+            array('position_id, organization_id, email,phone_number,node_id', 'required'),
             array('id, position_id, organization_id', 'numerical', 'integerOnly' => true),
-            array('email', 'length', 'max' => 45),
+            array('email,phone_number,node_id', 'length', 'max' => 45),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, position_id, organization_id, email', 'safe', 'on' => 'search'),
+            array('id,node_id, position_id, organization_id, email,phone_number', 'safe', 'on' => 'search'),
         );
     }
 
@@ -71,10 +71,12 @@ class User extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
+            'node_id' => 'Hierachy NodeID',
             'position_id' => 'Position',
             'organization_id' => 'Organization',
             'email' => 'Email',
             'number' => 'Number',
+            'phone_number' => 'Phone Number'
         );
     }
 
@@ -89,9 +91,11 @@ class User extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
+        $criteria->compare('node_id', $this->node_id);
         $criteria->compare('position_id', $this->position_id);
         $criteria->compare('organization_id', $this->organization_id);
         $criteria->compare('email', $this->email, true);
+        $criteria->compare('phone_number', $this->phone_number, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
