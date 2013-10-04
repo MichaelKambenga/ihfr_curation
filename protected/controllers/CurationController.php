@@ -30,18 +30,20 @@ class CurationController extends Controller
 	}
         
         public function loadFacility($id){
-            $url= Yii::app()->params['api-domain']."/collections/777/sites/$id.json"; 
+            $url = Yii::app()->params['api-domain']."/collections/777/sites/$id.json"; 
             $response = RestUtility::execCurl($url);
             $result = json_decode($response,true);
             
             return $result;
         }
+       
         
         public function actionFacilities(){
            
             $url= Yii::app()->params['api-domain']."/collections/777/sites.json"; 
             $response = RestUtility::execCurl($url);
             $result = json_decode($response,true);
+            
             $sites = new CArrayDataProvider($result);
             
             $result = Yii::app()->user->getState('hierarchy');

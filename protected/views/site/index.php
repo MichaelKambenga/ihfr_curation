@@ -11,4 +11,4 @@ $this->pageTitle=Yii::app()->name;
         .TbHtml::button('Learn more',
 array('color' => TbHtml::BUTTON_COLOR_PRIMARY, 'size' => TbHtml::BUTTON_SIZE_LARGE))
         )?>
-   
+  
