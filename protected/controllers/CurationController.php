@@ -3,11 +3,23 @@
 class CurationController extends Controller
 {
     
+        public function filters() {
+           return array(
+               'accessControl', // perform access control for CRUD operations
+               'postOnly + delete', // we only allow deletion via POST request
+           );
+       }
+       
         public function accessRules() {
             
             return array(
-                'allow',
-                
+                array('allow',
+                    'actions'=>array('Facilities','pendingRequests'),
+                    'users'=>array('@'),
+                    ),
+                array('deny', // deny all users
+                'users' => array('*'),
+            ),
                 );
         }
     
@@ -19,7 +31,7 @@ class CurationController extends Controller
         
         public function loadFacility($id){
             $url= Yii::app()->params['api-domain']."/collections/777/sites/$id.json"; 
-            $response =  $this->exec_curl($url);
+            $response = RestUtility::execCurl($url);
             $result = json_decode($response,true);
             
             return $result;
@@ -28,12 +40,13 @@ class CurationController extends Controller
         public function actionFacilities(){
            
             $url= Yii::app()->params['api-domain']."/collections/777/sites.json"; 
-            $response =  $this->exec_curl($url);
+            $response = RestUtility::execCurl($url);
             $result = json_decode($response,true);
             $sites = new CArrayDataProvider($result);
             
             $result = Yii::app()->user->getState('hierarchy');
-            $filteredData =$this->search($result['config']['hierarchy'],'id','TZ.ET');
+            $rootNode = Yii::app()->user->getState('node_id');
+            $filteredData =$this->search($result['config']['hierarchy'],'id',$rootNode);
             $data =$this->parseHierarchy($filteredData);
             $this->render('exploreFacilities',array('data'=>$data,'sites'=>$sites));
         }
@@ -85,29 +98,7 @@ class CurationController extends Controller
                 
                 $this->render('pending_requests');
         }
-        
-        function exec_curl($url){
-            $username="mkambenga@gmail.com"; 
-            $password="Michael"; 
-            $postdata = $username .":". $password; 
-            
-            $ch = curl_init(); 
-            curl_setopt ($ch, CURLOPT_URL, $url);             
-            curl_setopt($ch, CURLOPT_USERPWD, $postdata);
-            curl_setopt($ch,CURLOPT_RETURNTRANSFER, TRUE);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
-
-            if(!$result = curl_exec ($ch)){
-                echo "An error has occured".curl_error($ch);
-                echo curl_getinfo($ch);
-                curl_close($ch);
-            }
-            else{
-               curl_close($ch);
-               return $result; 
-            }
-            
-        }
+       
 
 	
 }

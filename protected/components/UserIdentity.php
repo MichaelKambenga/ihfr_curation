@@ -15,13 +15,15 @@ class UserIdentity extends CUserIdentity
         
         $result = $this->resourceMapAuthenticate();
       
-        if($result['status']==self::VALID_CREDENTIALS_HTTP_CODE){
+        if($result['status'] == self::VALID_CREDENTIALS_HTTP_CODE){
             
                 $this->errorCode = self::ERROR_NONE;
-                $url= Yii::app()->params['api-domain']."/collections/777/fields/2512.json"; 
-                $response =  $this->exec_curl($url);
+                $url= Yii::app()->params['api-domain']."/collections/777/fields/2512.json";
+                $response = RestUtility::execCurl($url);
                 $result = json_decode($response,true);
+                $user = User::model()->find('email=:email',array(':email'=>$this->username));
                 Yii::app()->user->setState('hierarchy',$result);
+                Yii::app()->user->setState('node_id',$user->node_id);
         }
         else{
                 $this->errorCode = self::ERROR_UNKNOWN_IDENTITY;
@@ -31,29 +33,6 @@ class UserIdentity extends CUserIdentity
         return !$this->errorCode;
 
     }
-    
-    function exec_curl($url){
-            $username="mkambenga@gmail.com"; 
-            $password="Michael"; 
-            $postdata = $username .":". $password; 
-            
-            $ch = curl_init(); 
-            curl_setopt ($ch, CURLOPT_URL, $url);             
-            curl_setopt($ch, CURLOPT_USERPWD, $postdata);
-            curl_setopt($ch,CURLOPT_RETURNTRANSFER, TRUE);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
-
-            if(!$result = curl_exec ($ch)){
-                echo "An error has occured".curl_error($ch);
-                echo curl_getinfo($ch);
-                curl_close($ch);
-            }
-            else{
-               curl_close($ch);
-               return $result; 
-            }
-            
-        }
     
     private function resourceMapAuthenticate(){
         

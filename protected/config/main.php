@@ -91,7 +91,10 @@ return array(
         // this is used in contact page
         'adminEmail' => 'webmaster@example.com',
         'api-domain'=>'http://resmap-stg.instedd.org',
+        
         'resourceMapConfig' => array(
+            'api-username'=>'mkambenga@gmail.com',
+            'api-password'=>'Michael',
             'public_collection_id' => '',
             'curation_collection_id' => ''
         ),
