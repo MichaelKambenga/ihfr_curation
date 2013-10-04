@@ -74,7 +74,6 @@ $('.search-form form').submit(function(){
     ));
     ?>
 
-<<<<<<< HEAD
     <?php
     $this->widget('bootstrap.widgets.TbModal', array(
         'id' => 'myModal',
@@ -96,8 +95,7 @@ $('.search-form form').submit(function(){
         'data-target' => '#myModal',
     ));
     ?>
-
-=======
+    
  <?php $this->widget('bootstrap.widgets.TbModal', array(
 'id' => 'myModal',
 'header' => 'Modal Heading',
@@ -108,8 +106,7 @@ TbHtml::button('Close', array('data-dismiss' => 'modal')),
 ),
 )); ?>
  
-    
->>>>>>> 0e79203e728c2bd588ff62bbe7ed73268cc591ab
+   
     <?php
     $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
         'id' => 'edit-dialog',
