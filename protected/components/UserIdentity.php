@@ -18,6 +18,10 @@ class UserIdentity extends CUserIdentity
         if($result['status']==self::VALID_CREDENTIALS_HTTP_CODE){
             
                 $this->errorCode = self::ERROR_NONE;
+                $url= Yii::app()->params['api-domain']."/collections/777/fields/2512.json"; 
+                $response =  $this->exec_curl($url);
+                $result = json_decode($response,true);
+                Yii::app()->user->setState('hierarchy',$result);
         }
         else{
                 $this->errorCode = self::ERROR_UNKNOWN_IDENTITY;
@@ -28,12 +32,33 @@ class UserIdentity extends CUserIdentity
 
     }
     
-    
+    function exec_curl($url){
+            $username="mkambenga@gmail.com"; 
+            $password="Michael"; 
+            $postdata = $username .":". $password; 
+            
+            $ch = curl_init(); 
+            curl_setopt ($ch, CURLOPT_URL, $url);             
+            curl_setopt($ch, CURLOPT_USERPWD, $postdata);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+
+            if(!$result = curl_exec ($ch)){
+                echo "An error has occured".curl_error($ch);
+                echo curl_getinfo($ch);
+                curl_close($ch);
+            }
+            else{
+               curl_close($ch);
+               return $result; 
+            }
+            
+        }
     
     private function resourceMapAuthenticate(){
-         
+        
             $login_data = $this->username .":". $this->password; 
-            $login_url = "http://resmap-stg.instedd.org/users/validate_credentials?user=$this->username&password=$this->password";
+            $login_url = Yii::app()->params['api-domain']."/users/validate_credentials?user=$this->username&password=$this->password";
             $ch = curl_init(); 
             curl_setopt ($ch, CURLOPT_URL, $login_url);             
             curl_setopt($ch, CURLOPT_USERPWD, $login_data);

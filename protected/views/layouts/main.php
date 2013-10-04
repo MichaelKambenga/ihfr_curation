@@ -7,7 +7,7 @@ Yii::app()->bootstrap->register();
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="en" />
-
+        <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl;   ?>/images/favicon.ico" type="image/x-icon" />
         <!-- blueprint CSS framework -->
         <link rel="stylesheet" type="text/css" href="<?php //echo Yii::app()->request->baseUrl;   ?>/css/screen.css" media="screen, projection" />
         <link rel="stylesheet" type="text/css" href="<?php //echo Yii::app()->request->baseUrl;   ?>/css/print.css" media="print" />
@@ -34,7 +34,7 @@ Yii::app()->bootstrap->register();
                 <?php
                 $this->widget('bootstrap.widgets.TbNavbar', array(
                     'brandLabel' => '<strong><span style="color:#005DCC">MFL</span>Curation Tool</strong>',
-                    'display' => null,
+                    'display' => TbHtml::NAVBAR_DISPLAY_FIXEDTOP,
                     'items' => array(
                         array(
                             'class' => 'bootstrap.widgets.TbNav',
@@ -55,7 +55,7 @@ Yii::app()->bootstrap->register();
                 ?>
             </div><!-- mainmenu -->
 
-
+            <br /><br /><br />
 
             <?php if (isset($this->breadcrumbs)): ?>
                 <?php
@@ -75,7 +75,7 @@ Yii::app()->bootstrap->register();
             <div id="footer" class="well" style="clear: both;">
                 Copyright &copy; <?php echo date('Y'); ?> by UCC.<br/>
                 All Rights Reserved.<br/>
-                <?php echo Yii::powered(); ?>
+                <?php  //echo Yii::powered(); ?>
             </div><!-- footer -->
 
         </div><!-- page -->

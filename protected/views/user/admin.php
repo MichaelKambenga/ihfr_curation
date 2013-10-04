@@ -33,7 +33,7 @@ $('.search-form form').submit(function(){
         'filter' => $model,
         'columns' => array(
             array('name' => 'number',
-                'header' => 'Number',
+                'header' => 'ID',
                 'value' => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
             ),
             
@@ -69,7 +69,7 @@ $('.search-form form').submit(function(){
     ));
     ?>
 
-    <?php $this->widget('bootstrap.widgets.TbModal', array(
+ <?php $this->widget('bootstrap.widgets.TbModal', array(
 'id' => 'myModal',
 'header' => 'Modal Heading',
 'content' => '<p>One fine body...</p>',
@@ -79,13 +79,6 @@ TbHtml::button('Close', array('data-dismiss' => 'modal')),
 ),
 )); ?>
  
-   
-<?php echo TbHtml::button('Click me to open modal', array(
-'style' => TbHtml::BUTTON_COLOR_PRIMARY,
-'size' => TbHtml::BUTTON_SIZE_LARGE,
-'data-toggle' => 'modal',
-'data-target' => '#myModal',
-)); ?>
     
     <?php
     $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
