@@ -10,7 +10,7 @@
 
 <div class="well" style="float: left;width:100%; clear: both; padding: 0" >
     
-    <div id="left-panel" style="width: 20%;clear: left;float: left; min-height: 300px;height: 600px;overflow-y: scroll">
+    <div id="left-panel" style="width: 22%;clear: left;float: left; min-height: 300px;height: 600px;overflow-y: scroll">
         <?php 
             echo TbHtml::button('',
             array('block' => true, 
@@ -31,110 +31,17 @@
        
        ?>
     </div>
-    <div id="right-panel" style="padding: 1%;padding-left: 2%;width: 70%;clear:right;float:left;min-height: 300px; border-left: 1px solid #D9DEE4;">
+    <div id="right-panel" style="padding: 1%;padding-left: 2%;width: 68%;clear:right;float:left;min-height: 300px; border-left: 1px solid #D9DEE4;">
         <?php echo TbHtml::beginFormTb(TbHtml::FORM_LAYOUT_SEARCH); ?>
     <?php echo TbHtml::searchQueryField('search'); ?>
     <?php echo TbHtml::submitButton('Search'); ?>
     <?php echo TbHtml::endForm(); ?>
-    <?php 
-       $persons = new CArrayDataProvider(
-               array(
-                   array(
-                       'id'=>'1',
-                       'name'=>'Robert',
-                       'psc'=>'1-234-46859',
-                       'location'=>'Dar es salaam',
-                       'ownership'=>'Government',
-                       'type'=>'Referral Hospital'
-                   ),
-                   
-                   array(
-                       'id'=>'1',
-                       'name'=>'Robert',
-                       'psc'=>'1-234-46859',
-                       'location'=>'Dar es salaam',
-                       'ownership'=>'Government',
-                       'type'=>'Referral Hospital'
-                   ),
-                   
-                   array(
-                       'id'=>'1',
-                       'name'=>'Robert',
-                       'psc'=>'1-234-46859',
-                       'location'=>'Dar es salaam',
-                       'ownership'=>'Government',
-                       'type'=>'Referral Hospital'
-                   ),
-                   array(
-                       'id'=>'1',
-                       'name'=>'Robert',
-                       'psc'=>'1-234-46859',
-                       'location'=>'Dar es salaam',
-                       'ownership'=>'Government',
-                       'type'=>'Referral Hospital'
-                   ),
-                   
-                     array(
-                       'id'=>'1',
-                       'name'=>'Robert',
-                       'psc'=>'1-234-46859',
-                       'location'=>'Dar es salaam',
-                       'ownership'=>'Government',
-                       'type'=>'Referral Hospital'
-                   ),
-                   
-                   array(
-                       'id'=>'1',
-                       'name'=>'Robert',
-                       'psc'=>'1-234-46859',
-                       'location'=>'Dar es salaam',
-                       'ownership'=>'Government',
-                       'type'=>'Referral Hospital'
-                   ),
-                   array(
-                       'id'=>'1',
-                       'name'=>'Robert',
-                       'psc'=>'1-234-46859',
-                       'location'=>'Dar es salaam',
-                       'ownership'=>'Government',
-                       'type'=>'Referral Hospital'
-                   ),
-                   
-                     array(
-                       'id'=>'1',
-                       'name'=>'Robert',
-                       'psc'=>'1-234-46859',
-                       'location'=>'Dar es salaam',
-                       'ownership'=>'Government',
-                       'type'=>'Referral Hospital'
-                   ),
-                   
-                   array(
-                       'id'=>'1',
-                       'name'=>'Robert',
-                       'psc'=>'1-234-46859',
-                       'location'=>'Dar es salaam',
-                       'ownership'=>'Government',
-                       'type'=>'Referral Hospital'
-                   ),
-                   array(
-                       'id'=>'1',
-                       'name'=>'Robert',
-                       'psc'=>'1-234-46859',
-                       'location'=>'Dar es salaam',
-                       'ownership'=>'Government',
-                       'type'=>'Referral Hospital'
-                   ),
-               )
-               
-               );
-    ?>
     
     <?php echo TbHtml::button('Create facility', array('class'=>'btn-primary')) ?>
     <br /><br />
     <?php $this->widget('bootstrap.widgets.TbGridView', array(
     'type'=>  TbHtml::GRID_TYPE_BORDERED,
-    'dataProvider' => $persons,
+    'dataProvider' => $sites,
 //    'filter' => $person,
 //    'template' => "{items}",
     'columns' => array(
@@ -150,18 +57,22 @@
     array(
     'name' => 'psc',
     'header' => 'PSC',
+    'value'=>'isset($data["properties"]["1697"])?$data["properties"]["1697"]:"Not set"'
     ),
+//    array(
+//    'name' => 'location',
+//    'header' => 'Location',
+//    ),
+//    
     array(
-    'name' => 'location',
-    'header' => 'Location',
+        'name'=>'nodeID',
+        'header'=>'Node ID',
+        'value'=>'isset($data["properties"]["2512"])?$data["properties"]["2512"]:"Not set"'
     ),
     array(
     'name' => 'ownership',
     'header' => 'Ownership',
-    ),
-    array(
-    'name' => 'type',
-    'header' => 'Type',
+    'value'=>'isset($data["properties"]["1709"])?$data["properties"]["1709"]:"Not set"'
     ),
     array(
         'class'=>'bootstrap.widgets.TbButtonColumn',
@@ -169,7 +80,9 @@
         'buttons'=>array(
             'delete'=>array('url'=>'#'),
             'update'=>array('url'=>'#'),
-            'view'=>array('url'=>'#'),
+            'view'=>array(
+                'url'=>'$this->grid->controller->createUrl("curation/viewFacility",array("id"=>$data["id"]))',
+                ),
         ),
     ),
     ),
