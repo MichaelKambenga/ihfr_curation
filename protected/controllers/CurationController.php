@@ -14,7 +14,7 @@ class CurationController extends Controller
             
             return array(
                 array('allow',
-                    'actions'=>array('Facilities','pendingRequests'),
+                    'actions'=>array('Facilities','pendingRequests','LoadFacilitiesByAjax','SearchFacilityByPSCode','viewFacility'),
                     'users'=>array('@'),
                     ),
                 array('deny', // deny all users
@@ -38,19 +38,75 @@ class CurationController extends Controller
         }
        
         
-        public function actionFacilities(){
-           
-            $url= Yii::app()->params['api-domain']."/collections/777/sites.json"; 
+        public function actionFacilities($node_id = null){
+            
+            $url = Yii::app()->params['api-domain']."/api/collections/777.json?page=all&Admin_div[under]=".Yii::app()->user->getState('node_id');          
+            if(isset($node_id))
+                $url = Yii::app()->params['api-domain']."/api/collections/777.json?page=all&Admin_div[under]={$node_id}";
             $response = RestUtility::execCurl($url);
             $result = json_decode($response,true);
             
-            $sites = new CArrayDataProvider($result);
+            $totalItemCount = (int)$result['count'];
+            $totalPages = (int)$result['totalPages']==0?1:(int)$result['totalPages'];
+            $pageSize = ceil($totalItemCount/$totalPages);
+
+            $sites = new CArrayDataProvider($result['sites'],
+                          array(
+                                'totalItemCount'=>$totalItemCount,
+                                'pagination'=>array(
+                                    'pageSize'=>20
+                                    )
+                              )
+                    );
             
             $result = Yii::app()->user->getState('hierarchy');
             $rootNode = Yii::app()->user->getState('node_id');
-            $filteredData =$this->search($result['config']['hierarchy'],'id',$rootNode);
-            $data =$this->parseHierarchy($filteredData);
+            $filteredData = $this->search($result['config']['hierarchy'],'id',$rootNode);
+            $data = $this->parseHierarchy($filteredData);
             $this->render('exploreFacilities',array('data'=>$data,'sites'=>$sites));
+        }
+        
+        public function actionLoadFacilitiesByAjax($node_id = null){
+            if(isset($node_id))
+                $url = Yii::app()->params['api-domain']."/api/collections/777.json?page=all&Admin_div[under]={$node_id}";
+            $response = RestUtility::execCurl($url);
+            $result = json_decode($response,true);
+            
+            $totalItemCount = (int)$result['count'];
+            $totalPages = (int)$result['totalPages']==0?1:(int)$result['totalPages'];
+            $pageSize = ceil($totalItemCount/$totalPages);
+
+            $sites = new CArrayDataProvider($result['sites'],
+                          array(
+                                'totalItemCount'=>$totalItemCount,
+                                'pagination'=>array(
+                                    'pageSize'=>20
+                                    )
+                              )
+                    );
+            
+            $this->renderPartial('_facilityGrid', array('sites'=>$sites));
+            
+        }
+        
+        public function actionSearchFacilityByPSCode($search_query){
+            if(isset($search_query)){
+                $url = Yii::app()->params['api-domain']."/api/collections/777.json?page=all&Fac_ID={$search_query}";
+                $response = RestUtility::execCurl($url);
+                $result = json_decode($response,true);
+                
+                $totalItemCount = (int)$result['count'];
+                $sites = new CArrayDataProvider($result['sites'],
+                          array(
+                                'totalItemCount'=>$totalItemCount,
+                                'pagination'=>array(
+                                    'pageSize'=>20
+                                    )
+                              )
+                    );
+                 
+                $this->renderPartial('_facilityGrid', array('sites'=>$sites));
+            }
         }
      
         public function search($array, $key, $value)
@@ -79,9 +135,9 @@ class CurationController extends Controller
                         if(array_key_exists('name', $node)){
                             if(array_key_exists('sub', $node)){
                                 $subNodes = $this->parseHierarchy($node['sub']);
-                                $treeNodeArray = array('text'=>'<span style="color:#3AA1BF;">'.$node['name'].'</span>','children'=>$subNodes);
+                                $treeNodeArray = array('text'=>'<span style="color:#3AA1BF;">'.CHtml::link(TbHtml::icon(TbHtml:: ICON_FOLDER_CLOSE).$node['name'],$this->createUrl('LoadFacilitiesByAjax',array('node_id'=>$node['id']))).'</span>','children'=>$subNodes);
                             } else {
-                                $treeNodeArray = array('text'=>'<span style="color:#3AA1BF;">'.$node['name'].'</span>');
+                                $treeNodeArray = array('text'=>'<span style="color:#3AA1BF;">'.CHtml::link(TbHtml::icon(TbHtml:: ICON_FOLDER_CLOSE).$node['name'],$this->createUrl('LoadFacilitiesByAjax',array('node_id'=>$node['id']))).'</span>');
                             }
                             array_push($treeArray, $treeNodeArray);                       
 

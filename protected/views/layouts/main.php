@@ -32,22 +32,31 @@ Yii::app()->bootstrap->register();
             <div id="mainmenu-mod">
 
                 <?php
+ 
+            ob_start();
+              echo TbHtml::badge('2', array('color' => TbHtml::BADGE_COLOR_SUCCESS));
+              $requestCount = ob_get_contents();
+            ob_clean();
+
                 $this->widget('bootstrap.widgets.TbNavbar', array(
-                    'brandLabel' => '<strong><span style="color:#005DCC">MFL</span>Curation Tool</strong>',
+                    'brandLabel' => '<strong><span style="color:#47ADCB">MFL</span>Curation Tool</strong>',
                     'display' => TbHtml::NAVBAR_DISPLAY_FIXEDTOP,
                     'items' => array(
                         array(
                             'class' => 'bootstrap.widgets.TbNav',
                             'items' => array(
-                                array('label'=>'Home', 'url'=>array('/site/index'), 'visible' => !Yii::app()->user->isGuest),
+                                array('label'=>'Home','icon'=>TbHtml::ICON_HOME, 'url'=>array('/site/index'), 'visible' => !Yii::app()->user->isGuest),
                                 //array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
                                // array('label'=>'Contacts', 'url'=>array('/site/contact')),
-                                array('label'=>'Facilities', 'url'=>array('/curation/facilities'), 'visible' => !Yii::app()->user->isGuest),
-                                array('label'=>'Pending Requests', 'url'=>array('/curation/pendingRequests'), 'visible' => !Yii::app()->user->isGuest),
+                                array('label'=>'Facilities','icon'=>TbHtml::ICON_BRIEFCASE, 'url'=>array('/curation/facilities'), 'visible' => !Yii::app()->user->isGuest),
+                                array('label'=>'Pending Requests','icon'=>  TbHtml::ICON_REFRESH,  'url'=>array('/curation/pendingRequests'), 'visible' => !Yii::app()->user->isGuest),
                                 array('label' => 'Login', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-                                array('label' => 'User Accounts', 'url' => array('user/admin'), 'visible' => !Yii::app()->user->isGuest),
-                                array('label' => 'User Privileges', 'url' => array('authItem/roles'), 'visible' => !Yii::app()->user->isGuest),
-                                array('label' => 'Logout (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
+                                array('label' => 'System Settings', 'icon'=>  TbHtml::ICON_WRENCH, 'url' =>'#', 'visible' => !Yii::app()->user->isGuest,
+                                        'items'=>array(
+                                            array('label' => 'User Accounts', 'url' => array('user/admin'), 'visible' => !Yii::app()->user->isGuest),
+                                            array('label' => 'User Privileges', 'url' => array('authItem/roles'), 'visible' => !Yii::app()->user->isGuest),
+                                        )),
+                                array('label' => 'Logout (' . Yii::app()->user->name . ')','icon'=>  TbHtml::ICON_USER, 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
                             ),
                         )
                     )

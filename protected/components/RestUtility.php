@@ -23,7 +23,7 @@ class RestUtility {
             curl_setopt ($ch, CURLOPT_URL, $url);             
             curl_setopt($ch, CURLOPT_USERPWD, $postdata);
             curl_setopt($ch,CURLOPT_RETURNTRANSFER, TRUE);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+            //curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
 
             if(!$result = curl_exec ($ch)){
                 echo "An error has occured".curl_error($ch);
