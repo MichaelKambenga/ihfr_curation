@@ -43,7 +43,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
  ),
 ));
 ?>
-<?php echo CHtml::submitButton('Assign',array('class'=>'btn btn-primary','name'=>'submit')); ?>
+<?php echo CHtml::submitButton('Assign',array('class'=>'btn btn-info','name'=>'submit')); ?>
 <?php echo CHtml::endForm(); 
  
 ?>

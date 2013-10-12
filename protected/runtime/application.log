@@ -2012,3 +2012,954 @@ REQUEST_URI=/ihfr_curation/index.php?r=curation/facilities
 in /var/www/ihfr_curation/protected/views/curation/exploreFacilities.php (36)
 in /var/www/ihfr_curation/protected/controllers/CurationController.php (66)
 in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:07:51 [error] [php] Undefined variable: model (/var/www/ihfr_curation/protected/views/curation/site_create.php:12)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CController.php(869): CurationController->renderFile()
+#1 /var/www/ihfr_curation/framework/web/CController.php(782): CurationController->renderPartial()
+#2 /var/www/ihfr_curation/protected/controllers/CurationController.php(171): CurationController->render()
+#3 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): CurationController->actionCreateSite()
+#4 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams()
+#5 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#6 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#7 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#8 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#9 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#10 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#11 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#12 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#13 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#14 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#15 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createsite
+in /var/www/ihfr_curation/protected/views/curation/site_create.php (12)
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (171)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:08:10 [error] [exception.CException] exception 'CException' with message 'Property "SiteForm.isNewRecord" is not defined.' in /var/www/ihfr_curation/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/ihfr_curation/protected/views/curation/_site_form.php(22): CComponent->__get('isNewRecord')
+#1 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require('/var/www/ihfr_c...')
+#2 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/ihfr_c...', Array, true)
+#3 /var/www/ihfr_curation/framework/web/CController.php(869): CBaseController->renderFile('/var/www/ihfr_c...', Array, true)
+#4 /var/www/ihfr_curation/protected/views/curation/site_create.php(12): CController->renderPartial('_site_form', Array)
+#5 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require('/var/www/ihfr_c...')
+#6 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/ihfr_c...', Array, true)
+#7 /var/www/ihfr_curation/framework/web/CController.php(869): CBaseController->renderFile('/var/www/ihfr_c...', Array, true)
+#8 /var/www/ihfr_curation/framework/web/CController.php(782): CController->renderPartial('site_create', Array, true)
+#9 /var/www/ihfr_curation/protected/controllers/CurationController.php(171): CController->render('site_create', Array)
+#10 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): CurationController->actionCreateSite()
+#11 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#12 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#13 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#14 /var/www/ihfr_curation/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#15 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#16 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#17 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#18 /var/www/ihfr_curation/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#19 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('createsite')
+#20 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('curation/create...')
+#21 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#22 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#23 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createsite
+---
+2013/10/10 11:09:48 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "curation".' in /var/www/ihfr_curation/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CController.php(270): CController->missingAction('curation')
+#1 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('curation')
+#2 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('curation/curati...')
+#3 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#4 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=curation/curation
+HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=curation/createsite
+---
+2013/10/10 11:10:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "index".' in /var/www/ihfr_curation/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CController.php(270): CController->missingAction('')
+#1 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('')
+#2 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('curation/')
+#3 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#4 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=curation/
+HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=curation/createsite
+---
+2013/10/10 11:10:54 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "index".' in /var/www/ihfr_curation/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CController.php(270): CController->missingAction('')
+#1 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('')
+#2 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('curation/')
+#3 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#4 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=curation/
+HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=curation/createsite
+---
+2013/10/10 11:13:46 [error] [exception.CException] exception 'CException' with message 'Property "SiteForm.Admin_div" is not defined.' in /var/www/ihfr_curation/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/helpers/CHtml.php(2255): CComponent->__get('Admin_div')
+#1 /var/www/ihfr_curation/framework/web/helpers/CHtml.php(1980): CHtml::resolveValue(Object(SiteForm), 'Admin_div')
+#2 /var/www/ihfr_curation/framework/web/helpers/CHtml.php(1257): CHtml::activeInputField('text', Object(SiteForm), 'Admin_div', Array)
+#3 /var/www/ihfr_curation/framework/web/widgets/CActiveForm.php(657): CHtml::activeTextField(Object(SiteForm), 'Admin_div', Array)
+#4 /var/www/ihfr_curation/protected/views/curation/_site_form.php(33): CActiveForm->textField(Object(SiteForm), 'Admin_div', Array)
+#5 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require('/var/www/ihfr_c...')
+#6 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/ihfr_c...', Array, true)
+#7 /var/www/ihfr_curation/framework/web/CController.php(869): CBaseController->renderFile('/var/www/ihfr_c...', Array, true)
+#8 /var/www/ihfr_curation/protected/views/curation/site_create.php(12): CController->renderPartial('_site_form', Array)
+#9 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require('/var/www/ihfr_c...')
+#10 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/ihfr_c...', Array, true)
+#11 /var/www/ihfr_curation/framework/web/CController.php(869): CBaseController->renderFile('/var/www/ihfr_c...', Array, true)
+#12 /var/www/ihfr_curation/framework/web/CController.php(782): CController->renderPartial('site_create', Array, true)
+#13 /var/www/ihfr_curation/protected/controllers/CurationController.php(171): CController->render('site_create', Array)
+#14 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): CurationController->actionCreateSite()
+#15 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#16 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#17 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#18 /var/www/ihfr_curation/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#19 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#20 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#21 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#22 /var/www/ihfr_curation/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#23 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('createsite')
+#24 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('curation/create...')
+#25 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#26 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#27 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createsite
+---
+2013/10/10 11:56:24 [error] [php] Undefined variable: collection_id (/var/www/ihfr_curation/protected/controllers/CurationController.php:167)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#1 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#2 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#3 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#4 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#5 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#7 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#8 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#9 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createsite
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (167)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:56:52 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:56:52 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:56:52 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:57:27 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:57:27 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:57:27 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:57:49 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:57:49 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:57:49 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:57:54 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:57:54 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:57:54 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:58:29 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:58:29 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:58:29 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:58:45 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:58:45 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:58:45 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:59:09 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:59:09 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 11:59:09 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:01:15 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:01:15 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:01:15 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:02:41 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:02:41 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:02:41 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:03:29 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:03:29 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:03:29 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:03:33 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:03:33 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:03:33 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:03:34 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:03:34 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:03:34 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:05:28 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:05:28 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:05:28 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:06:28 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:06:28 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:06:28 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:06:28 [error] [php] Undefined index: properties[Ownership] (/var/www/ihfr_curation/protected/controllers/CurationController.php:170)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#1 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#2 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#3 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#4 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#5 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#7 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#8 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#9 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createsite
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (170)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:07:29 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:07:29 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:07:29 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:07:29 [error] [php] Undefined index: properties[Ownership] (/var/www/ihfr_curation/protected/controllers/CurationController.php:170)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#1 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#2 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#3 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#4 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#5 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#7 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#8 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#9 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createsite
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (170)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:08:56 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:08:56 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:08:56 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:08:56 [error] [php] Undefined index: SiteForm[properties][Ownership] (/var/www/ihfr_curation/protected/controllers/CurationController.php:170)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#1 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#2 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#3 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#4 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#5 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#7 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#8 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#9 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createsite
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (170)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:09:39 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:09:39 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:09:39 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:09:55 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:09:55 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:09:55 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:10:18 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:10:18 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:10:18 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:11:00 [warning] [application] Failed to set unsafe attribute "id" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:11:00 [warning] [application] Failed to set unsafe attribute "name" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 12:11:00 [warning] [application] Failed to set unsafe attribute "properties" of "SiteForm".
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (169)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 13:38:43 [error] [php] Undefined variable: name (/var/www/ihfr_curation/protected/controllers/CurationController.php:179)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#1 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#2 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#3 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#4 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#5 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#7 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#8 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#9 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createsite
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (179)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 15:50:34 [error] [php] Undefined index: count (/var/www/ihfr_curation/protected/controllers/CurationController.php:49)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#1 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams()
+#2 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#3 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#4 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#5 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#6 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#7 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#8 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#9 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#10 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#11 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#12 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/facilities
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (49)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 15:54:02 [error] [php] Argument 2 passed to TbArray::popValue() must be an array, string given, called in /var/www/ihfr_curation/protected/extensions/bootstrap/helpers/TbHtml.php on line 2507 and defined (/var/www/ihfr_curation/protected/extensions/bootstrap/helpers/TbArray.php:34)
+Stack trace:
+#0 /var/www/ihfr_curation/protected/views/curation/exploreFacilities.php(44): linkButton()
+#1 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require()
+#2 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CurationController->renderInternal()
+#3 /var/www/ihfr_curation/framework/web/CController.php(869): CurationController->renderFile()
+#4 /var/www/ihfr_curation/framework/web/CController.php(782): CurationController->renderPartial()
+#5 /var/www/ihfr_curation/protected/controllers/CurationController.php(66): CurationController->render()
+#6 unknown(0): CurationController->actionFacilities()
+#7 /var/www/ihfr_curation/framework/web/actions/CAction.php(108): ReflectionMethod->invokeArgs()
+#8 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#9 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams()
+#10 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#11 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#12 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#13 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#14 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#15 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#16 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#17 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#18 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#19 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#20 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/facilities
+in /var/www/ihfr_curation/protected/extensions/bootstrap/helpers/TbArray.php (34)
+in /var/www/ihfr_curation/protected/extensions/bootstrap/helpers/TbHtml.php (2507)
+in /var/www/ihfr_curation/protected/extensions/bootstrap/helpers/TbHtml.php (2443)
+2013/10/10 16:39:45 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '0' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `user` (`email`, `node_id`, `position_id`, `organization_id`, `phone_number`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4).
+in /var/www/ihfr_curation/protected/controllers/UserController.php (66)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 16:39:45 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '0' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `user` (`email`, `node_id`, `position_id`, `organization_id`, `phone_number`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4)' in /var/www/ihfr_curation/framework/db/CDbCommand.php:357
+Stack trace:
+#0 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(1023): CDbCommand->execute()
+#1 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(795): CActiveRecord->insert(NULL)
+#2 /var/www/ihfr_curation/protected/controllers/UserController.php(66): CActiveRecord->save()
+#3 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): UserController->actionCreate()
+#4 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#6 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#7 /var/www/ihfr_curation/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#8 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#9 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#10 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#11 /var/www/ihfr_curation/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('create')
+#13 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('user/create')
+#14 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#15 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=user/create
+HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=user/create
+---
+2013/10/10 16:40:44 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '0' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `user` (`email`, `node_id`, `position_id`, `organization_id`, `phone_number`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4).
+in /var/www/ihfr_curation/protected/controllers/UserController.php (66)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 16:40:44 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '0' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `user` (`email`, `node_id`, `position_id`, `organization_id`, `phone_number`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4)' in /var/www/ihfr_curation/framework/db/CDbCommand.php:357
+Stack trace:
+#0 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(1023): CDbCommand->execute()
+#1 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(795): CActiveRecord->insert(NULL)
+#2 /var/www/ihfr_curation/protected/controllers/UserController.php(66): CActiveRecord->save()
+#3 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): UserController->actionCreate()
+#4 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#6 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#7 /var/www/ihfr_curation/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#8 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#9 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#10 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#11 /var/www/ihfr_curation/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('create')
+#13 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('user/create')
+#14 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#15 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=user/create
+HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=user/create
+---
+2013/10/10 16:43:16 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`ihfr_curation`.`user`, CONSTRAINT `fk_user_position1` FOREIGN KEY (`position_id`) REFERENCES `position` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION). The SQL statement executed was: INSERT INTO `user` (`email`, `node_id`, `position_id`, `organization_id`, `phone_number`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4).
+in /var/www/ihfr_curation/protected/controllers/UserController.php (66)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 16:43:16 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`ihfr_curation`.`user`, CONSTRAINT `fk_user_position1` FOREIGN KEY (`position_id`) REFERENCES `position` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION). The SQL statement executed was: INSERT INTO `user` (`email`, `node_id`, `position_id`, `organization_id`, `phone_number`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4)' in /var/www/ihfr_curation/framework/db/CDbCommand.php:357
+Stack trace:
+#0 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(1023): CDbCommand->execute()
+#1 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(795): CActiveRecord->insert(NULL)
+#2 /var/www/ihfr_curation/protected/controllers/UserController.php(66): CActiveRecord->save()
+#3 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): UserController->actionCreate()
+#4 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#6 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#7 /var/www/ihfr_curation/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#8 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#9 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#10 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#11 /var/www/ihfr_curation/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('create')
+#13 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('user/create')
+#14 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#15 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=user/create
+HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=user/create
+---
+2013/10/10 16:44:47 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`ihfr_curation`.`user`, CONSTRAINT `fk_user_position1` FOREIGN KEY (`position_id`) REFERENCES `position` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION). The SQL statement executed was: INSERT INTO `user` (`email`, `node_id`, `position_id`, `organization_id`, `phone_number`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4).
+in /var/www/ihfr_curation/protected/controllers/UserController.php (66)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 16:44:47 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`ihfr_curation`.`user`, CONSTRAINT `fk_user_position1` FOREIGN KEY (`position_id`) REFERENCES `position` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION). The SQL statement executed was: INSERT INTO `user` (`email`, `node_id`, `position_id`, `organization_id`, `phone_number`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4)' in /var/www/ihfr_curation/framework/db/CDbCommand.php:357
+Stack trace:
+#0 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(1023): CDbCommand->execute()
+#1 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(795): CActiveRecord->insert(NULL)
+#2 /var/www/ihfr_curation/protected/controllers/UserController.php(66): CActiveRecord->save()
+#3 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): UserController->actionCreate()
+#4 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#6 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#7 /var/www/ihfr_curation/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#8 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#9 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#10 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#11 /var/www/ihfr_curation/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('create')
+#13 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('user/create')
+#14 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#15 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=user/create
+HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=user/create
+---
+2013/10/10 16:53:39 [error] [exception.CDbException] exception 'CDbException' with message 'Column name must be either a string or an array.' in /var/www/ihfr_curation/framework/db/schema/CDbCommandBuilder.php:722
+Stack trace:
+#0 /var/www/ihfr_curation/framework/db/schema/CDbCommandBuilder.php(519): CDbCommandBuilder->createInCondition(Object(CMysqlTableSchema), NULL, Array, NULL)
+#1 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(1689): CDbCommandBuilder->createPkCriteria(Object(CMysqlTableSchema), NULL, '', Array)
+#2 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(1070): CActiveRecord->updateByPk(NULL, Array)
+#3 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(795): CActiveRecord->update(NULL)
+#4 /var/www/ihfr_curation/protected/controllers/AuthItemController.php(87): CActiveRecord->save()
+#5 [internal function]: AuthItemController->actionUpdate('Request Change ...')
+#6 /var/www/ihfr_curation/framework/web/actions/CAction.php(108): ReflectionMethod->invokeArgs(Object(AuthItemController), Array)
+#7 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(47): CAction->runWithParamsInternal(Object(AuthItemController), Object(ReflectionMethod), Array)
+#8 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#9 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#10 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#11 /var/www/ihfr_curation/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#12 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#13 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#14 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#15 /var/www/ihfr_curation/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#16 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('update')
+#17 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('authItem/update')
+#18 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#19 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#20 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=authItem/update&id=Request+Change+Privilege&asDialog=1&gridId=auth-item-grid
+HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=authItem/update&id=Request+Change+Privilege&asDialog=1&gridId=auth-item-grid
+---
+2013/10/10 16:54:10 [error] [exception.CDbException] exception 'CDbException' with message 'Column name must be either a string or an array.' in /var/www/ihfr_curation/framework/db/schema/CDbCommandBuilder.php:722
+Stack trace:
+#0 /var/www/ihfr_curation/framework/db/schema/CDbCommandBuilder.php(519): CDbCommandBuilder->createInCondition(Object(CMysqlTableSchema), NULL, Array, NULL)
+#1 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(1689): CDbCommandBuilder->createPkCriteria(Object(CMysqlTableSchema), NULL, '', Array)
+#2 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(1070): CActiveRecord->updateByPk(NULL, Array)
+#3 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(795): CActiveRecord->update(NULL)
+#4 /var/www/ihfr_curation/protected/controllers/AuthItemController.php(87): CActiveRecord->save()
+#5 [internal function]: AuthItemController->actionUpdate('Request Change ...')
+#6 /var/www/ihfr_curation/framework/web/actions/CAction.php(108): ReflectionMethod->invokeArgs(Object(AuthItemController), Array)
+#7 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(47): CAction->runWithParamsInternal(Object(AuthItemController), Object(ReflectionMethod), Array)
+#8 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#9 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#10 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#11 /var/www/ihfr_curation/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#12 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#13 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#14 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#15 /var/www/ihfr_curation/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#16 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('update')
+#17 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('authItem/update')
+#18 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#19 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#20 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=authItem/update&id=Request+Change+Privilege&asDialog=1&gridId=auth-item-grid
+HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=authItem/update&id=Request+Change+Privilege&asDialog=1&gridId=auth-item-grid
+---
+2013/10/10 17:12:09 [error] [php] Undefined variable: model (/var/www/ihfr_curation/protected/views/curation/facility.php:14)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CController.php(869): CurationController->renderFile()
+#1 /var/www/ihfr_curation/framework/web/CController.php(782): CurationController->renderPartial()
+#2 /var/www/ihfr_curation/protected/controllers/CurationController.php(188): CurationController->render()
+#3 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): CurationController->actionCreateSite()
+#4 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams()
+#5 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#6 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#7 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#8 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#9 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#10 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#11 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#12 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#13 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#14 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#15 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createsite
+in /var/www/ihfr_curation/protected/views/curation/facility.php (14)
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (188)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/10 17:19:45 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "facility".' in /var/www/ihfr_curation/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CController.php(270): CController->missingAction('facility')
+#1 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('facility')
+#2 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('curation/facili...')
+#3 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#4 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=curation/facility
+HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=curation/createsite
+---
+2013/10/10 17:21:05 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "facility".' in /var/www/ihfr_curation/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CController.php(270): CController->missingAction('facility')
+#1 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('facility')
+#2 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('curation/facili...')
+#3 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#4 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=curation/facility
+HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=curation/createsite
+---
+2013/10/10 17:33:39 [error] [exception.CDbException] exception 'CDbException' with message 'Column name must be either a string or an array.' in /var/www/ihfr_curation/framework/db/schema/CDbCommandBuilder.php:722
+Stack trace:
+#0 /var/www/ihfr_curation/framework/db/schema/CDbCommandBuilder.php(519): CDbCommandBuilder->createInCondition(Object(CMysqlTableSchema), NULL, Array, NULL)
+#1 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(1689): CDbCommandBuilder->createPkCriteria(Object(CMysqlTableSchema), NULL, '', Array)
+#2 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(1070): CActiveRecord->updateByPk(NULL, Array)
+#3 /var/www/ihfr_curation/framework/db/ar/CActiveRecord.php(795): CActiveRecord->update(NULL)
+#4 /var/www/ihfr_curation/protected/controllers/AuthItemController.php(87): CActiveRecord->save()
+#5 [internal function]: AuthItemController->actionUpdate('Request Change ...')
+#6 /var/www/ihfr_curation/framework/web/actions/CAction.php(108): ReflectionMethod->invokeArgs(Object(AuthItemController), Array)
+#7 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(47): CAction->runWithParamsInternal(Object(AuthItemController), Object(ReflectionMethod), Array)
+#8 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#9 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#10 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#11 /var/www/ihfr_curation/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#12 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#13 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#14 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#15 /var/www/ihfr_curation/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#16 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('update')
+#17 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('authItem/update')
+#18 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#19 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#20 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=authItem/update&id=Request+Change+Privilege&asDialog=1&gridId=auth-item-grid
+HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=authItem/update&id=Request+Change+Privilege&asDialog=1&gridId=auth-item-grid
+---
+2013/10/10 17:34:21 [error] [php] Undefined index: count (/var/www/ihfr_curation/protected/controllers/CurationController.php:49)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#1 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams()
+#2 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#3 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#4 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#5 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#6 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#7 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#8 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#9 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#10 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#11 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#12 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/facilities
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (49)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/11 10:09:36 [error] [php] Undefined variable: view (/var/www/ihfr_curation/protected/views/curation/_site_form.php:69)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CController.php(869): CurationController->renderFile()
+#1 /var/www/ihfr_curation/protected/views/curation/site_create.php(17): CurationController->renderPartial()
+#2 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require()
+#3 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CurationController->renderInternal()
+#4 /var/www/ihfr_curation/framework/web/CController.php(869): CurationController->renderFile()
+#5 /var/www/ihfr_curation/framework/web/CController.php(782): CurationController->renderPartial()
+#6 /var/www/ihfr_curation/protected/controllers/CurationController.php(179): CurationController->render()
+#7 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): CurationController->actionCreateSite()
+#8 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams()
+#9 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#10 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#11 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#12 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#13 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#14 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#15 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#16 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#17 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#18 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#19 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createsite
+in /var/www/ihfr_curation/protected/views/curation/_site_form.php (69)
+in /var/www/ihfr_curation/protected/views/curation/site_create.php (17)
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (179)
+2013/10/11 10:46:28 [error] [php] Undefined variable: form (/var/www/ihfr_curation/protected/views/curation/_layers_priority_fields_form.php:9)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CController.php(869): CurationController->renderFile()
+#1 /var/www/ihfr_curation/protected/views/curation/_site_form.php(12): CurationController->renderPartial()
+#2 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require()
+#3 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CurationController->renderInternal()
+#4 /var/www/ihfr_curation/framework/web/CController.php(869): CurationController->renderFile()
+#5 /var/www/ihfr_curation/protected/views/curation/site_create.php(17): CurationController->renderPartial()
+#6 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require()
+#7 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CurationController->renderInternal()
+#8 /var/www/ihfr_curation/framework/web/CController.php(869): CurationController->renderFile()
+#9 /var/www/ihfr_curation/framework/web/CController.php(782): CurationController->renderPartial()
+#10 /var/www/ihfr_curation/protected/controllers/CurationController.php(179): CurationController->render()
+#11 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): CurationController->actionCreateSite()
+#12 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams()
+#13 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#14 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#15 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#16 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#17 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#18 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#19 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#20 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#21 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#22 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#23 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createsite
+in /var/www/ihfr_curation/protected/views/curation/_layers_priority_fields_form.php (9)
+in /var/www/ihfr_curation/protected/views/curation/_site_form.php (12)
+in /var/www/ihfr_curation/protected/views/curation/site_create.php (17)
+2013/10/11 10:53:59 [error] [exception.CException] exception 'CException' with message 'Property "SiteForm.isNewRecord" is not defined.' in /var/www/ihfr_curation/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/ihfr_curation/protected/views/curation/_site_form.php(78): CComponent->__get('isNewRecord')
+#1 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require('/var/www/ihfr_c...')
+#2 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/ihfr_c...', Array, true)
+#3 /var/www/ihfr_curation/framework/web/CController.php(869): CBaseController->renderFile('/var/www/ihfr_c...', Array, true)
+#4 /var/www/ihfr_curation/protected/views/curation/site_create.php(17): CController->renderPartial('_site_form', Array)
+#5 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require('/var/www/ihfr_c...')
+#6 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/ihfr_c...', Array, true)
+#7 /var/www/ihfr_curation/framework/web/CController.php(869): CBaseController->renderFile('/var/www/ihfr_c...', Array, true)
+#8 /var/www/ihfr_curation/framework/web/CController.php(782): CController->renderPartial('site_create', Array, true)
+#9 /var/www/ihfr_curation/protected/controllers/CurationController.php(179): CController->render('site_create', Array)
+#10 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): CurationController->actionCreateSite()
+#11 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#12 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#13 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#14 /var/www/ihfr_curation/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#15 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#16 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#17 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#18 /var/www/ihfr_curation/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#19 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('createsite')
+#20 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('curation/create...')
+#21 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#22 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#23 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createsite
+---
+2013/10/11 12:14:01 [warning] [application] Failed to set unsafe attribute "number" of "User".
+in /var/www/ihfr_curation/protected/controllers/UserController.php (135)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/11 12:14:06 [warning] [application] Failed to set unsafe attribute "number" of "User".
+in /var/www/ihfr_curation/protected/controllers/UserController.php (135)
+in /var/www/ihfr_curation/index.php (13)
+2013/10/11 14:06:13 [error] [php] Undefined index: code (/var/www/ihfr_curation/protected/models/Layer.php:26)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CurationController->renderInternal()
+#1 /var/www/ihfr_curation/framework/web/CController.php(869): CurationController->renderFile()
+#2 /var/www/ihfr_curation/framework/web/CController.php(782): CurationController->renderPartial()
+#3 /var/www/ihfr_curation/protected/controllers/CurationController.php(179): CurationController->render()
+#4 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): CurationController->actionCreateSite()
+#5 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams()
+#6 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#7 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#8 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#9 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#10 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#11 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#12 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#13 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#14 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#15 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#16 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createsite
+in /var/www/ihfr_curation/protected/models/Layer.php (26)
+in /var/www/ihfr_curation/protected/views/curation/site_create.php (20)
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (179)
+2013/10/11 14:49:43 [error] [php] Undefined offset: 3 (/var/www/ihfr_curation/protected/models/Layer.php:41)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CurationController->renderInternal()
+#1 /var/www/ihfr_curation/framework/web/CController.php(869): CurationController->renderFile()
+#2 /var/www/ihfr_curation/framework/web/CController.php(782): CurationController->renderPartial()
+#3 /var/www/ihfr_curation/protected/controllers/CurationController.php(179): CurationController->render()
+#4 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): CurationController->actionCreateSite()
+#5 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams()
+#6 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#7 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#8 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#9 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#10 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#11 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#12 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#13 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#14 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#15 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#16 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createSite
+in /var/www/ihfr_curation/protected/models/Layer.php (41)
+in /var/www/ihfr_curation/protected/views/curation/site_create.php (22)
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (179)
+2013/10/11 14:50:09 [error] [php] Undefined offset: 0 (/var/www/ihfr_curation/protected/models/Layer.php:41)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CurationController->renderInternal()
+#1 /var/www/ihfr_curation/framework/web/CController.php(869): CurationController->renderFile()
+#2 /var/www/ihfr_curation/framework/web/CController.php(782): CurationController->renderPartial()
+#3 /var/www/ihfr_curation/protected/controllers/CurationController.php(179): CurationController->render()
+#4 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): CurationController->actionCreateSite()
+#5 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams()
+#6 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#7 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#8 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#9 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#10 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#11 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#12 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#13 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#14 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#15 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#16 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createSite
+in /var/www/ihfr_curation/protected/models/Layer.php (41)
+in /var/www/ihfr_curation/protected/views/curation/site_create.php (22)
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (179)
+2013/10/11 15:08:59 [error] [php] Undefined index: hierarchy (/var/www/ihfr_curation/protected/models/Layer.php:56)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CurationController->renderInternal()
+#1 /var/www/ihfr_curation/framework/web/CController.php(869): CurationController->renderFile()
+#2 /var/www/ihfr_curation/framework/web/CController.php(782): CurationController->renderPartial()
+#3 /var/www/ihfr_curation/protected/controllers/CurationController.php(179): CurationController->render()
+#4 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): CurationController->actionCreateSite()
+#5 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams()
+#6 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#7 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#8 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#9 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#10 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#11 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#12 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#13 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#14 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#15 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#16 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createSite
+in /var/www/ihfr_curation/protected/models/Layer.php (56)
+in /var/www/ihfr_curation/protected/views/curation/site_create.php (22)
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (179)
+2013/10/11 16:14:54 [error] [php] Undefined index: labels (/var/www/ihfr_curation/protected/models/Layer.php:49)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CurationController->renderInternal()
+#1 /var/www/ihfr_curation/framework/web/CController.php(869): CurationController->renderFile()
+#2 /var/www/ihfr_curation/framework/web/CController.php(782): CurationController->renderPartial()
+#3 /var/www/ihfr_curation/protected/controllers/CurationController.php(179): CurationController->render()
+#4 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): CurationController->actionCreateSite()
+#5 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams()
+#6 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#7 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#8 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#9 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#10 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#11 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#12 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#13 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#14 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#15 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#16 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createsite
+in /var/www/ihfr_curation/protected/models/Layer.php (49)
+in /var/www/ihfr_curation/protected/views/curation/site_create.php (20)
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (179)
+2013/10/12 16:18:54 [error] [php] get_class() expects parameter 1 to be object, string given (/var/www/ihfr_curation/framework/web/helpers/CHtml.php:2220)
+Stack trace:
+#0 /var/www/ihfr_curation/protected/extensions/bootstrap/helpers/TbHtml.php(1710): resolveNameID()
+#1 /var/www/ihfr_curation/protected/extensions/bootstrap/helpers/TbHtml.php(1733): activeCheckBoxList()
+#2 /var/www/ihfr_curation/protected/views/curation/_layers_services_offered_form.php(108): activeInlineCheckBoxList()
+#3 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require()
+#4 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CurationController->renderInternal()
+#5 /var/www/ihfr_curation/framework/web/CController.php(869): CurationController->renderFile()
+#6 /var/www/ihfr_curation/protected/views/curation/_site_form.php(42): CurationController->renderPartial()
+#7 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require()
+#8 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CurationController->renderInternal()
+#9 /var/www/ihfr_curation/framework/web/CController.php(869): CurationController->renderFile()
+#10 /var/www/ihfr_curation/protected/views/curation/site_create.php(17): CurationController->renderPartial()
+#11 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require()
+#12 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CurationController->renderInternal()
+#13 /var/www/ihfr_curation/framework/web/CController.php(869): CurationController->renderFile()
+#14 /var/www/ihfr_curation/framework/web/CController.php(782): CurationController->renderPartial()
+#15 /var/www/ihfr_curation/protected/controllers/CurationController.php(162): CurationController->render()
+#16 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): CurationController->actionCreateSite()
+#17 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams()
+#18 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#19 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#20 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#21 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#22 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#23 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#24 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#25 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#26 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#27 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#28 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createSite
+in /var/www/ihfr_curation/protected/extensions/bootstrap/helpers/TbHtml.php (1710)
+in /var/www/ihfr_curation/protected/extensions/bootstrap/helpers/TbHtml.php (1733)
+in /var/www/ihfr_curation/protected/views/curation/_layers_services_offered_form.php (108)
+2013/10/12 16:20:19 [error] [exception.CException] exception 'CException' with message 'Property "SiteForm.inlineCheckbox" is not defined.' in /var/www/ihfr_curation/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/helpers/CHtml.php(2255): CComponent->__get('inlineCheckbox')
+#1 /var/www/ihfr_curation/protected/extensions/bootstrap/helpers/TbHtml.php(1711): CHtml::resolveValue(Object(SiteForm), 'inlineCheckbox')
+#2 /var/www/ihfr_curation/protected/extensions/bootstrap/helpers/TbHtml.php(1733): TbHtml::activeCheckBoxList(Object(SiteForm), 'inlineCheckbox', Array, Array)
+#3 /var/www/ihfr_curation/protected/views/curation/_layers_services_offered_form.php(108): TbHtml::activeInlineCheckBoxList(Object(SiteForm), 'inlineCheckbox', Array)
+#4 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require('/var/www/ihfr_c...')
+#5 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/ihfr_c...', Array, true)
+#6 /var/www/ihfr_curation/framework/web/CController.php(869): CBaseController->renderFile('/var/www/ihfr_c...', Array, true)
+#7 /var/www/ihfr_curation/protected/views/curation/_site_form.php(42): CController->renderPartial('_layers_service...', Array)
+#8 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require('/var/www/ihfr_c...')
+#9 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/ihfr_c...', Array, true)
+#10 /var/www/ihfr_curation/framework/web/CController.php(869): CBaseController->renderFile('/var/www/ihfr_c...', Array, true)
+#11 /var/www/ihfr_curation/protected/views/curation/site_create.php(17): CController->renderPartial('_site_form', Array)
+#12 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require('/var/www/ihfr_c...')
+#13 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/ihfr_c...', Array, true)
+#14 /var/www/ihfr_curation/framework/web/CController.php(869): CBaseController->renderFile('/var/www/ihfr_c...', Array, true)
+#15 /var/www/ihfr_curation/framework/web/CController.php(782): CController->renderPartial('site_create', Array, true)
+#16 /var/www/ihfr_curation/protected/controllers/CurationController.php(162): CController->render('site_create', Array)
+#17 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): CurationController->actionCreateSite()
+#18 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#19 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#20 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#21 /var/www/ihfr_curation/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#22 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#23 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#24 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#25 /var/www/ihfr_curation/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#26 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('createSite')
+#27 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('curation/create...')
+#28 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#29 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#30 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createSite
+---
+2013/10/12 16:59:01 [error] [php] Undefined index: name (/var/www/ihfr_curation/protected/controllers/CurationController.php:134)
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CurationController->runAction()
+#1 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#2 /var/www/ihfr_curation/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#3 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CurationController->filterAccessControl()
+#4 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#5 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/ihfr_curation/framework/web/CController.php(265): CurationController->runActionWithFilters()
+#7 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CurationController->run()
+#8 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#9 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/ihfr_curation/index.php(13): CWebApplication->run()
+REQUEST_URI=/ihfr_curation/index.php?r=curation/createSite
+in /var/www/ihfr_curation/protected/controllers/CurationController.php (134)
+in /var/www/ihfr_curation/index.php (13)

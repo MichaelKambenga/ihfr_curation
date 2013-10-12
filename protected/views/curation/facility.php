@@ -8,6 +8,11 @@
 
 <?php echo TbHtml::pageHeader('', 'View/Change Facility');?>
 <div class="well">
+      <?php if(Yii::app()->user->hasFlash('success')):?>
+        <div class="alert alert-success">
+              <?php echo Yii::app()->user->getFlash('success');?>
+        </div>
+    <?php endif;?>
     <?php
     $this->widget('bootstrap.widgets.TbDetailView', array(
         'type'=>  TbHtml::DETAIL_TYPE_BORDERED,

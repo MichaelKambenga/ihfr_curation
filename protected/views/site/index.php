@@ -9,6 +9,6 @@ $this->pageTitle=Yii::app()->name;
         'Facility Curation Tool which works on top of InSTEDD ResourceMap'
         .'<br />'
         .TbHtml::button('Learn more',
-array('color' => TbHtml::BUTTON_COLOR_PRIMARY, 'size' => TbHtml::BUTTON_SIZE_LARGE))
+array('color' => TbHtml::BUTTON_COLOR_INFO, 'size' => TbHtml::BUTTON_SIZE_LARGE))
         )?>
   

@@ -24,6 +24,7 @@ class UserIdentity extends CUserIdentity
                 $user = User::model()->find('email=:email',array(':email'=>$this->username));
                 Yii::app()->user->setState('hierarchy',$result);
                 Yii::app()->user->setState('node_id',$user->node_id);
+                Yii::app()->user->setState('layers',  Layer::loadLayers());
         }
         else{
                 $this->errorCode = self::ERROR_UNKNOWN_IDENTITY;

@@ -95,8 +95,8 @@ return array(
         'resourceMapConfig' => array(
             'api-username'=>'mkambenga@gmail.com',
             'api-password'=>'Michael',
-            'public_collection_id' => '',
-            'curation_collection_id' => ''
+            'public_collection_id' => '409',
+            'curation_collection_id' => '463'
         ),
     ),
 );

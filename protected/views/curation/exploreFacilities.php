@@ -31,8 +31,8 @@
    
     <?php echo TbHtml::beginFormTb(TbHtml::FORM_LAYOUT_SEARCH); ?>
     <?php echo TbHtml::searchQueryField('search','',array('id'=>'search_text_field','placeholder'=>'Search by public site code')); ?>
-    <?php echo TbHtml::ajaxButton('Search', $url=$this->createUrl('SearchFacilityByPSCode'),
-            $ajaxOptions = array(
+    <?php echo TbHtml::ajaxButton('Search',$this->createUrl('SearchFacilityByPSCode'),
+                      array(
                                 'type'=>'GET',
                                 'data'=>array('search_query'=>'js: $("#search_text_field").val()'),
                                 'update'=>'#facilityGrid'
@@ -41,7 +41,8 @@
     ?>
     <?php echo TbHtml::endForm(); ?>
 
-    <?php echo TbHtml::button('Create facility', array('class'=>'btn-primary')) ?>
+   
+    <?php echo TbHtml::link('Create facility',$this->createUrl('createSite'), array('class'=>'btn btn-info')) ?>
     <br /><br />
     <div id="gridContainer">
        <?php $this->renderPartial('_facilityGrid',array('sites'=>$sites));?>
