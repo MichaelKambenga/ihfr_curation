@@ -64,9 +64,16 @@ class Layer {
         return $layers;
     }
     
+    public static function loadHierarchy(){
+         $url= Yii::app()->params['api-domain']."/collections/777/fields/2512.json";
+         $response = RestUtility::execCurl($url);
+         
+         return CJSON::decode($response,true);
+    }
+    
     //services offered helpers
     public static function getGeneralClinicalServicesOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_GENERAL_CLINICAL_SERVICES];
         $options = array();
         foreach($services['config']['options'] as $option){
@@ -77,7 +84,7 @@ class Layer {
     }
     
     public static function getMalariaServicesOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_MALARIA];
         $options = array();
         foreach($services['config']['options'] as $option){
@@ -88,7 +95,7 @@ class Layer {
     }
     
     public static function getTBServicesOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_TB];
         $options = array();
         foreach($services['config']['options'] as $option){
@@ -99,7 +106,7 @@ class Layer {
     }
     
     public static function getCardiovascularServicesOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_CARDIOVASCULAR];
         $options = array();
         foreach($services['config']['options'] as $option){
@@ -110,7 +117,7 @@ class Layer {
     }
     
     public static function getHIVAIDSPreventionServicesOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_HIVAIDS_PREVENTION];
         $options = array();
         foreach($services['config']['options'] as $option){
@@ -121,7 +128,7 @@ class Layer {
     }
     
     public static function getHIVAIDSCareAndTreatmentServicesOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_HIVAIDS_CARE_AND_TREATMENT];
         $options = array();
         foreach($services['config']['options'] as $option){
@@ -132,7 +139,7 @@ class Layer {
     }
     
     public static function getTherapeuticsServicesOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_THERAPEUTICS];
         $options = array();
         foreach($services['config']['options'] as $option){
@@ -143,7 +150,7 @@ class Layer {
     }
     
     public static function getProstheticsAndMedicalDevicesServicesOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_PROSTHETICS_AND_MEDICAL_DEVICES];
         $options = array();
         foreach($services['config']['options'] as $option){
@@ -154,7 +161,7 @@ class Layer {
     }
     
     public static function getHealthPromotionAndDiseasePrventionServicesOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_HEALTH_PROMOTION_AND_DISEASE_PREVENTION];
         $options = array();
         foreach($services['config']['options'] as $option){
@@ -165,7 +172,7 @@ class Layer {
     }
     
     public static function getDiagnosticServicesOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_DIAGNOSTIC];
         $options = array();
         foreach($services['config']['options'] as $option){
@@ -176,7 +183,7 @@ class Layer {
     }
     
     public static function getReproductiveAndChildHealthCareServicesOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_REPRODUCTIVE_AND_CHILD_HEALTH_CARE];
         $options = array();
         foreach($services['config']['options'] as $option){
@@ -187,7 +194,7 @@ class Layer {
     }
     
     public static function getGrowthMonitoringAndNutritionSurveillanceServicesOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_GROWTH_MONITORING_NUTRITIONAL_SURVEILLANCE];
         $options = array();
         foreach($services['config']['options'] as $option){
@@ -198,7 +205,7 @@ class Layer {
     }
     
     public static function getDentalServicesOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_ORAL_HEALTH_DENTAL];
         $options = array();
         foreach($services['config']['options'] as $option){
@@ -209,7 +216,7 @@ class Layer {
     }
     
     public static function getENTServicesOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_ENT];
         $options = array();
         foreach($services['config']['options'] as $option){
@@ -220,7 +227,7 @@ class Layer {
     }
     
     public static function getSupportServicesOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_SUPPORT];
         $options = array();
         foreach($services['config']['options'] as $option){
@@ -231,7 +238,7 @@ class Layer {
     }
     
     public static function getEmergencyPreparednessServicesOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_EMERGENCY_PREPAREDNESS];
         $options = array();
         foreach($services['config']['options'] as $option){
@@ -245,7 +252,7 @@ class Layer {
     //priority fields helpers
     public static function getOperatingStatusOptions(){
         
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         
         $status = $layers[self::PRIORITY_FIELDS]['fields'][self::PRIORITY_FIELDS_OPERATING_STATUS];
         
@@ -259,31 +266,31 @@ class Layer {
     
     public static function getAdministrativeDivisionOptions(){
         
-        $result = Yii::app()->user->getState('hierarchy');
+        $result = Yii::app()->cache->get('hierarchy');
         $rootNode = Yii::app()->user->getState('node_id');
         $filteredData = self::search($result['config']['hierarchy'],'id',$rootNode);
         return self::parseHierarchy($filteredData);
     }
     
     public static function getOwnershipOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         
-        $ownership = $layers[self::PRIORITY_FIELDS]['fields'][self::PRIORITY_FIELDS_OWNERSHIP];
+        $data = $layers[self::PRIORITY_FIELDS]['fields'][self::PRIORITY_FIELDS_OWNERSHIP];
         
-        return self::parseHierarchy($ownership['config']['hierarchy']);
+        return self::parseHierarchy($data['config']['hierarchy']);
        
     }
     
    
     public static function getFacilityTypeOptions(){
-        $layers = Yii::app()->user->getState('layers');
-        $facilityType = $layers[self::PRIORITY_FIELDS]['fields'][self::PRIORITY_FIELDS_FACILITY_TYPE];
-        return self::parseHierarchy($facilityType['config']['hierarchy']);
+        $layers = Yii::app()->cache->get('layers');
+        $data = $layers[self::PRIORITY_FIELDS]['fields'][self::PRIORITY_FIELDS_FACILITY_TYPE];
+        return self::parseHierarchy($data['config']['hierarchy']);
     }
     
     //classification helpers
     public static function getLicensingStatusOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         
         $status = $layers[self::CLASSIFICATION]['fields'][self::CLASSIFICATION_LICENSING_STATUS];
         
@@ -296,7 +303,7 @@ class Layer {
     }
     
     public static function getRegistrationStatusOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         
         $status = $layers[self::CLASSIFICATION]['fields'][self::CLASSIFICATION_REGISTRATION_STATUS];
         
@@ -310,12 +317,12 @@ class Layer {
     
     //infrastructure helpers
     public static function getSterilizationAndInfectionControlOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         
-        $status = $layers[self::INFRASTRUCTURE]['fields'][self::INFRASTRUCTURE_STERILIZATION_AND_INFECTION_CONTROL];
+        $data = $layers[self::INFRASTRUCTURE]['fields'][self::INFRASTRUCTURE_STERILIZATION_AND_INFECTION_CONTROL];
         
         $options = array();
-        foreach($status['config']['options'] as $option){ 
+        foreach($data['config']['options'] as $option){ 
             array_push($options, $option['label']);
         }
         
@@ -323,12 +330,12 @@ class Layer {
     }
     
     public static function getSourceOfEnergyOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         
-        $status = $layers[self::INFRASTRUCTURE]['fields'][self::INFRASTRUCTURE_SOURCE_OF_ENERGY];
+        $data = $layers[self::INFRASTRUCTURE]['fields'][self::INFRASTRUCTURE_SOURCE_OF_ENERGY];
         
         $options = array();
-        foreach($status['config']['options'] as $option){ 
+        foreach($data['config']['options'] as $option){ 
             array_push($options, $option['label']);
         }
         
@@ -336,12 +343,12 @@ class Layer {
     }
     
     public static function getMobileNetworkOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         
-        $status = $layers[self::INFRASTRUCTURE]['fields'][self::INFRASTRUCTURE_MOBILE_NETWORKS];
+        $data = $layers[self::INFRASTRUCTURE]['fields'][self::INFRASTRUCTURE_MOBILE_NETWORKS];
         
         $options = array();
-        foreach($status['config']['options'] as $option){ 
+        foreach($data['config']['options'] as $option){ 
             array_push($options, $option['label']);
         }
         
@@ -349,12 +356,12 @@ class Layer {
     }
     
     public static function getSourceOfWaterOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         
-        $status = $layers[self::INFRASTRUCTURE]['fields'][self::INFRASTRUCTURE_SOURCE_OF_WATER];
+        $data = $layers[self::INFRASTRUCTURE]['fields'][self::INFRASTRUCTURE_SOURCE_OF_WATER];
         
         $options = array();
-        foreach($status['config']['options'] as $option){ 
+        foreach($data['config']['options'] as $option){ 
             array_push($options, $option['label']);
         }
         
@@ -362,12 +369,12 @@ class Layer {
     }
     
     public static function getToiletFacilityOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         
-        $status = $layers[self::INFRASTRUCTURE]['fields'][self::INFRASTRUCTURE_TOILET_FACILITY];
+        $data = $layers[self::INFRASTRUCTURE]['fields'][self::INFRASTRUCTURE_TOILET_FACILITY];
         
         $options = array();
-        foreach($status['config']['options'] as $option){ 
+        foreach($data['config']['options'] as $option){ 
             array_push($options, $option['label']);
         }
         
@@ -375,12 +382,12 @@ class Layer {
     }
     
     public static function getWasteManagementOptions(){
-        $layers = Yii::app()->user->getState('layers');
+        $layers = Yii::app()->cache->get('layers');
         
-        $status = $layers[self::INFRASTRUCTURE]['fields'][self::INFRASTRUCTURE_WASTE_MANAGEMENT];
+        $data = $layers[self::INFRASTRUCTURE]['fields'][self::INFRASTRUCTURE_WASTE_MANAGEMENT];
         
         $options = array();
-        foreach($status['config']['options'] as $option){ 
+        foreach($data['config']['options'] as $option){ 
             array_push($options, $option['label']);
         }
         

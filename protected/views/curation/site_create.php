@@ -16,5 +16,3 @@ $this->breadcrumbs=array(
 <?php endif;?>
 <?php echo $this->renderPartial('_site_form', array('model'=>$model)); ?>
 </div>
-
-<?php //print_r(Layer::getSterilizationAndInfectionControlOptions());?>

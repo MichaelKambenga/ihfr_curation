@@ -32,7 +32,7 @@ class CurationController extends Controller
         public function loadFacility($id){
             $url = Yii::app()->params['api-domain']."/collections/777/sites/$id.json"; 
             $response = RestUtility::execCurl($url);
-            $result = json_decode($response,true);
+            $result = CJSON::decode($response,true);
             
             return $result;
         }
@@ -44,7 +44,7 @@ class CurationController extends Controller
             if(isset($node_id))
                 $url = Yii::app()->params['api-domain']."/api/collections/777.json?page=all&Admin_div[under]={$node_id}";
             $response = RestUtility::execCurl($url);
-            $result = json_decode($response,true);
+            $result = CJSON::decode($response,true);
             
             $totalItemCount = (int)$result['count'];
             $totalPages = (int)$result['totalPages']==0?1:(int)$result['totalPages'];
@@ -63,7 +63,7 @@ class CurationController extends Controller
                 Yii::app()->end();
             }
             
-            $result = Yii::app()->user->getState('hierarchy');
+            $result = Yii::app()->cache->get('hierarchy');
             $rootNode = Yii::app()->user->getState('node_id');
             $filteredData = Layer::search($result['config']['hierarchy'],'id',$rootNode);
             $data = $this->parseHierarchy($filteredData);
@@ -74,7 +74,7 @@ class CurationController extends Controller
             if(isset($search_query)){
                 $url = Yii::app()->params['api-domain']."/api/collections/777.json?page=all&Fac_ID={$search_query}";
                 $response = RestUtility::execCurl($url);
-                $result = json_decode($response,true);
+                $result = CJSON::decode($response,true);
                 
                 $totalItemCount = (int)$result['count'];
                 $sites = new CArrayDataProvider($result['sites'],

@@ -38,6 +38,9 @@ return array(
             // enable cookie-based authentication
             'allowAutoLogin' => true,
         ),
+        'cache'=>array(
+            'class'=>'CMemCache',
+        ),
         // uncomment the following to enable URLs in path-format
         /*
           'urlManager'=>array(
@@ -49,9 +52,11 @@ return array(
           ),
           ),
          */
+        /*
         'db' => array(
             'connectionString' => 'sqlite:' . dirname(__FILE__) . '/../data/testdrive.db',
         ),
+         */
         // uncomment the following to use a MySQL database
         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=ihfr_curation',

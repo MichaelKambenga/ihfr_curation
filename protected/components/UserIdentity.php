@@ -18,13 +18,16 @@ class UserIdentity extends CUserIdentity
         if($result['status'] == self::VALID_CREDENTIALS_HTTP_CODE){
             
                 $this->errorCode = self::ERROR_NONE;
-                $url= Yii::app()->params['api-domain']."/collections/777/fields/2512.json";
-                $response = RestUtility::execCurl($url);
-                $result = json_decode($response,true);
+                if(!Yii::app()->cache->get('hierarchy')){
+                    Yii::app()->cache->set('hierarchy', Layer::loadHierarchy(), 0); 
+                }
+                if(!Yii::app()->cache->get('layers')){
+                     Yii::app()->cache->set('layers',  Layer::loadLayers(),0);   
+                }
+                
                 $user = User::model()->find('email=:email',array(':email'=>$this->username));
-                Yii::app()->user->setState('hierarchy',$result);
                 Yii::app()->user->setState('node_id',$user->node_id);
-                Yii::app()->user->setState('layers',  Layer::loadLayers());
+              
         }
         else{
                 $this->errorCode = self::ERROR_UNKNOWN_IDENTITY;
