@@ -22,7 +22,7 @@ class UserIdentity extends CUserIdentity
                     Yii::app()->cache->set('hierarchy', Layer::loadHierarchy(), 0); 
                 }
                 if(!Yii::app()->cache->get('layers')){
-                     Yii::app()->cache->set('layers',  Layer::loadLayers(),0);   
+                    Yii::app()->cache->set('layers',  Layer::loadLayers(),0);   
                 }
                 
                 $user = User::model()->find('email=:email',array(':email'=>$this->username));
