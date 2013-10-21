@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs = array(
-    'Groups' => array('index'),
+    'Groups' => array('roles'),
     'Manage',
 );
 
@@ -45,17 +45,17 @@ $('.search-form form').submit(function(){
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
                 'header' => 'Options',
-                'template' => '{view}{update}{delete}',
-                'buttons' => array(
-                    'delete' => array('url' => 'Yii::app()->createUrl("authItem/delete/",array("id" =>  $data->name))'),
-                    // 'update' => array('url' => 'Yii::app()->createUrl("authItem/update/",array("id" =>  $data->name))'),
-                    'update' => array(
-                        //'visible' => '(Yii::app()->user->getState("SSPerson"))?TRUE:FALSE',
-                        'url' => '$this->grid->controller->createUrl("authItem/update", array("id"=>$data->name,"asDialog"=>1,"gridId"=>$this->grid->id))',
-                        'click' => 'function(){$("#edit-frame").attr("src",$(this).attr("href")); $("#edit-dialog").dialog("open");  return false;}',
-                    ),
-                    'view' => array('url' => 'Yii::app()->createUrl("authItem/view/",array("id" =>  $data->name))'),
-                ),
+//                'template' => '{view}{update}{delete}',
+//                'buttons' => array(
+//                    'delete' => array('url' => 'Yii::app()->createUrl("authItem/delete/",array("id" =>  $data->name))'),
+//                    // 'update' => array('url' => 'Yii::app()->createUrl("authItem/update/",array("id" =>  $data->name))'),
+//                    'update' => array(
+//                        //'visible' => '(Yii::app()->user->getState("SSPerson"))?TRUE:FALSE',
+//                        'url' => '$this->grid->controller->createUrl("authItem/update", array("id"=>$data->name,"asDialog"=>1,"gridId"=>$this->grid->id))',
+//                       // 'click' => 'function(){$("#edit-frame").attr("src",$(this).attr("href")); $("#edit-dialog").dialog("open");  return false;}',
+//                    ),
+//                    'view' => array('url' => 'Yii::app()->createUrl("authItem/view/",array("id" =>  $data->name))'),
+//                ),
             ),
         ),
     ));

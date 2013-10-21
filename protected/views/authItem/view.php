@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs = array(
-    'Groups' => array('index'),
+    'Groups' => array('roles'),
     $model->name,
 );
 ?>

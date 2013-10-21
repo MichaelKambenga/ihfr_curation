@@ -85,16 +85,16 @@ class AuthItemController extends Controller {
         if (isset($_POST['AuthItem'])) {
             $model->attributes = $_POST['AuthItem'];
             if ($model->save()) {
-                //$this->redirect(array('view','id'=>$model->id));
-                if (!empty($_GET['asDialog'])) {
-                    //Close the dialog, reset the iframe and update the grid
-                    echo CHtml::script("window.parent.$('#edit-dialog').dialog('close');window.parent.$('#edit-frame').attr('src','');window.parent.$.fn.yiiGridView.update('{$_GET['gridId']}');");
-                    Yii::app()->end();
-                }
+                $this->redirect(array('view','id'=>$model->name));
+//                if (!empty($_GET['asDialog'])) {
+//                    //Close the dialog, reset the iframe and update the grid
+//                    echo CHtml::script("window.parent.$('#edit-dialog').dialog('close');window.parent.$('#edit-frame').attr('src','');window.parent.$.fn.yiiGridView.update('{$_GET['gridId']}');");
+//                    Yii::app()->end();
+//                }
             }
         }
-        if (!empty($_GET['asDialog']))
-            $this->layout = '//layouts/iframe';
+//        if (!empty($_GET['asDialog']))
+//            $this->layout = '//layouts/iframe';
 
         $this->render('update', array(
             'model' => $model,

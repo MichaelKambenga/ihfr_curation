@@ -38,9 +38,6 @@ return array(
             // enable cookie-based authentication
             'allowAutoLogin' => true,
         ),
-        'cache'=>array(
-            'class'=>'CMemCache',
-        ),
         // uncomment the following to enable URLs in path-format
         /*
           'urlManager'=>array(
@@ -52,17 +49,15 @@ return array(
           ),
           ),
          */
-        /*
         'db' => array(
             'connectionString' => 'sqlite:' . dirname(__FILE__) . '/../data/testdrive.db',
         ),
-         */
         // uncomment the following to use a MySQL database
         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=ihfr_curation',
             'emulatePrepare' => true,
             'username' => 'root',
-            'password' => 'Michael',
+            'password' => 'drobyg3',
             'charset' => 'utf8',
         ),
         /* Using the Database Authorization Manager */
@@ -100,8 +95,8 @@ return array(
         'resourceMapConfig' => array(
             'api-username'=>'mkambenga@gmail.com',
             'api-password'=>'Michael',
-            'public_collection_id' => '409',
-            'curation_collection_id' => '463'
+            'public_collection_id' => '',
+            'curation_collection_id' => ''
         ),
     ),
 );
