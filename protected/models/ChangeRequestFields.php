@@ -40,9 +40,9 @@ class ChangeRequestFields extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, change_request_id, field_id', 'required'),
-			array('change_request_id, field_id', 'numerical', 'integerOnly'=>true),
-			array('id', 'length', 'max'=>45),
+			array('change_request_id, field_id', 'required'),
+			array('change_request_id', 'numerical', 'integerOnly'=>true),
+			array('field_id', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, change_request_id, field_id', 'safe', 'on'=>'search'),
@@ -58,7 +58,6 @@ class ChangeRequestFields extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'changeRequest' => array(self::BELONGS_TO, 'ChangeRequest', 'change_request_id'),
-			'field' => array(self::BELONGS_TO, 'FieldMapping', 'field_id'),
 		);
 	}
 

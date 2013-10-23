@@ -11,9 +11,12 @@
  * @author robert
  */
 class SiteForm extends CFormModel {
-    public $id;
-    public $name;
-    public $note;
+    //public $id;
+    
+    public $administrativeDivision;
+    public $ownership;
+    public $operatingStatus;
+    public $facilityType;
     public $commonFacilityName;
     public $registrationId;
     public $ctcId;
@@ -35,7 +38,7 @@ class SiteForm extends CFormModel {
     //physical location
     public $locationDescription;
     public $wayPointNumber;
-    public $altitute;
+    public $altitude;
     public $serviceAreas;
     public $serviceAreaPopulation;
     public $catchmentArea;
@@ -102,38 +105,99 @@ class SiteForm extends CFormModel {
     //temp fields
     public $oldHFRId;
     
-    public $properties = array(
-        'Registrar_ID'=>'',
-        'Admin_div'=>'',
-        'Ownership'=>'',
-        'Fac_Type'=>'',
-        'OperatingStatus'=>'',
-        'Fac_ID'=>''
-    );
-    
+    public $note;
     
     public function rules() {
         return array(
-            
+            array('officialEmail,note','length','max'=>255),
+            array('registrationStatus,licensingStatus','numerical','integerOnly'=>true),
+            array('
+                 administrativeDivision,
+                 ownership，
+                 operatingStatus,
+                 facilityType, 
+                 commonFacilityName,
+                 registrationId, ctcId，
+                 mtuhaCode，
+                 postalAddress，
+                 postalCode，
+                 officialPhoneNumber，
+                 officialFax，
+                 website，
+                 inChargeName，
+                 inChargeCadre，
+                 inChargeEmail，
+                 inChargeNID，
+                 inChargeMobilePhone，
+                 locationDescription，
+                 wayPointNumber，
+                 altitude，
+                 serviceAreas，
+                 serviceAreaPopulation，
+                 catchmentArea，
+                 catchmentPopulation，
+                 dateOpened，
+                 ownershipDetailOrName，
+                 registrationStatus，
+                 licensingStatus，
+                 otherClinic，
+                 receptionRoom，
+                 consultationRoom，
+                 dressingRoom，
+                 injectionRoom，
+                 wardRoom，
+                 observationRoom，
+                 remarks，
+                 patientBeds,
+                 deliveryBeds,
+                 babyCots,
+                 ambulances,
+                 cars,
+                 motorcycles,
+                 otherTransport,
+                 noOfOtherTransport,
+                 sterilizationAndInfectionControl,
+                 meansOfTransportToReferralPoint,
+                 distanceToReferralPoint,
+                 challengesToReachReferralPoint,
+                 sourceOfEnergy,
+                 otherEnergySource,
+                 mobileNetworks,
+                 otherMobileNetwork,
+                 sourceOfWater,
+                 otherSourceOfWater,
+                 toiletFacility,
+                 toiletRemarks,
+                 wasteManagement,
+                 otherWasteManagement,
+                 generalClinicalServices,
+                 malariaDiagnosisAndTreatment,
+                 TBDiagnosisCareAndTreatment,
+                 cardiovasculasCareAndTreatment,
+                 HIVAIDSPrevention,
+                 HIVAIDSCareAndTreatment,
+                 therapeutics,
+                 prostheticsAndMedicalDevices,
+                 healthPromotionAndDiseasePrevention,
+                 diagnosticServices,
+                 reproductiveAndChildHealthCareServices,
+                 growthMonitoringOrNutritionalSurveillance,
+                 oralHealthService,
+                 ENTServices,
+                 supportServices,
+                 emergencyPreparedness,
+                 otherServices,','safe'),
         );
     }
     
     public function attributeLabels() {
         return array(
             'id'=>'ID',
-            'name'=>'Name',
             'note'=>"Curator's Note",
             'commonFaciltyName'=>'Common Facility Name',
             'registrationId'=>'Registration ID',
             'ctcId'=>'CTC ID',
             'mtuhaCode'=>'MTUHA Code',
-            'properties'=>'Properties',
-            'properties[Registrar_ID]'=>'Registrar ID',
-            'properties[Admin_div]'=>'Administrative Division',
-            'properties[Ownership]'=>'Ownership',
-            'properties[Fac_Type]'=>'Facility Type',
-            'properties[OperatingStatus]'=>'Operating Status',
-            'properties[Fac_ID]'=>'Facility ID',
         );
     }
 }

@@ -19,6 +19,11 @@ class FieldMapping extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return FieldMapping the static model class
 	 */
+    
+        const PC_HIERARCHY_FIELD_ID = 1629;
+        const CC_HIERARCHY_FIELD_ID = 1810;
+        
+        const CC_PRIMARY_SITE_CODE = 1814;
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -93,4 +98,11 @@ class FieldMapping extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        public static function getCodes(){
+            foreach(self::model()->findAll() as $model){
+                echo " '$model->cc_field_id' =>'',";
+                echo "<br />";
+            }
+        }
 }

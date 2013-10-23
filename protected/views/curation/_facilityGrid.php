@@ -18,7 +18,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     array(
     'name' => 'psc',
     'header' => 'PSC',
-    'value'=>'isset($data["properties"]["Fac_ID"])?$data["properties"]["Fac_ID"]:"Not set"'
+    'value'=>'isset($data["properties"]["Fac_IDNumber"])?$data["properties"]["Fac_IDNumber"]:"Not set"'
     ),
 //    array(
 //    'name' => 'location',

@@ -54,9 +54,10 @@ class Layer {
     const SERVICES_OFFERED_SUPPORT = 14;
     const SERVICES_OFFERED_EMERGENCY_PREPAREDNESS = 15;
     
+    
     public static function loadLayers(){
-        $url = "http://resourcemap.instedd.org/collections/".
-                Yii::app()->params['resourceMapConfig']['curation_collection_id']
+        $url = Yii::app()->params['api-domain']."/collections/".
+               Yii::app()->params['resourceMapConfig']['public_collection_id']
                 ."/layers.json";
         $response = RestUtility::execCurl($url);
         $layers = CJSON::decode($response, true);
@@ -65,7 +66,9 @@ class Layer {
     }
     
     public static function loadHierarchy(){
-         $url= Yii::app()->params['api-domain']."/collections/777/fields/2512.json";
+         $url= Yii::app()->params['api-domain']."/collections/".
+               Yii::app()->params['resourceMapConfig']['public_collection_id'].
+               "/fields/".FieldMapping::PC_HIERARCHY_FIELD_ID.".json";
          $response = RestUtility::execCurl($url);
          
          return CJSON::decode($response,true);
@@ -77,7 +80,7 @@ class Layer {
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_GENERAL_CLINICAL_SERVICES];
         $options = array();
         foreach($services['config']['options'] as $option){
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -88,7 +91,7 @@ class Layer {
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_MALARIA];
         $options = array();
         foreach($services['config']['options'] as $option){
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -99,7 +102,7 @@ class Layer {
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_TB];
         $options = array();
         foreach($services['config']['options'] as $option){
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -110,7 +113,7 @@ class Layer {
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_CARDIOVASCULAR];
         $options = array();
         foreach($services['config']['options'] as $option){
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -121,7 +124,7 @@ class Layer {
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_HIVAIDS_PREVENTION];
         $options = array();
         foreach($services['config']['options'] as $option){
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -132,7 +135,7 @@ class Layer {
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_HIVAIDS_CARE_AND_TREATMENT];
         $options = array();
         foreach($services['config']['options'] as $option){
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -143,7 +146,7 @@ class Layer {
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_THERAPEUTICS];
         $options = array();
         foreach($services['config']['options'] as $option){
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -154,7 +157,7 @@ class Layer {
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_PROSTHETICS_AND_MEDICAL_DEVICES];
         $options = array();
         foreach($services['config']['options'] as $option){
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -165,7 +168,7 @@ class Layer {
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_HEALTH_PROMOTION_AND_DISEASE_PREVENTION];
         $options = array();
         foreach($services['config']['options'] as $option){
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -176,7 +179,7 @@ class Layer {
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_DIAGNOSTIC];
         $options = array();
         foreach($services['config']['options'] as $option){
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -187,7 +190,7 @@ class Layer {
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_REPRODUCTIVE_AND_CHILD_HEALTH_CARE];
         $options = array();
         foreach($services['config']['options'] as $option){
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -198,7 +201,7 @@ class Layer {
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_GROWTH_MONITORING_NUTRITIONAL_SURVEILLANCE];
         $options = array();
         foreach($services['config']['options'] as $option){
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -209,7 +212,7 @@ class Layer {
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_ORAL_HEALTH_DENTAL];
         $options = array();
         foreach($services['config']['options'] as $option){
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -220,7 +223,7 @@ class Layer {
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_ENT];
         $options = array();
         foreach($services['config']['options'] as $option){
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -231,7 +234,7 @@ class Layer {
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_SUPPORT];
         $options = array();
         foreach($services['config']['options'] as $option){
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -242,7 +245,7 @@ class Layer {
         $services = $layers[self::SERVICES_OFFERED]['fields'][self::SERVICES_OFFERED_EMERGENCY_PREPAREDNESS];
         $options = array();
         foreach($services['config']['options'] as $option){
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -255,10 +258,9 @@ class Layer {
         $layers = Yii::app()->cache->get('layers');
         
         $status = $layers[self::PRIORITY_FIELDS]['fields'][self::PRIORITY_FIELDS_OPERATING_STATUS];
-        
         $options = array();
         foreach($status['config']['options'] as $option){ 
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -296,7 +298,7 @@ class Layer {
         
         $options = array();
         foreach($status['config']['options'] as $option){ 
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -306,10 +308,10 @@ class Layer {
         $layers = Yii::app()->cache->get('layers');
         
         $status = $layers[self::CLASSIFICATION]['fields'][self::CLASSIFICATION_REGISTRATION_STATUS];
-        
+        //print_r($status['config']['options']);exit;
         $options = array();
         foreach($status['config']['options'] as $option){ 
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -323,7 +325,7 @@ class Layer {
         
         $options = array();
         foreach($data['config']['options'] as $option){ 
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -336,7 +338,7 @@ class Layer {
         
         $options = array();
         foreach($data['config']['options'] as $option){ 
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -349,7 +351,7 @@ class Layer {
         
         $options = array();
         foreach($data['config']['options'] as $option){ 
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -362,7 +364,7 @@ class Layer {
         
         $options = array();
         foreach($data['config']['options'] as $option){ 
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -375,7 +377,7 @@ class Layer {
         
         $options = array();
         foreach($data['config']['options'] as $option){ 
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;
@@ -388,7 +390,7 @@ class Layer {
         
         $options = array();
         foreach($data['config']['options'] as $option){ 
-            array_push($options, $option['label']);
+            $options[$option['id']] = $option['label'];
         }
         
         return $options;

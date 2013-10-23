@@ -19,9 +19,9 @@
  </div>
 
 <div class="row">
-		<?php echo $form->labelEx($model,'altitute'); ?>
-		<?php echo $form->textField($model,'altitute'); ?>
-		<?php echo $form->error($model,'altitute'); ?>
+		<?php echo $form->labelEx($model,'altitude'); ?>
+		<?php echo $form->textField($model,'altitude'); ?>
+		<?php echo $form->error($model,'altitude'); ?>
  </div>
 
 <div class="row">

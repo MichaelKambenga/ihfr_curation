@@ -8,6 +8,7 @@
  * @property integer $position_id
  * @property integer $organization_id
  * @property string $email
+ * @property string $node_id max hierarchy node
  *
  * The followings are the available model relations:
  * @property ChangeRequest[] $changeRequests

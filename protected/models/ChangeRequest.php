@@ -22,11 +22,22 @@
  */
 class ChangeRequest extends CActiveRecord
 {
+    
+       const STATUS_PENDING = 1;
+       const STATUS_APPROVED = 2;
+       const STATUS_REJECTED = 3;
+       
+       const TYPE_CREATE = 1;
+       const TYPE_UPDATE = 2;
+       const TYPE_DELETE = 3;
+       
+       public $note;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
 	 * @return ChangeRequest the static model class
 	 */
+     
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -117,4 +128,54 @@ class ChangeRequest extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        public static function getFieldValues($site_id){
+            $url = Yii::app()->params['api-domain']."/collections/".
+                   Yii::app()->params['resourceMapConfig']['curation_collection_id'].
+                   "/sites/$site_id.json"; 
+            $response = RestUtility::execCurl($url);
+            $site = CJSON::decode($response,true);
+            $siteProperties = array();
+          
+            foreach($site['properties'] as $key=>$property){
+                   $url = Yii::app()->params['api-domain']."/collections/".
+                   Yii::app()->params['resourceMapConfig']['curation_collection_id'].
+                   "/fields/{$key}.json";
+                   $response = RestUtility::execCurl($url);
+                   $fieldDetails = CJSON::decode($response,true);
+                   
+                   if($fieldDetails['config']){
+                       if(array_key_exists('options',$fieldDetails['config'])){
+
+                           if(is_array($property)){
+                               foreach($property as $k=>$value){
+                                   foreach($fieldDetails['config']['options'] as $option){
+                                       if($option['id'] == $value){
+                                           $siteProperties[$fieldDetails['name']][] = $option['label'];
+                                       }
+                                   }
+                               }
+                           }
+                           else{
+                               foreach($fieldDetails['config']['options'] as $option){
+                                   if($option['id'] == $property){
+                                       $siteProperties[$fieldDetails['name']] = $option['label'];
+                                   }
+                               }
+                           }
+                       }
+                       else{
+                           $siteProperties[$fieldDetails['name']] = $property;
+                       }
+                 }else{ 
+                     $siteProperties[$fieldDetails['name']] = $property;
+                 }
+                   
+            }
+            
+
+            
+            
+            return $siteProperties;
+        }
 }

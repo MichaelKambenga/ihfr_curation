@@ -9,8 +9,8 @@
 <?php echo $form->errorSummary($model); ?>
     
         <div class="row">
-		<?php echo $form->labelEx($model,'properties[Admin_div]'); ?>
-		<?php echo $form->hiddenField($model,'properties[Admin_div]',array('size'=>60,'maxlength'=>64)); ?>
+		<?php echo $form->labelEx($model,'administrativeDivision'); ?>
+		<?php echo $form->hiddenField($model,'administrativeDivision',array('size'=>60,'maxlength'=>64)); ?>
 		<span>
                 <?php $this->widget('CTreeView',array(
                         'id'=>'admin-div-treeview',
@@ -26,12 +26,12 @@
 
                   ?>
                 </span>
-                <?php echo $form->error($model,'properties[Admin_div]'); ?>
+                <?php echo $form->error($model,'administrativeDivision'); ?>
 	</div>
     
         <div class="row">
-		<?php echo $form->labelEx($model,'properties[Ownership]'); ?>
-		<?php echo $form->hiddenField($model,'properties[Ownership]',array('size'=>60,'maxlength'=>64)); ?>
+		<?php echo $form->labelEx($model,'ownership'); ?>
+		<?php echo $form->hiddenField($model,'ownership',array('size'=>60,'maxlength'=>64)); ?>
 		
             <span>
                 <?php $this->widget('CTreeView',array(
@@ -48,19 +48,19 @@
 
                   ?>
             </span>
-            <?php echo $form->error($model,'properties[Ownership]'); ?>
+            <?php echo $form->error($model,'ownership'); ?>
 	</div>
     
     
         <div class="row">
-		<?php echo $form->labelEx($model,'properties[OperatingStatus]'); ?>
-		<?php echo $form->dropDownList($model,'properties[OperatingStatus]', Layer::getOperatingStatusOptions(),array('empty'=>'--Please select--')); ?>
-		<?php echo $form->error($model,'properties[OperatingStatus]'); ?>
+		<?php echo $form->labelEx($model,'operatingStatus'); ?>
+		<?php echo $form->dropDownList($model,'operatingStatus', Layer::getOperatingStatusOptions(),array('empty'=>'--Please select--')); ?>
+		<?php echo $form->error($model,'operatingStatus'); ?>
 	</div>
 
          <div class="row">
-		<?php echo $form->labelEx($model,'properties[Fac_Type]'); ?>
-		<?php echo $form->hiddenField($model,'properties[Fac_Type]',array('size'=>60,'maxlength'=>64)); ?>
+		<?php echo $form->labelEx($model,'facilityType'); ?>
+		<?php echo $form->hiddenField($model,'facilityType',array('size'=>60,'maxlength'=>64)); ?>
 		 <span>
                 <?php $this->widget('CTreeView',array(
                         'id'=>'facility-type-treeview',
@@ -76,7 +76,7 @@
 
                   ?>
             </span>
-                <?php echo $form->error($model,'properties[Fac_Type]'); ?>
+                <?php echo $form->error($model,'facilityType'); ?>
 	</div>
 
 	
