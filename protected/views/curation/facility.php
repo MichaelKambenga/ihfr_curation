@@ -5,6 +5,7 @@
  * and open the template in the editor.
  */
 ?>
+<?php $fields = ChangeRequest::getFieldValues($model['id'])?>
 
 <?php echo TbHtml::pageHeader('', 'View/Change Facility');?>
 <div class="well">
@@ -13,36 +14,37 @@
               <?php echo Yii::app()->user->getFlash('success');?>
         </div>
     <?php endif;?>
-    <?php
-    $this->widget('bootstrap.widgets.TbDetailView', array(
-        'type'=>  TbHtml::DETAIL_TYPE_BORDERED,
-        'data' => $model,
-        'attributes' => array(
-        
-            array(
-                'label'=>'ID',
-                'value'=>$model['id'],
-            ),
-            array(
-                'label' => 'Name',
-                'value' => $model['name'],
-            ),
-           // 'organization_id',
-            array(
-                'label' => 'PSC',
-                'value' =>isset($model["properties"]["1697"])?$model["properties"]["1697"]:"Not set"
-            ),
-           array(
-                'label'=>'Node ID',
-                'value'=>isset($model["properties"]["2512"])?$model["properties"]["2512"]:"Not set"
-            ),
-            array(
-                'label' => 'Ownership',
-                'value'=>isset($model["properties"]["1709"])?$model["properties"]["1709"]:"Not set"
-            ),
-        ),
-    ));
 
-?>
+<table>
+<?php foreach($fields as $key=>$field):?>
     
+<?php if(!is_array($field)):?>
+<tr>
+    <td><?php echo TbHtml::labelTb($key, array('color' => TbHtml::LABEL_COLOR_INFO))?></td>
+    <?php //echo TbHtml::labelTb($field, array('color' => TbHtml::LABEL_COLOR_INFO)); ?>
+    <?php //echo TbHtml::icon(TbHtml::ICON_ARROW_RIGHT) ?>
+    <td><?php echo TbHtml::labelTb($field); ?></td>
+</tr>
+
+<?php else:?>
+<tr>
+    <td><?php echo TbHtml::labelTb($key, array('color' => TbHtml::LABEL_COLOR_INFO))?></td>
+    <?php //echo TbHtml::labelTb($field, array('color' => TbHtml::LABEL_COLOR_INFO)); ?>
+    <?php //echo TbHtml::icon(TbHtml::ICON_ARROW_RIGHT) ?>
+    <?php $concatValues = "";?>
+    <?php foreach($field as $value):?>
+           <?php $concatValues.= $value.'<br />';?>
+    <?php endforeach;?>
+    <td><?php echo TbHtml::labelTb($concatValues); ?></td>
+</tr>
+   
+      
+<?php endif;?>
+
+<?php endforeach;?>
+<td></td>
+<td><p></p><?php echo TbHtml::link('Update',$this->createUrl('curation/updateSite',array('id'=>$model['id'])),array('class'=>'btn btn-info'));?></td>
+</table>
+  
 </div>
+

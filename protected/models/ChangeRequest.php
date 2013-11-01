@@ -136,12 +136,15 @@ class ChangeRequest extends CActiveRecord
             $response = RestUtility::execCurl($url);
             $site = CJSON::decode($response,true);
             $siteProperties = array();
-          
+            
+           if($site){
             foreach($site['properties'] as $key=>$property){
-                   $url = Yii::app()->params['api-domain']."/collections/".
-                   Yii::app()->params['resourceMapConfig']['curation_collection_id'].
-                   "/fields/{$key}.json";
-                   $response = RestUtility::execCurl($url);
+//                   $url = Yii::app()->params['api-domain']."/collections/".
+//                   Yii::app()->params['resourceMapConfig']['curation_collection_id'].
+//                   "/fields/{$key}.json";
+//                   $response = RestUtility::execCurl($url);
+                   $fieldModel = FieldMapping::model()->find('cc_field_id=:key',array(':key'=>$key));
+                   $response = $fieldModel->cc_field_structure;
                    $fieldDetails = CJSON::decode($response,true);
                    
                    if($fieldDetails['config']){
@@ -173,6 +176,7 @@ class ChangeRequest extends CActiveRecord
                    
             }
             
+           }
 
             
             

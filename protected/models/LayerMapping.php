@@ -1,24 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "change_request_note".
+ * This is the model class for table "layer_mapping".
  *
- * The followings are the available columns in table 'change_request_note':
+ * The followings are the available columns in table 'layer_mapping':
  * @property integer $id
- * @property integer $change_request_id
- * @property integer $user_id
- * @property string $note
- *
- * The followings are the available model relations:
- * @property ChangeRequest $changeRequest
- * @property User $user
+ * @property integer $cc_layer_id
+ * @property integer $pc_layer_id
+ * @property string $layer_name
  */
-class ChangeRequestNote extends CActiveRecord
+class LayerMapping extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return ChangeRequestNote the static model class
+	 * @return LayerMapping the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -30,7 +26,7 @@ class ChangeRequestNote extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'change_request_note';
+		return 'layer_mapping';
 	}
 
 	/**
@@ -41,12 +37,12 @@ class ChangeRequestNote extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('change_request_id, user_id', 'required'),
-			array('change_request_id, user_id', 'numerical', 'integerOnly'=>true),
-			array('note', 'length', 'max'=>255),
+			array('cc_layer_id, layer_name', 'required'),
+			array('cc_layer_id, pc_layer_id', 'numerical', 'integerOnly'=>true),
+			array('layer_name', 'length', 'max'=>500),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, change_request_id, user_id, note', 'safe', 'on'=>'search'),
+			array('id, cc_layer_id, pc_layer_id, layer_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,8 +54,6 @@ class ChangeRequestNote extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'changeRequest' => array(self::BELONGS_TO, 'ChangeRequest', 'change_request_id'),
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 		);
 	}
 
@@ -70,9 +64,9 @@ class ChangeRequestNote extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'change_request_id' => 'Change Request',
-			'user_id' => 'User',
-			'note' => 'Note',
+			'cc_layer_id' => 'Cc Layer',
+			'pc_layer_id' => 'Pc Layer',
+			'layer_name' => 'Layer Name',
 		);
 	}
 
@@ -88,9 +82,9 @@ class ChangeRequestNote extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('change_request_id',$this->change_request_id);
-		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('note',$this->note,true);
+		$criteria->compare('cc_layer_id',$this->cc_layer_id);
+		$criteria->compare('pc_layer_id',$this->pc_layer_id);
+		$criteria->compare('layer_name',$this->layer_name,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

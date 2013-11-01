@@ -4,6 +4,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+ 
 ?>
 <?php 
 ob_start();
@@ -19,7 +20,9 @@ ob_clean();
         echo TbHtml::button('<strong>Change Requests</strong>',
         array('block' => true, 
         'color' => TbHtml::BUTTON_COLOR_PRIMARY, 
-        'size'=>TbHtml::BUTTON_SIZE_LARGE)); 
+        'size'=>TbHtml::BUTTON_SIZE_LARGE,
+                )); 
+        
     ?>
    
    <?php
@@ -38,8 +41,8 @@ ob_clean();
        'options' => array(
            'collapsible' => true,
            'active' => 0,
-           'clearStyle'=>true,
-           'fillSpace'=>true,
+//           'clearStyle'=>true,
+//           'fillSpace'=>true,
        ),
        'htmlOptions' => array(
            'style' => 'width:100%;'
@@ -48,3 +51,4 @@ ob_clean();
    ?>
     
 </div>
+

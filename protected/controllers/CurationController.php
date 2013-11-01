@@ -14,7 +14,7 @@ class CurationController extends Controller
             
             return array(
                 array('allow',
-                    'actions'=>array('CreateSite','Facilities','pendingRequests','SearchFacilityByPSCode','viewFacility'),
+                    'actions'=>array('Approve','UpdateSite','CreateSite','Facilities','pendingRequests','SearchFacilityByPSCode','viewFacility'),
                     'users'=>array('@'),
                     ),
                 array('deny', // deny all users
@@ -26,12 +26,12 @@ class CurationController extends Controller
 	public function actionViewFacility($id)
 	{
 		$this->render('facility', 
-                        array('model'=>$this->loadFacility($id)));
+                        array('model'=>$this->loadFacility($id,Yii::app()->params['resourceMapConfig']['curation_collection_id'])));
 	}
         
-        public function loadFacility($id){
+        public function loadFacility($id,$collection_id){
             $url = Yii::app()->params['api-domain']."/collections/".
-                   Yii::app()->params['resourceMapConfig']['public_collection_id'].
+                   $collection_id.
                    "/sites/$id.json"; 
             $response = RestUtility::execCurl($url);
             $result = CJSON::decode($response,true);
@@ -103,31 +103,29 @@ class CurationController extends Controller
         public function parseHierarchy($hierarchy){
              $treeArray = array();
                 if(is_array($hierarchy)){
-                    foreach ($hierarchy as $node){
+                    foreach($hierarchy as $node){
                        if(is_array($node)){
                         if(array_key_exists('name', $node)){
                             if(array_key_exists('sub', $node)){
                                 $subNodes = $this->parseHierarchy($node['sub']);
                                 $treeNodeArray = array('text'=>'<span style="color:#3AA1BF;">'.CHtml::link(TbHtml::icon(TbHtml:: ICON_FOLDER_CLOSE).$node['name'],$this->createUrl('facilities',array('node_id'=>$node['id']))).'</span>','children'=>$subNodes);
-                            } else {
+                            }else{
                                 $treeNodeArray = array('text'=>'<span style="color:#3AA1BF;">'.CHtml::link(TbHtml::icon(TbHtml:: ICON_FOLDER_CLOSE).$node['name'],$this->createUrl('facilities',array('node_id'=>$node['id']))).'</span>');
                             }
                             array_push($treeArray, $treeNodeArray);                       
                         }
-                       }
+                      }
                                        
-                    }
+                    } 
                     
-                    return $treeArray;
+                   return $treeArray;
                 }
                        
         }
         
         
         public function actionPendingRequests(){  
-               
-                
-                //print_r(ChangeRequest::getFieldValues(99247));exit;
+            
                 $myPendingRequests = array();
                 $models = ChangeRequest::model()->findAllByAttributes(array('status'=>ChangeRequest::STATUS_PENDING));
                 foreach($models as $model){
@@ -136,6 +134,7 @@ class CurationController extends Controller
                     }
                 }
                 $this->render('pending_requests',array('models'=>$myPendingRequests));
+              
         }
         
         public function hasApprovePrivilegesForRequest($node_id){
@@ -169,16 +168,16 @@ class CurationController extends Controller
             
             $model->note = $site['note'];
             $model->cc_site_id = $site['id'];
-            $model->primary_site_code = $site['properties'][FieldMapping::CC_PRIMARY_SITE_CODE];
+            $model->primary_site_code = $site['saved_properties'][FieldMapping::CC_PRIMARY_SITE_CODE];
             $model->version_id = $site['version'];
             $model->requested_by = Yii::app()->user->getState('user_id');
-            $model->request_type = ChangeRequest::TYPE_CREATE;
+            $model->request_type = $site['request_type'];
             $model->status = ChangeRequest::STATUS_PENDING;
             $model->requested_date = date('Y-m-d H:i:s');
             
             $model->save();
             $this->logChangeRequestNote($model);
-            $this->logChangeRequestFields($model->id, $site['properties']);
+            $this->logChangeRequestFields($model->id, $site['saved_properties']);
         }
         
         public function logChangeRequestNote($changeRequestModel){
@@ -204,210 +203,387 @@ class CurationController extends Controller
         public function actionCreateSite(){
             
             
-            $model = new SiteForm();
+            $model = new FacilityForm();
             
-            if(isset($_POST['SiteForm'])){
+            if(isset($_POST['FacilityForm'])){
                
                $url = Yii::app()->params['api-domain']."/collections/".
                       Yii::app()->params['resourceMapConfig']['curation_collection_id'].
                       "/sites.json";
              
                //capture form values
-               $model->attributes = $_POST['SiteForm'];
-               $data = array(
-                    'name'=>$model->commonFacilityName,
-                    'properties'=>$this->curationCollectionSitePropertiesMapping($model),
-                );
-            //convert data into json format 
-            $json = CJSON::encode($data);
+               $model->attributes = $_POST['FacilityForm'];
+                   if($model->validate()){
+                        //prepare properties array
+                        $properties = array();
+                        foreach($model->attributes as $key=>$attribute){
+                            if($key=='note')continue;
+                            $properties[trim($key,'_')] = $attribute;
+                        }
 
-            $params = array('site'=>$json);
-            $response = RestUtility::execCurlPost($url, $params);
-            $site = CJSON::decode($response);
-            $site['note'] = $model->note;
-            
-                if(isset($site['id'])){
-                    
-                    $this->onSiteCreateRequest = array($this,'logChangeRequest');
-                    $this->afterSiteCreate($site);
-                    Yii::app()->user->setFlash('success','Site created successfully');
-                    $this->render('facility',array('model'=>$site));
-                    Yii::app()->end();
-                }
-                else{  
-                    Yii::app()->user->setFlash('failure','Site creation failed');
-                }
-            
+                        $data = array(
+                             'name'=>$model->_1815,//common facility name
+                             'properties'=>$properties,
+                         );
+
+                     //convert data into json format 
+                     $json = CJSON::encode($data);
+
+                     $params = array('site'=>$json);
+                     $response = RestUtility::execCurlPost($url, $params);
+                     $site = CJSON::decode($response);
+                     $site['note'] = $model->note;
+                     $site['request_type'] = ChangeRequest::TYPE_CREATE;
+                     $site['saved_properties'] = $site['properties'];
+                     //echo $response;exit;
+                         if(isset($site['id'])){
+
+                             $this->onSiteCreateRequest = array($this,'logChangeRequest');
+                             $this->afterSiteCreate($site);
+                             Yii::app()->user->setFlash('success','Site created successfully');
+                             $this->render('facility',array('model'=>$site));
+                             Yii::app()->end();
+                         }
+                         else{  
+                             Yii::app()->user->setFlash('failure','Site creation failed');
+                         }
+                   }
             }
             
           
-            $this->render('site_create',array('model'=>$model));
+            $this->render('site_form',array('model'=>$model,'layers'=>$this->generateCurationForm($model)));
         }
+        
+        
+        
+        public function actionUpdateSite($id){
+            
+            $site = $this->loadFacility($id, 
+                     Yii::app()->params['resourceMapConfig']['curation_collection_id']
+                    ); 
+            $form = new FacilityForm();
+            if($site){
+                foreach($site['properties'] as $key=>$value){
+                   $form->setAttributes(array("_$key"=>$value));
+                }
+            }
+            
+            if(isset($_POST['FacilityForm'])){  
+                
+                $form->attributes = $_POST['FacilityForm'];
+                if($form->validate()){
+                $properties = array();
+                foreach($form->attributes as $key=>$attribute){
+                    if($key=='note')continue;
+                    //check for updated fields only and add them to properties array
+                    if(isset($site['properties'][trim($key,'_')])){
+                        if($form->attributes[$key] != $site['properties'][trim($key,'_')]){
+                            $properties[trim($key,'_')] = $attribute;
+                        }
+                    }else{
+                        if($form->attributes[$key]!= null){
+                            $properties[trim($key,'_')] = $attribute;
+                        }
+                    }
+                }
+                
+                //print_r($properties);exit;
+                $data = array(
+                    'name'=>$form->_1815,//common facility name
+                    'properties'=>$properties,
+                );
+              
+                //convert data into json format 
+                $json = CJSON::encode($data);
+               
+                $params = array('site'=>$json);
+                $url = Yii::app()->params['api-domain']."/collections/".
+                       Yii::app()->params['resourceMapConfig']['curation_collection_id'].
+                      "/sites/{$id}/partial_update";
+                $response = RestUtility::execCurlPost($url, $params);
+                $site = CJSON::decode($response);
+                $site['note'] = $form->note;
+                $site['request_type'] = ChangeRequest::TYPE_UPDATE;
+                $site['saved_properties'] = $properties;
+                $site['saved_properties'][FieldMapping::CC_PRIMARY_SITE_CODE]=$site['properties'][FieldMapping::CC_PRIMARY_SITE_CODE];
+                //print_r($site['saved_properties']);exit;
+                //echo $response;exit;
+                  if(isset($site['id'])){
 
-    public function curationCollectionSitePropertiesMapping($model) {
+                             $this->onSiteCreateRequest = array($this,'logChangeRequest');
+                             $this->afterSiteCreate($site);
+                             Yii::app()->user->setFlash('success','Site Updated successfully');
+                             $this->render('facility',array('model'=>$site));
+                             Yii::app()->end();
+                         }
+                         else{  
+                             Yii::app()->user->setFlash('failure','Site update failed');
+                         }
+                         
+                  }//if(validate())
+            }
+            
+            $this->render('site_form',array('model'=>$form,'layers'=>$this->generateCurationForm($form)));
+        }
         
-        return array(
-            '1810' =>$model->administrativeDivision,
-            '1839' =>$model->ownershipDetailOrName,
-            '1831' =>$model->locationDescription,
-            '1819' =>$model->postalAddress,
-            '1843' =>$model->receptionRoom,
-            '1872' =>$model->generalClinicalServices,
-            '1814' =>'',
-            '1832' =>$model->wayPointNumber,
-            '1811' =>$model->facilityType,
-            '1812' =>$model->ownership,
-            '1840' =>$model->registrationStatus,
-            '1820' =>$model->postalCode,
-            '1844' =>$model->consultationRoom,
-            '1873' =>$model->malariaDiagnosisAndTreatment,
-            '1816' =>$model->registrationId,
-            '1817' =>$model->ctcId,
-            '1833' =>$model->altitude,
-            '1822' =>$model->officialPhoneNumber,
-            '1845' =>$model->dressingRoom,
-            '1874' =>$model->TBDiagnosisCareAndTreatment,
-            '1841' =>$model->licensingStatus,
-            '1842' =>$model->otherClinic,
-            '1889' =>$model->oldHFRId,
-            '1818' =>$model->mtuhaCode,
-            '1813' =>$model->operatingStatus,
-            '1834' =>$model->serviceAreas,
-            '1823' =>$model->officialFax,
-            '1875' =>$model->cardiovasculasCareAndTreatment,
-            '1835' =>$model->serviceAreaPopulation,
-            '1824' =>$model->officialEmail,
-            '1847' =>$model->wardRoom,
-            '1876' =>$model->HIVAIDSPrevention,
-            '1848' =>$model->observationRoom,
-            '1836' =>$model->catchmentArea,
-            '1877' =>$model->HIVAIDSCareAndTreatment,
-            '1837' =>$model->catchmentPopulation,
-            '1826' =>$model->inChargeName,
-            '1849' =>$model->remarks,
-            '1878' =>$model->therapeutics,
-            '1838' =>$model->dateOpened,
-            '1827' =>$model->inChargeCadre,
-            '1850' =>$model->patientBeds,
-            '1879' =>$model->prostheticsAndMedicalDevices,
-            '1828' =>$model->inChargeEmail,
-            '1851' =>$model->deliveryBeds,
-            '1880' =>$model->healthPromotionAndDiseasePrevention,
-            '1852' =>$model->babyCots,
-            '1881' =>$model->diagnosticServices,
-            '1829' =>$model->inChargeNID,
-            '1830' =>$model->inChargeMobilePhone,
-            '1853' =>$model->ambulances,
-            '1882' =>$model->reproductiveAndChildHealthCareServices,
-            '1854' =>$model->cars,
-            '1883' =>$model->growthMonitoringOrNutritionalSurveillance,
-            '1855' =>$model->motorcycles,
-            '1884' =>$model->oralHealthService,
-            '1856' =>$model->otherTransport,
-            '1885' =>$model->ENTServices,
-            '1857' =>$model->noOfOtherTransport,
-            '1886' =>$model->supportServices,
-            '1858' =>$model->sterilizationAndInfectionControl,
-            '1887' =>$model->emergencyPreparedness,
-            '1859' =>$model->meansOfTransportToReferralPoint,
-            '1888' =>$model->otherServices,
-            '1860' =>$model->distanceToReferralPoint,
-            '1861' =>$model->challengesToReachReferralPoint,
-            '1862' =>$model->sourceOfEnergy,
-            '1863' =>$model->otherEnergySource,
-            '1864' =>$model->mobileNetworks,
-            '1865' =>$model->otherMobileNetwork,
-            '1866' =>$model->sourceOfWater,
-            '1867' =>$model->otherSourceOfWater,
-            '1868' =>$model->toiletFacility,
-            '1869' =>$model->toiletRemarks,
-            '1870' =>$model->wasteManagement,
-            '1871' =>$model->otherWasteManagement,
-        );
-    }
-    
-    public function publicCollectionSitePropertiesMapping($model) {
-        
-        return array(
-            '1810' =>$model->administrativeDivision,
-            '1839' =>$model->ownershipDetailOrName,
-            '1831' =>$model->locationDescription,
-            '1819' =>$model->postalAddress,
-            '1843' =>$model->receptionRoom,
-            '1872' =>$model->generalClinicalServices,
-            '1814' =>'',
-            '1832' =>$model->wayPointNumber,
-            '1811' =>$model->facilityType,
-            '1812' =>$model->ownership,
-            '1840' =>$model->registrationStatus,
-            '1820' =>$model->postalCode,
-            '1844' =>$model->consultationRoom,
-            '1873' =>$model->malariaDiagnosisAndTreatment,
-            '1816' =>$model->registrationId,
-            '1817' =>$model->ctcId,
-            '1833' =>$model->altitude,
-            '1822' =>$model->officialPhoneNumber,
-            '1845' =>$model->dressingRoom,
-            '1874' =>$model->TBDiagnosisCareAndTreatment,
-            '1841' =>$model->licensingStatus,
-            '1842' =>$model->otherClinic,
-            '1889' =>$model->oldHFRId,
-            '1818' =>$model->mtuhaCode,
-            '1813' =>$model->operatingStatus,
-            '1834' =>$model->serviceAreas,
-            '1823' =>$model->officialFax,
-            '1875' =>$model->cardiovasculasCareAndTreatment,
-            '1835' =>$model->serviceAreaPopulation,
-            '1824' =>$model->officialEmail,
-            '1847' =>$model->wardRoom,
-            '1876' =>$model->HIVAIDSPrevention,
-            '1848' =>$model->observationRoom,
-            '1836' =>$model->catchmentArea,
-            '1877' =>$model->HIVAIDSCareAndTreatment,
-            '1837' =>$model->catchmentPopulation,
-            '1826' =>$model->inChargeName,
-            '1849' =>$model->remarks,
-            '1878' =>$model->therapeutics,
-            '1838' =>$model->dateOpened,
-            '1827' =>$model->inChargeCadre,
-            '1850' =>$model->patientBeds,
-            '1879' =>$model->prostheticsAndMedicalDevices,
-            '1828' =>$model->inChargeEmail,
-            '1851' =>$model->deliveryBeds,
-            '1880' =>$model->healthPromotionAndDiseasePrevention,
-            '1852' =>$model->babyCots,
-            '1881' =>$model->diagnosticServices,
-            '1829' =>$model->inChargeNID,
-            '1830' =>$model->inChargeMobilePhone,
-            '1853' =>$model->ambulances,
-            '1882' =>$model->reproductiveAndChildHealthCareServices,
-            '1854' =>$model->cars,
-            '1883' =>$model->growthMonitoringOrNutritionalSurveillance,
-            '1855' =>$model->motorcycles,
-            '1884' =>$model->oralHealthService,
-            '1856' =>$model->otherTransport,
-            '1885' =>$model->ENTServices,
-            '1857' =>$model->noOfOtherTransport,
-            '1886' =>$model->supportServices,
-            '1858' =>$model->sterilizationAndInfectionControl,
-            '1887' =>$model->emergencyPreparedness,
-            '1859' =>$model->meansOfTransportToReferralPoint,
-            '1888' =>$model->otherServices,
-            '1860' =>$model->distanceToReferralPoint,
-            '1861' =>$model->challengesToReachReferralPoint,
-            '1862' =>$model->sourceOfEnergy,
-            '1863' =>$model->otherEnergySource,
-            '1864' =>$model->mobileNetworks,
-            '1865' =>$model->otherMobileNetwork,
-            '1866' =>$model->sourceOfWater,
-            '1867' =>$model->otherSourceOfWater,
-            '1868' =>$model->toiletFacility,
-            '1869' =>$model->toiletRemarks,
-            '1870' =>$model->wasteManagement,
-            '1871' =>$model->otherWasteManagement,
-        );
-    }
+        public function generateCurationForm($formModel){
+            
+            $fieldMappings = FieldMapping::model()->findAll();
+            $layerMappings = LayerMapping::model()->findAll();
+            $layers = array();
+            foreach($fieldMappings as $fieldMapping){
+
+                   $fieldDetails = CJSON::decode($fieldMapping->cc_field_structure,true);
+                   
+                   foreach($layerMappings as $layerMapping){
+                       if(!isset($layers[$layerMapping->layer_name])){
+                           $layers[$layerMapping->layer_name] = '';
+                       }
+                       if($fieldDetails['layer_id'] == $layerMapping->cc_layer_id){
+                           ob_start();
+                           $this->generateFieldWidgets($fieldDetails,$formModel);
+                           $layers[$layerMapping->layer_name] .= ob_get_contents();
+                           ob_end_clean();
+                       }
+                       
+                   }     
+                   
+            }
+            
+            return $layers;
+        }
        
+        
+        private function generateFieldWidgets($fieldDetails,$formModel){
+            
+            switch($fieldDetails['kind']){
+                       case 'select_many':
+                           $options = array();
+                           foreach($fieldDetails['config']['options'] as $option){
+                             $options[$option['id']] = $option['label'];
+                           }
+                           
+                           echo "<div class='row'>".
+                           TbHtml::activeLabel($formModel, '_'.$fieldDetails['id']).
+                           TbHtml::activeCheckBoxList($formModel, '_'.$fieldDetails['id'], $options).
+                           TbHtml::error($formModel, '_'.$fieldDetails['id']).
+                           "</div>";
+                           break;
+                           
+                       case 'select_one':
+                           $options = array();
+                           foreach($fieldDetails['config']['options'] as $option){
+                             $options[$option['id']] = $option['label'];
+                           }
+                            echo "<div class='row'>".
+                           TbHtml::activeLabel($formModel, '_'.$fieldDetails['id']).
+                           TbHtml::activeDropDownList($formModel, '_'.$fieldDetails['id'], $options,array('prompt'=>'--Please select--')).
+                           TbHtml::error($formModel, '_'.$fieldDetails['id']).
+                           "</div>";
+                           break;
+                       
+                       case 'hierarchy':
+                           $filteredData = Layer::search($fieldDetails['config']['hierarchy'], 'id', Yii::app()->user->getState('node_id'));
+                           if(!$filteredData){
+                             $data = Layer::parseHierarchy($fieldDetails['config']['hierarchy']);
+                           }
+                           else{
+                             $data = Layer::parseHierarchy($filteredData);
+                           }
+                           echo "<div class='row'>";
+                           
+                           echo TbHtml::activeLabel($formModel, '_'.$fieldDetails['id']);
+                           $this->widget('CTreeView',array(
+                            'id'=>'_'.$fieldDetails['id'],
+                            'data'=>$data,
+                            'control'=>'#treecontrol',
+                            'animated'=>'fast',
+                            'collapsed'=>true,
+                            'htmlOptions'=>array(
+                            'class'=>'treeview-gray',
 
+                                    )
+                              ) );
+                           echo "</div>";
+                           break;
+                       case 'email':
+                           echo "<div class='row'>".
+                           TbHtml::activeLabel($formModel, '_'.$fieldDetails['id']).
+                           TbHtml::activeEmailField($formModel, '_'.$fieldDetails['id']).
+                           TbHtml::error($formModel, '_'.$fieldDetails['id']).
+                          "</div>";
+                           break;
+                       case 'date':
+                           
+                           echo "<div class='row'>";
+                           echo TbHtml::activeLabel($formModel, '_'.$fieldDetails['id']);
+                                 $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+                                    'model'=>$formModel,
+                                    'attribute'=>'_'.$fieldDetails['id'],
+                                    'options'=>array(
+                                        'showAnim'=>'fold',
+                                        'showOn'=>'both',//focus,button,both
+                                        'buttonText'=>'Please select date',
+                                        'buttonImage'=>Yii::app()->request->baseUrl."/images/calendar.png",
+                                        'buttonImageOnly'=>true,
+                                        'dateFormat'=>'dd/mm/yy',
+                                    ),
+                                    'htmlOptions'=>array(
+                                        'style'=>'height:25px;',
+                                    ),
+                                ));  
+                           echo TbHtml::error($formModel, '_'.$fieldDetails['id']);
+                           echo "</div>";
+                           break;
+                       case 'numeric':
+                           echo "<div class='row'>".
+                           TbHtml::activeLabel($formModel, '_'.$fieldDetails['id']).
+                           TbHtml::activeNumberField($formModel, '_'.$fieldDetails['id'],array('min'=>0)).
+                           TbHtml::error($formModel, '_'.$fieldDetails['id']).
+                           "</div>";
+                           break;
+                       
+                       default:
+                           echo "<div class='row'>".
+                           TbHtml::activeLabel($formModel, '_'.$fieldDetails['id']).
+                           TbHtml::activeTextField($formModel, '_'.$fieldDetails['id']).
+                           TbHtml::error($formModel, '_'.$fieldDetails['id']).
+                          "</div>";
+                         
+                   } 
+        }
+        
+        
+        public function actionApprove($id){
+            $changeRequest = ChangeRequest::model()->findByPk($id);
+            if($changeRequest){
+                  $version = $changeRequest->version_id;
+                  $requestType = $changeRequest->request_type;
+                  $siteID = $changeRequest->cc_site_id;
+                  $url = Yii::app()->params['api-domain']."/collections/".
+                         Yii::app()->params['resourceMapConfig']['curation_collection_id'].
+                         "/sites/{$siteID}/histories?version=$version";
+                  $response = RestUtility::execCurl($url);
+                  $responseArray = CJSON::decode($response, true);
+                   if($requestType == ChangeRequest::TYPE_CREATE){
+                       
+                       $data = array(
+                           'name'=>$responseArray['name'],
+                           'properties'=>$responseArray['properties']
+                       );
+                       
+                       $json = CJSON::encode($data);
+                       $params = array('site'=>$json);
+                       $url = Yii::app()->params['api-domain']."/collections/".
+                              Yii::app()->params['resourceMapConfig']['public_collection_id'].
+                               "/sites.json";
+                       $response = RestUtility::execCurlPost($url, $params);
+                       $site = CJSON::decode($response,true);
+                       if(isset($site['id'])){
+                           $changeRequest->pc_site_id = $site['id'];
+                           $changeRequest->status = ChangeRequest::STATUS_APPROVED;
+                           $changeRequest->reviewed_by = Yii::app()->user->getState('user_id');
+                           $changeRequest->reviewed_date = date('Y-m-d H:i:s');
+                           $changeRequest->save();
+                           $note = new ChangeRequestNote();
+                           $note->change_request_id = $changeRequest->id;
+                           $note->user_id = Yii::app()->user->getState('user_id');
+                           $note->note = ' ';
+                           $note->save();
+                       }
+                   }
+                   elseif($requestType == ChangeRequest::TYPE_UPDATE){
+                       //get changed fields from change_request_fields table
+                       $changedFields = ChangeRequestFields::model()->findAllByAttributes(
+                              array( 
+                                  'change_request_id'=>$changeRequest->id,
+                               )
+                             );
+                       //filter out non-updated fields
+                       $properties = array();
+                       foreach($responseArray['properties'] as $key=>$property){
+                           foreach($changedFields as $field){
+                               if($key == $field->field_id){
+                                   $properties[$key]= $property;
+                               }
+                           }
+                       }
+                       
+                       $data = array(
+                           'properties'=>$properties,
+                       );
+                       
+                       //encode the data into json format
+                       $json = CJSON::encode($data);
+                       $params = array('site'=>$json);
+                       
+                       //update site in the public collection
+                       $url = Yii::app()->params['api-domain']."/collections/".
+                              Yii::app()->params['resourceMapConfig']['public_collection_id'].
+                              "/sites/{$changeRequest->pc_site_id}/partial_update";
+                      
+                       $response = RestUtility::execCurlPost($url, $params);
+                       
+                       //change status to approved and log info
+                           $changeRequest->status = ChangeRequest::STATUS_APPROVED;
+                           $changeRequest->reviewed_by = Yii::app()->user->getState('user_id');
+                           $changeRequest->reviewed_date = date('Y-m-d H:i:s');
+                           $changeRequest->save();
+                           $note = new ChangeRequestNote();
+                           $note->change_request_id = $changeRequest->id;
+                           $note->user_id = Yii::app()->user->getState('user_id');
+                           $note->note = ' ';
+                           $note->save();
+                   }
+                   elseif($requestType == ChangeRequest::TYPE_DELETE){
+                          
+                       //delete from public collection
+                           $url = Yii::app()->params['api-domain']."/collections/".
+                              Yii::app()->params['resourceMapConfig']['public_collection_id'].
+                               "/sites/{$changeRequest->pc_site_id}";
+                           RestUtility::execCurlDelete($url);
+                       
+                       //delete from curation collection
+                           $url = Yii::app()->params['api-domain']."/collections/".
+                                   Yii::app()->params['resourceMapConfig']['curation_collection_id'].
+                                    "/sites/{$changeRequest->cc_site_id}";
+                           RestUtility::execCurlDelete($url);
+                           
+                           $changeRequest->status = ChangeRequest::STATUS_APPROVED;
+                           $changeRequest->reviewed_by = Yii::app()->user->getState('user_id');
+                           $changeRequest->reviewed_date = date('Y-m-d H:i:s');
+                           $changeRequest->save();
+                           $note = new ChangeRequestNote();
+                           $note->change_request_id = $changeRequest->id;
+                           $note->user_id = Yii::app()->user->getState('user_id');
+                           $note->note = ' ';
+                           $note->save();
+                   }
+
+                  
+            }
+        }
+  
+       
+        
+          //This was used to populate fields mapping table cache of field structures
+        public function batchCache(){
+            $fieldMappings = FieldMapping::model()->findAll();
+             foreach($fieldMappings as $fieldMapping){
+               $url = Yii::app()->params['api-domain']."/collections/".
+                   Yii::app()->params['resourceMapConfig']['public_collection_id'].
+                   "/fields/{$fieldMapping->pc_field_id}.json";
+                   
+                   $response = RestUtility::execCurl($url);
+                   $fieldMapping->pc_field_structure = $response;
+                   $fieldMapping->save();
+                   
+               }
+        }
+        
+        
+       
+        
+        
 	
 }

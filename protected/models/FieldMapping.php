@@ -8,9 +8,8 @@
  * @property string $cc_field_id
  * @property string $pc_field_id
  * @property string $semantics
- *
- * The followings are the available model relations:
- * @property ChangeRequestFields[] $changeRequestFields
+ * @property string $cc_field_structure cache
+ * @property string $pc_field_structure cache
  */
 class FieldMapping extends CActiveRecord
 {
@@ -19,11 +18,10 @@ class FieldMapping extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return FieldMapping the static model class
 	 */
-    
         const PC_HIERARCHY_FIELD_ID = 1629;
         const CC_HIERARCHY_FIELD_ID = 1810;
-        
         const CC_PRIMARY_SITE_CODE = 1814;
+        
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -47,9 +45,10 @@ class FieldMapping extends CActiveRecord
 		return array(
 			array('cc_field_id, pc_field_id', 'length', 'max'=>45),
 			array('semantics', 'length', 'max'=>255),
+			array('cc_field_structure,pc_field_structure', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, cc_field_id, pc_field_id, semantics', 'safe', 'on'=>'search'),
+			array('id, cc_field_id, pc_field_id, semantics, cc_field_structure, pc_field_structure', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,7 +60,6 @@ class FieldMapping extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'changeRequestFields' => array(self::HAS_MANY, 'ChangeRequestFields', 'field_id'),
 		);
 	}
 
@@ -75,6 +73,8 @@ class FieldMapping extends CActiveRecord
 			'cc_field_id' => 'Cc Field',
 			'pc_field_id' => 'Pc Field',
 			'semantics' => 'Semantics',
+			'cc_field_structure' => 'Cc Field Structure',
+                        'pc_field_structure' => 'Pc Fieald Structure',
 		);
 	}
 
@@ -93,16 +93,51 @@ class FieldMapping extends CActiveRecord
 		$criteria->compare('cc_field_id',$this->cc_field_id,true);
 		$criteria->compare('pc_field_id',$this->pc_field_id,true);
 		$criteria->compare('semantics',$this->semantics,true);
+		$criteria->compare('cc_field_structure',$this->cc_field_structure,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
         
-        public static function getCodes(){
-            foreach(self::model()->findAll() as $model){
-                echo " '$model->cc_field_id' =>'',";
-                echo "<br />";
+        public static function generateFields(){
+            $models = self::model()->findAll();
+            foreach($models as $model){
+                echo "public ".'$'."_{$model->cc_field_id};<br />";
             }
+            
+            
+                
+              $attr ="public function attributeLabels() {
+                  return array(";
+              foreach($models as $model){
+                  $attr.= " '_".$model->cc_field_id."'=>'"."$model->semantics"."',<br />";
+              }      
+              $attr .= " );<br />}";
+              
+              echo $attr;
+              
+              
+            $numericals='';$others='';
+            $rules = "public function rules(){
+                
+                      return array(";
+            foreach($models as $model){
+                $schema = CJSON::decode($model->cc_field_structure);
+                if($schema['kind']=='numeric')
+                    $numericals.="_".$model->cc_field_id.",";
+                else{
+                    $others.="_".$model->cc_field_id.",";
+                }
+                
+            }
+            
+            $rules.= "array('note','required'),";
+            $rules.= "array('".$numericals."','numerical','integerOnly'=>true),";
+            $rules.= "array('".$others."','safe'),";
+           
+            $rules .= " );<br />}";
+            
+            echo $rules;
         }
 }

@@ -1,40 +1,37 @@
 
 <?php $fields = ChangeRequest::getFieldValues($model->cc_site_id)?>
 
+<table>
 <?php foreach($fields as $key=>$field):?>
-
+    
 <?php if(!is_array($field)):?>
-<div class="row">
-    <?php echo TbHtml::labelTb($key, array('color' => TbHtml::LABEL_COLOR_INFO))?><br />
+<tr>
+    <td><?php echo TbHtml::labelTb($key, array('color' => TbHtml::LABEL_COLOR_INFO))?></td>
     <?php //echo TbHtml::labelTb($field, array('color' => TbHtml::LABEL_COLOR_INFO)); ?>
     <?php //echo TbHtml::icon(TbHtml::ICON_ARROW_RIGHT) ?>
-    <?php echo TbHtml::labelTb($field); ?>
-</div>
-<br />
+    <td><?php echo TbHtml::labelTb($field); ?></td>
+</tr>
+
 <?php else:?>
-<div class="row">
-    <?php echo TbHtml::labelTb($key, array('color' => TbHtml::LABEL_COLOR_INFO))?><br />
+<tr>
+    <td><?php echo TbHtml::labelTb($key, array('color' => TbHtml::LABEL_COLOR_INFO))?></td>
     <?php //echo TbHtml::labelTb($field, array('color' => TbHtml::LABEL_COLOR_INFO)); ?>
     <?php //echo TbHtml::icon(TbHtml::ICON_ARROW_RIGHT) ?>
     <?php $concatValues = "";?>
     <?php foreach($field as $value):?>
            <?php $concatValues.= $value.'<br />';?>
     <?php endforeach;?>
-    <?php echo TbHtml::labelTb($concatValues); ?>
-</div>
-<br />     
+    <td><?php echo TbHtml::labelTb($concatValues); ?></td>
+</tr>
+   
       
 <?php endif;?>
 
 <?php endforeach;?>
-<div class="row">
- <?php 
-    echo TbHtml::button('Cancel');
- ?>
-    <span>&nbsp;</span>
- <?php 
-    echo TbHtml::button('Accept',array('class'=>'btn btn-info'));
-  ?>
-</div>
+<tr >
+<td></td>
+<td><?php echo TbHtml::button('Cancel');?><span>&nbsp;&nbsp;</span><?php echo TbHtml::button('Accept',array('class'=>'btn btn-info'));?></td>
+</tr>
+</table>
 <br />
 
