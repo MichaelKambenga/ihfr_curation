@@ -1,12 +1,12 @@
 <?php
-
 $url = Yii::app()->params['api-domain']."/collections/".
-                   Yii::app()->params['resourceMapConfig']['curation_collection_id'].
+                   Yii::app()->params['resourceMapConfig']['public_collection_id'].
                    "/sites/".$model['id'].".json"; 
             $response = RestUtility::execCurl($url);
             $site = CJSON::decode($response,true);
+
 ?>
-<?php $fields = ChangeRequest::getFieldValues($site['properties'],Yii::app()->params['resourceMapConfig']['curation_collection_id'])?>
+<?php $fields = ChangeRequest::getFieldValues($site['properties'],Yii::app()->params['resourceMapConfig']['public_collection_id'])?>
 
 <?php echo TbHtml::pageHeader('', 'View/Change Facility');?>
 <div class="well">
@@ -43,8 +43,6 @@ $url = Yii::app()->params['api-domain']."/collections/".
 <?php endif;?>
 
 <?php endforeach;?>
-<td></td>
-<td><p></p><?php echo TbHtml::link('Update',$this->createUrl('curation/updateSite',array('id'=>$model['id'])),array('class'=>'btn btn-info'));?></td>
 </table>
   
 </div>

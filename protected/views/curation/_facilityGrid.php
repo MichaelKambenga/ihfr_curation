@@ -40,9 +40,9 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         'template'=>'{view}{update}{delete}',
         'buttons'=>array(
             'delete'=>array('url'=>'#'),
-            'update'=>array('url'=>'#'),
+            'update'=>array('url'=>'$this->grid->controller->createUrl("curation/updateSite",array("id"=>$data["properties"]["Fac_IDNumber"]))'),
             'view'=>array(
-                'url'=>'$this->grid->controller->createUrl("curation/viewFacility",array("id"=>$data["id"]))',
+                'url'=>'$this->grid->controller->createUrl("curation/view",array("id"=>$data["id"]))',
                 ),
         ),
     ),

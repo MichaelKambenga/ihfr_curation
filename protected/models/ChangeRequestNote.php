@@ -41,7 +41,7 @@ class ChangeRequestNote extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('change_request_id, user_id', 'required'),
+			array('change_request_id, user_id,note', 'required'),
 			array('change_request_id, user_id', 'numerical', 'integerOnly'=>true),
 			array('note', 'length', 'max'=>255),
 			// The following rule is used by search().

@@ -129,22 +129,28 @@ class ChangeRequest extends CActiveRecord
 		));
 	}
         
-        public static function getFieldValues($site_id){
-            $url = Yii::app()->params['api-domain']."/collections/".
-                   Yii::app()->params['resourceMapConfig']['curation_collection_id'].
-                   "/sites/$site_id.json"; 
-            $response = RestUtility::execCurl($url);
-            $site = CJSON::decode($response,true);
+        
+         public static function getFieldValues($properties,$collection_id){
+//            $url = Yii::app()->params['api-domain']."/collections/".
+//                   $collection_id.
+//                   "/sites/$site_id.json"; 
+//            $response = RestUtility::execCurl($url);
+//            $site = CJSON::decode($response,true);
             $siteProperties = array();
             
-           if($site){
-            foreach($site['properties'] as $key=>$property){
-//                   $url = Yii::app()->params['api-domain']."/collections/".
-//                   Yii::app()->params['resourceMapConfig']['curation_collection_id'].
-//                   "/fields/{$key}.json";
-//                   $response = RestUtility::execCurl($url);
-                   $fieldModel = FieldMapping::model()->find('cc_field_id=:key',array(':key'=>$key));
-                   $response = $fieldModel->cc_field_structure;
+           if($properties){
+            foreach($properties as $key=>$property){
+
+                   if($collection_id == Yii::app()->params['resourceMapConfig']['curation_collection_id']){
+                       $fieldModel = FieldMapping::model()->find('cc_field_id=:key',array(':key'=>$key));
+                       $response = $fieldModel->cc_field_structure;
+                   }
+                   elseif($collection_id == Yii::app()->params['resourceMapConfig']['public_collection_id']){
+                       $fieldModel = FieldMapping::model()->find('pc_field_id=:key',array(':key'=>$key));
+                       $response = $fieldModel->pc_field_structure;
+                   }
+                   
+                   
                    $fieldDetails = CJSON::decode($response,true);
                    
                    if($fieldDetails['config']){

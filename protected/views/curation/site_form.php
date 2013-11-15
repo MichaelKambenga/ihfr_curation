@@ -34,8 +34,15 @@ $this->breadcrumbs=array(
      $remarksView = ob_get_contents();
      ob_end_clean();
      
+     ob_start();
+     $this->renderPartial('_layers_mainfields_form',array('model'=>$model,'form'=>$form));
+     $mainFieldsView = ob_get_contents();
+     ob_end_clean();
+     
      //Note field---for curation purposes
      $layers['Remarks'] = $remarksView;
+     
+     $layers['Name and Location'] = $mainFieldsView;
      
      $this->widget('zii.widgets.jui.CJuiAccordion', array(
                             'id'=>'accordion',

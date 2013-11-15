@@ -14,7 +14,7 @@ class CurationController extends Controller
             
             return array(
                 array('allow',
-                    'actions'=>array('Approve','UpdateSite','CreateSite','Facilities','pendingRequests','SearchFacilityByPSCode','viewFacility'),
+                    'actions'=>array('Reject','Approve','UpdateSite','CreateSite','Facilities','pendingRequests','SearchFacilityByPSCode','viewFacility','view'),
                     'users'=>array('@'),
                     ),
                 array('deny', // deny all users
@@ -29,10 +29,26 @@ class CurationController extends Controller
                         array('model'=>$this->loadFacility($id,Yii::app()->params['resourceMapConfig']['curation_collection_id'])));
 	}
         
+        public function actionView($id){
+            $this->render('public_facility',
+                  array('model'=>$this->loadFacility($id, Yii::app()->params['resourceMapConfig']['public_collection_id'])
+                ));
+        }
         public function loadFacility($id,$collection_id){
             $url = Yii::app()->params['api-domain']."/collections/".
                    $collection_id.
                    "/sites/$id.json"; 
+            $response = RestUtility::execCurl($url);
+            $result = CJSON::decode($response,true);
+            
+            return $result;
+        }
+        
+        public function loadFacilityByPSC($psc,$collection_id){
+            $url = Yii::app()->params['api-domain']."/api/collections/".
+                       $collection_id.
+                       ".json?Fac_IDNumber={$psc}";
+                       
             $response = RestUtility::execCurl($url);
             $result = CJSON::decode($response,true);
             
@@ -84,7 +100,6 @@ class CurationController extends Controller
                        
                 $response = RestUtility::execCurl($url);
                 $result = CJSON::decode($response,true);
-                
                 $totalItemCount = (int)$result['count'];
                 $sites = new CArrayDataProvider($result['sites'],
                           array(
@@ -177,7 +192,7 @@ class CurationController extends Controller
             
             $model->save();
             $this->logChangeRequestNote($model);
-            $this->logChangeRequestFields($model->id, $site['saved_properties']);
+            $this->logChangeRequestFields($model->id, $site);
         }
         
         public function logChangeRequestNote($changeRequestModel){
@@ -188,9 +203,9 @@ class CurationController extends Controller
            $model->save();
         }
         
-        public function logChangeRequestFields($change_request_id,$fields){
+        public function logChangeRequestFields($change_request_id,$site){
             
-            foreach($fields as  $key=>$value){
+            foreach($site['saved_properties'] as  $key=>$value){
                 $model = new ChangeRequestFields();
                 $model->change_request_id = $change_request_id;
                 $model->field_id = $key;
@@ -212,30 +227,41 @@ class CurationController extends Controller
                       "/sites.json";
              
                //capture form values
-               $model->attributes = $_POST['FacilityForm'];
+                $model->attributes = $_POST['FacilityForm'];
+                    $longitude = '';
+                    $latitute = '';
+                    $geoCodeArray = array();
+                    if(!empty($model->location)){
+                        $geoCodeArray = explode(',', $model->location);
+                        $latitute = $geoCodeArray[0];
+                        $longitude = $geoCodeArray[1];
+                    }
                    if($model->validate()){
                         //prepare properties array
                         $properties = array();
                         foreach($model->attributes as $key=>$attribute){
-                            if($key=='note')continue;
+                            if($key=='note' || $key =='location' || $key=='name')continue;
                             $properties[trim($key,'_')] = $attribute;
                         }
-
+                        
                         $data = array(
-                             'name'=>$model->_1815,//common facility name
+                             'name'=>$model->name,//site name
+                             'lat'=>$latitute,
+                             'lng'=>$longitude,
                              'properties'=>$properties,
                          );
 
                      //convert data into json format 
                      $json = CJSON::encode($data);
-
+                    
                      $params = array('site'=>$json);
                      $response = RestUtility::execCurlPost($url, $params);
                      $site = CJSON::decode($response);
                      $site['note'] = $model->note;
                      $site['request_type'] = ChangeRequest::TYPE_CREATE;
                      $site['saved_properties'] = $site['properties'];
-                     //echo $response;exit;
+                     
+                     
                          if(isset($site['id'])){
 
                              $this->onSiteCreateRequest = array($this,'logChangeRequest');
@@ -258,10 +284,15 @@ class CurationController extends Controller
         
         public function actionUpdateSite($id){
             
-            $site = $this->loadFacility($id, 
+            $results = $this->loadFacilityByPSC($id,Yii::app()->params['resourceMapConfig']['curation_collection_id']);
+            $site = $this->loadFacility($results['sites'][0]['id'], 
                      Yii::app()->params['resourceMapConfig']['curation_collection_id']
                     ); 
+            $site_id = $site['id'];
             $form = new FacilityForm();
+            $form->name = $site['name'];
+            if(array_key_exists('lat', $site) && array_key_exists('lng', $site))
+             $form->location = $site['lat'].','.$site['lng'];
             if($site){
                 foreach($site['properties'] as $key=>$value){
                    $form->setAttributes(array("_$key"=>$value));
@@ -271,10 +302,18 @@ class CurationController extends Controller
             if(isset($_POST['FacilityForm'])){  
                 
                 $form->attributes = $_POST['FacilityForm'];
+                $longitude = '';
+                $latitute = '';
+                $geoCodeArray = array();
+                if(!empty($form->location)){
+                    $geoCodeArray = explode(',', $form->location);
+                    $latitute = $geoCodeArray[0];
+                    $longitude = $geoCodeArray[1];
+                }
                 if($form->validate()){
                 $properties = array();
                 foreach($form->attributes as $key=>$attribute){
-                    if($key=='note')continue;
+                    if($key=='note' || $key=='location' || $key=='name' || $key=='_'.FieldMapping::CC_PRIMARY_SITE_CODE)continue;
                     //check for updated fields only and add them to properties array
                     if(isset($site['properties'][trim($key,'_')])){
                         if($form->attributes[$key] != $site['properties'][trim($key,'_')]){
@@ -287,27 +326,30 @@ class CurationController extends Controller
                     }
                 }
                 
-                //print_r($properties);exit;
                 $data = array(
-                    'name'=>$form->_1815,//common facility name
-                    'properties'=>$properties,
+                    'name'=>$form->name,//site name
+                    'lat'=>$latitute,
+                    'lng'=>$longitude,
                 );
+                if(!empty($properties)){
+                    $data['properties'] = $properties;
+                }
               
                 //convert data into json format 
                 $json = CJSON::encode($data);
-               
+                //echo $json;exit;
                 $params = array('site'=>$json);
                 $url = Yii::app()->params['api-domain']."/collections/".
                        Yii::app()->params['resourceMapConfig']['curation_collection_id'].
-                      "/sites/{$id}/partial_update";
+                      "/sites/{$site_id}/partial_update";
+                
                 $response = RestUtility::execCurlPost($url, $params);
                 $site = CJSON::decode($response);
+                
                 $site['note'] = $form->note;
                 $site['request_type'] = ChangeRequest::TYPE_UPDATE;
                 $site['saved_properties'] = $properties;
                 $site['saved_properties'][FieldMapping::CC_PRIMARY_SITE_CODE]=$site['properties'][FieldMapping::CC_PRIMARY_SITE_CODE];
-                //print_r($site['saved_properties']);exit;
-                //echo $response;exit;
                   if(isset($site['id'])){
 
                              $this->onSiteCreateRequest = array($this,'logChangeRequest');
@@ -330,7 +372,8 @@ class CurationController extends Controller
             
             $fieldMappings = FieldMapping::model()->findAll();
             $layerMappings = LayerMapping::model()->findAll();
-            $layers = array();
+            $layers = array('Name and Location'=>'');
+            
             foreach($fieldMappings as $fieldMapping){
 
                    $fieldDetails = CJSON::decode($fieldMapping->cc_field_structure,true);
@@ -460,23 +503,36 @@ class CurationController extends Controller
                   $version = $changeRequest->version_id;
                   $requestType = $changeRequest->request_type;
                   $siteID = $changeRequest->cc_site_id;
-                  $url = Yii::app()->params['api-domain']."/collections/".
+                  $note = '';
+                  if(isset($_POST['ChangeRequestNote'])){
+                       $note = $_POST['ChangeRequestNote']['note'];
+                  }
+                  
+                  $url = Yii::app()->params['api-domain']."/api/collections/".
                          Yii::app()->params['resourceMapConfig']['curation_collection_id'].
-                         "/sites/{$siteID}/histories?version=$version";
+                         "/sites/{$siteID}/histories.json?version=$version";
                   $response = RestUtility::execCurl($url);
+                  
                   $responseArray = CJSON::decode($response, true);
-                   if($requestType == ChangeRequest::TYPE_CREATE){
-                       
+                  if($requestType == ChangeRequest::TYPE_CREATE){
+                     
+                       $properties = $this->sitePropertiesMapping($responseArray[0]['properties']);
                        $data = array(
-                           'name'=>$responseArray['name'],
-                           'properties'=>$responseArray['properties']
+                           'name'=>$responseArray[0]['name'],
+                           'properties'=>$properties
                        );
+                       if(array_key_exists('lat', $responseArray[0]) && array_key_exists('lng', $responseArray[0]))
+                       {
+                           $data['lat'] = $responseArray[0]['lat'];
+                           $data['lng'] = $responseArray[0]['lng'];
+                       }
                        
                        $json = CJSON::encode($data);
                        $params = array('site'=>$json);
                        $url = Yii::app()->params['api-domain']."/collections/".
                               Yii::app()->params['resourceMapConfig']['public_collection_id'].
                                "/sites.json";
+                       
                        $response = RestUtility::execCurlPost($url, $params);
                        $site = CJSON::decode($response,true);
                        if(isset($site['id'])){
@@ -485,11 +541,12 @@ class CurationController extends Controller
                            $changeRequest->reviewed_by = Yii::app()->user->getState('user_id');
                            $changeRequest->reviewed_date = date('Y-m-d H:i:s');
                            $changeRequest->save();
-                           $note = new ChangeRequestNote();
-                           $note->change_request_id = $changeRequest->id;
-                           $note->user_id = Yii::app()->user->getState('user_id');
-                           $note->note = ' ';
-                           $note->save();
+                           $noteModel = new ChangeRequestNote();
+                           $noteModel->change_request_id = $changeRequest->id;
+                           $noteModel->user_id = Yii::app()->user->getState('user_id');
+                           $noteModel->note = $note;
+                           $noteModel->save();
+                           echo 'Successfully created';
                        }
                    }
                    elseif($requestType == ChangeRequest::TYPE_UPDATE){
@@ -501,7 +558,7 @@ class CurationController extends Controller
                              );
                        //filter out non-updated fields
                        $properties = array();
-                       foreach($responseArray['properties'] as $key=>$property){
+                       foreach($responseArray[0]['properties'] as $key=>$property){
                            foreach($changedFields as $field){
                                if($key == $field->field_id){
                                    $properties[$key]= $property;
@@ -509,31 +566,46 @@ class CurationController extends Controller
                            }
                        }
                        
-                       $data = array(
-                           'properties'=>$properties,
-                       );
                        
+                       $properties = $this->sitePropertiesMapping($properties);
+                       $data = array();
+                       if(array_key_exists('lat', $responseArray[0]) && array_key_exists('lng', $responseArray[0]))
+                       {
+                           $data['lat'] = $responseArray[0]['lat'];
+                           $data['lng'] = $responseArray[0]['lng'];
+                       }
+                       if(!empty($properties)){
+                            $data['properties'] = $properties;
+                       }
                        //encode the data into json format
                        $json = CJSON::encode($data);
                        $params = array('site'=>$json);
                        
+                       $result = $this->loadFacilityByPSC($changeRequest->primary_site_code,
+                               Yii::app()->params['resourceMapConfig']['public_collection_id']
+                               );
+                       $pc_site_id = $result['sites'][0]['id'];
                        //update site in the public collection
                        $url = Yii::app()->params['api-domain']."/collections/".
                               Yii::app()->params['resourceMapConfig']['public_collection_id'].
-                              "/sites/{$changeRequest->pc_site_id}/partial_update";
+                              "/sites/{$pc_site_id}/partial_update";
                       
                        $response = RestUtility::execCurlPost($url, $params);
-                       
                        //change status to approved and log info
+                       $site = CJSON::decode($response,true);
+                       if(isset($site['id'])){
+                           $changeRequest->pc_site_id = $site['id'];
                            $changeRequest->status = ChangeRequest::STATUS_APPROVED;
                            $changeRequest->reviewed_by = Yii::app()->user->getState('user_id');
                            $changeRequest->reviewed_date = date('Y-m-d H:i:s');
                            $changeRequest->save();
-                           $note = new ChangeRequestNote();
-                           $note->change_request_id = $changeRequest->id;
-                           $note->user_id = Yii::app()->user->getState('user_id');
-                           $note->note = ' ';
-                           $note->save();
+                           $noteModel = new ChangeRequestNote();
+                           $noteModel->change_request_id = $changeRequest->id;
+                           $noteModel->user_id = Yii::app()->user->getState('user_id');
+                           $noteModel->note = $note;
+                           $noteModel->save();
+                           echo 'Successfully updated';
+                       }
                    }
                    elseif($requestType == ChangeRequest::TYPE_DELETE){
                           
@@ -553,17 +625,123 @@ class CurationController extends Controller
                            $changeRequest->reviewed_by = Yii::app()->user->getState('user_id');
                            $changeRequest->reviewed_date = date('Y-m-d H:i:s');
                            $changeRequest->save();
-                           $note = new ChangeRequestNote();
-                           $note->change_request_id = $changeRequest->id;
-                           $note->user_id = Yii::app()->user->getState('user_id');
-                           $note->note = ' ';
-                           $note->save();
+                           $noteModel = new ChangeRequestNote();
+                           $noteModel->change_request_id = $changeRequest->id;
+                           $noteModel->user_id = Yii::app()->user->getState('user_id');
+                           $noteModel->note = $note;
+                           $noteModel->save();
                    }
 
                   
             }
         }
   
+        public function actionReject($id){
+            $changeRequest = ChangeRequest::model()->findByPk($id);
+            if($changeRequest){
+                  $requestType = $changeRequest->request_type;
+                  $note = '';
+                if(isset($_POST['ChangeRequestNote'])){
+                   $note = $_POST['ChangeRequestNote']['note'];
+                }
+                if($requestType == ChangeRequest::TYPE_DELETE){
+                    $changeRequest->status = ChangeRequest::STATUS_REJECTED;
+                           $changeRequest->reviewed_by = Yii::app()->user->getState('user_id');
+                           $changeRequest->reviewed_date = date('Y-m-d H:i:s');
+                           $changeRequest->save();
+                           $noteModel = new ChangeRequestNote();
+                           $noteModel->change_request_id = $changeRequest->id;
+                           $noteModel->user_id = Yii::app()->user->getState('user_id');
+                           $noteModel->note = $note;
+                           $noteModel->save();
+                }
+                elseif($requestType == ChangeRequest::TYPE_CREATE){
+                     //delete from curation collection
+                           $url = Yii::app()->params['api-domain']."/collections/".
+                                  Yii::app()->params['resourceMapConfig']['curation_collection_id'].
+                                    "/sites/{$changeRequest->cc_site_id}";
+                           RestUtility::execCurlDelete($url);
+                           
+                           $changeRequest->status = ChangeRequest::STATUS_REJECTED;
+                           $changeRequest->reviewed_by = Yii::app()->user->getState('user_id');
+                           $changeRequest->reviewed_date = date('Y-m-d H:i:s');
+                           $changeRequest->save();
+                           $noteModel = new ChangeRequestNote();
+                           $noteModel->change_request_id = $changeRequest->id;
+                           $noteModel->user_id = Yii::app()->user->getState('user_id');
+                           $noteModel->note = $note;
+                           $noteModel->save();
+                }
+                elseif($requestType == ChangeRequest::TYPE_UPDATE){
+                           $url = Yii::app()->params['api-domain']."/api/collections/".
+                                    Yii::app()->params['resourceMapConfig']['public_collection_id'].
+                                    ".json?Fac_IDNumber={$changeRequest->primary_site_code}";
+                       
+                            $response = RestUtility::execCurl($url);
+                            $site = CJSON::decode($response,true);
+                           if($site){
+                               //get changed fields from change_request_fields table
+                               $changedFields = ChangeRequestFields::model()->findAllByAttributes(
+                                      array( 
+                                          'change_request_id'=>$changeRequest->id,
+                                       )
+                                     );
+                           //filter out non-updated fields
+                           $properties = array();
+                           foreach($site['properties'] as $key=>$property){
+                               foreach($changedFields as $field){
+                                   if($key == $field->field_id){
+                                       $properties[$key]= $property;
+                                   }
+                               }
+                           }
+                       
+                           $data = array(
+                               'properties'=>$properties,
+                           );
+                       
+                           //encode the data into json format
+                           $json = CJSON::encode($data);
+                           $params = array('site'=>$json);
+                       
+                           //update site in the curation collection
+                           $url = Yii::app()->params['api-domain']."/collections/".
+                                  Yii::app()->params['resourceMapConfig']['curation_collection_id'].
+                                  "/sites/{$changeRequest->cc_site_id}/partial_update";
+                      
+                            $response = RestUtility::execCurlPost($url, $params);
+                            $changeRequest->status = ChangeRequest::STATUS_REJECTED;
+                            $changeRequest->reviewed_by = Yii::app()->user->getState('user_id');
+                            $changeRequest->reviewed_date = date('Y-m-d H:i:s');
+                            $changeRequest->save();
+                            $noteModel = new ChangeRequestNote();
+                            $noteModel->change_request_id = $changeRequest->id;
+                            $noteModel->user_id = Yii::app()->user->getState('user_id');
+                            $noteModel->note = $note;
+                            $noteModel->save();
+                           }
+                }
+            }
+            
+        }
+        
+        
+       public function sitePropertiesMapping($siteProperties){
+           
+           $fieldMappings = FieldMapping::model()->findAll();
+                       $properties = array();
+                       foreach($fieldMappings as $fieldMapping){
+                           foreach($siteProperties as $key=>$value){
+                               if($fieldMapping->cc_field_id == $key){
+//                                   if($key == FieldMapping::CC_PRIMARY_SITE_CODE){
+//                                       continue;
+//                                   }
+                                   $properties[$fieldMapping->pc_field_id] = $value;
+                               }
+                           }
+                       }            
+           return $properties;
+       }
        
         
           //This was used to populate fields mapping table cache of field structures

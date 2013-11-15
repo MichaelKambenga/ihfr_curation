@@ -11,31 +11,37 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
 	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'change_request_id'); ?>
-		<?php echo $form->textField($model,'change_request_id'); ?>
-		<?php echo $form->error($model,'change_request_id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'user_id'); ?>
-		<?php echo $form->textField($model,'user_id'); ?>
-		<?php echo $form->error($model,'user_id'); ?>
-	</div>
-
+        <div class="row">
+            <?php if($actionType == 'approve'):?>
+            <span id="approve-status<?php echo $id?>"></span>
+           <?php else:?>
+            <span id="reject-status<?php echo $id?>"></span>
+           <?php endif;?>
+        </div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'note'); ?>
-		<?php echo $form->textField($model,'note',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->textArea($model,'note',array('style'=>'width:350px;height:100px;')); ?>
 		<?php echo $form->error($model,'note'); ?>
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-	</div>
+            <?php if($actionType =='reject'):?>
+            <?php echo TbHtml::ajaxSubmitButton('Confirm Reject',$this->createUrl('curation/reject',array('id'=>$id)),
+                    array(
+                        'type'=>'POST',
+                        'update'=>'#reject-status'.$id
+                    ),
+                    array('class'=>'btn btn-info')) ?>
+	    <?php elseif($actionType == 'approve'):?>
+            <?php echo TbHtml::ajaxSubmitButton('Confirm Approval', $this->createUrl('curation/approve',array('id'=>$id)),
+                     array(
+                        'type'=>'POST',
+                        'update'=>'#approve-status'.$id
+                    ),
+                    array('class'=>'btn btn-info')) ?>
+            <?php endif;?>
+        </div>
 
 <?php $this->endWidget(); ?>
 
