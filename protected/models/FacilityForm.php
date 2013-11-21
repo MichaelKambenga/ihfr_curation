@@ -99,11 +99,28 @@ public $note;
 public function rules(){ 
     return array(
         array('note,name','required'),
+        array('location','isLocationWithinRange'),
+//        array('_1814','readOnly'=>true),
             array('_1843,_1820,_1844,_1833,_1845,_1835,_1847,_1848,_1837,_1850,_1851,_1852,_1853,_1854,_1855,_1857','numerical','integerOnly'=>true),
             array('location,_1810,_1815,_1839,_1831,_1819,_1872,_1814,_1832,_1811,_1812,_1840,_1873,_1816,_1817,_1822,_1874,_1841,_1842,_1889,_1818,_1813,_1834,_1823,_1875,_1824,_1876,_1836,_1877,_1826,_1849,_1878,_1838,_1827,_1879,_1828,_1880,_1881,_1829,_1830,_1882,_1883,_1884,_1856,_1885,_1886,_1858,_1887,_1859,_1888,_1860,_1861,_1862,_1863,_1864,_1865,_1866,_1867,_1868,_1869,_1870,_1871','safe'),
 
         );
 }
+
+public function isLocationWithinRange(){
+    $geoCodeArray = explode(',', $this->location);
+    $latitude = $geoCodeArray[0];
+    $longitude = $geoCodeArray[1];
+    
+    if(Yii::app()->params['resourceMapConfig']['lower_bound_latitude']<=$latitude && $latitude<=Yii::app()->params['resourceMapConfig']['upper_bound_latitude']){
+        if(Yii::app()->params['resourceMapConfig']['lower_bound_longitude'] <=$longitude && $longitude<=Yii::app()->params['resourceMapConfig']['upper_bound_longitude']){
+            return true;
+        }
+    }
+    $this->addError('location','Location out of range');
+    return false;
+}
+
 public function attributeLabels() { 
     return array( 
             '_1810'=>'Administrative Divisions',

@@ -102,5 +102,14 @@ class User extends CActiveRecord {
             'criteria' => $criteria,
         ));
     }
-
+    
+    public static function getUserSignature($id){
+        $model = self::model()->find(
+                'id=:id',array(':id'=>$id)
+                );
+        return "<br />".$model->email."<br />".
+               $model->position->position_name."<br />".
+               $model->organization->organization_name;
+    }
+    
 }

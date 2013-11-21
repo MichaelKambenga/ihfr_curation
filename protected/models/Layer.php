@@ -39,12 +39,12 @@ class Layer {
                         if(array_key_exists('name', $node)){
                             if(array_key_exists('sub', $node)){
                                 $subNodes = self::parseHierarchy($node['sub']);
-                                $treeNodeArray = array('text'=>CHtml::link(TbHtml::icon(TbHtml:: ICON_FOLDER_CLOSE).$node['name'],'#'),'children'=>$subNodes);
+                                $treeNodeArray = array('text'=>CHtml::link(TbHtml::icon(TbHtml:: ICON_FOLDER_CLOSE).$node['name'],'#',array('id'=>$node['id'])),'children'=>$subNodes);
                             } else {
-                                $treeNodeArray = array('text'=>CHtml::link(TbHtml::icon(TbHtml:: ICON_FOLDER_CLOSE).$node['name'],'#'));
+                                $treeNodeArray = array('text'=>CHtml::link(TbHtml::icon(TbHtml:: ICON_FOLDER_CLOSE).$node['name'],'#',array('id'=>$node['id'])));
                             }
                             array_push($treeArray, $treeNodeArray);                       
-
+                            
                         }
                        }
                                        

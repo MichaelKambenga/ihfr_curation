@@ -266,12 +266,12 @@ class CurationController extends Controller
 
                              $this->onSiteCreateRequest = array($this,'logChangeRequest');
                              $this->afterSiteCreate($site);
-                             Yii::app()->user->setFlash('success','Site created successfully');
+                             Yii::app()->user->setFlash('success','Site create request sent');
                              $this->render('facility',array('model'=>$site));
                              Yii::app()->end();
                          }
                          else{  
-                             Yii::app()->user->setFlash('failure','Site creation failed');
+                             Yii::app()->user->setFlash('failure','Site create request failed');
                          }
                    }
             }
@@ -354,18 +354,34 @@ class CurationController extends Controller
 
                              $this->onSiteCreateRequest = array($this,'logChangeRequest');
                              $this->afterSiteCreate($site);
-                             Yii::app()->user->setFlash('success','Site Updated successfully');
+                             Yii::app()->user->setFlash('success','Site update request sent');
                              $this->render('facility',array('model'=>$site));
                              Yii::app()->end();
                          }
                          else{  
-                             Yii::app()->user->setFlash('failure','Site update failed');
+                             Yii::app()->user->setFlash('failure','Site update request failed');
                          }
                          
                   }//if(validate())
             }
             
             $this->render('site_form',array('model'=>$form,'layers'=>$this->generateCurationForm($form)));
+        }
+        
+        public function actionDeleteSite($psc,$pc_id){
+            $result = $this->loadFacilityByPSC($psc,  
+                    Yii::app()->params['resourceMapConfig']['curation_collection_id']);
+            $cc_site_id = $result['sites'][0]['id'];
+            $changeRequest = new ChangeRequest();
+            $changeRequest->request_type = ChangeRequest::TYPE_DELETE;
+            $changeRequest->primary_site_code = $psc;
+            $changeRequest->cc_site_id = $cc_site_id;
+            $changeRequest->pc_site_id = $pc_id;
+            $changeRequest->status = ChangeRequest::STATUS_PENDING;
+            $changeRequest->requested_date = date('Y-m-d H:i:s');
+            $changeRequest->requested_by = Yii::app()->user->getState('id');
+           
+            echo TbHtml::alert (TbHtml::ALERT_COLOR_SUCCESS, 'Site delete request sent');
         }
         
         public function generateCurationForm($formModel){
@@ -447,6 +463,7 @@ class CurationController extends Controller
 
                                     )
                               ) );
+                           echo "<span class='hierarchy-field'>".CHtml::activeHiddenField($formModel, '_'.$fieldDetails['id'])."</span>";
                            echo "</div>";
                            break;
                        case 'email':
@@ -545,8 +562,10 @@ class CurationController extends Controller
                            $noteModel->change_request_id = $changeRequest->id;
                            $noteModel->user_id = Yii::app()->user->getState('user_id');
                            $noteModel->note = $note;
-                           $noteModel->save();
-                           echo 'Successfully created';
+                           if($noteModel->save())
+                                echo TbHtml::alert(TbHtml::ALERT_COLOR_SUCCESS,'Successfully created');
+                           else
+                                echo TbHtml::alert(TbHtml::ALERT_COLOR_ERROR,'Site creation failed');
                        }
                    }
                    elseif($requestType == ChangeRequest::TYPE_UPDATE){
@@ -603,8 +622,10 @@ class CurationController extends Controller
                            $noteModel->change_request_id = $changeRequest->id;
                            $noteModel->user_id = Yii::app()->user->getState('user_id');
                            $noteModel->note = $note;
-                           $noteModel->save();
-                           echo 'Successfully updated';
+                           if($noteModel->save())
+                               echo TbHtml::alert (TbHtml::ALERT_COLOR_SUCCESS, 'Site update successful');
+                           else 
+                               echo TbHtml::alert (TbHtml::ALERT_COLOR_ERROR, 'Site update failed');
                        }
                    }
                    elseif($requestType == ChangeRequest::TYPE_DELETE){
@@ -629,7 +650,10 @@ class CurationController extends Controller
                            $noteModel->change_request_id = $changeRequest->id;
                            $noteModel->user_id = Yii::app()->user->getState('user_id');
                            $noteModel->note = $note;
-                           $noteModel->save();
+                           if($noteModel->save())
+                                echo TbHtml::alert(TbHtml::ALERT_COLOR_SUCCESS,'Successfully deleted');
+                           else
+                                echo TbHtml::alert(TbHtml::ALERT_COLOR_ERROR,'Site could not be deleted');
                    }
 
                   
@@ -653,7 +677,10 @@ class CurationController extends Controller
                            $noteModel->change_request_id = $changeRequest->id;
                            $noteModel->user_id = Yii::app()->user->getState('user_id');
                            $noteModel->note = $note;
-                           $noteModel->save();
+                           if($noteModel->save())
+                                echo TbHtml::alert(TbHtml::ALERT_COLOR_SUCCESS,'Delete request rejected');
+                           else
+                                echo TbHtml::alert(TbHtml::ALERT_COLOR_ERROR,'Rejection failed');
                 }
                 elseif($requestType == ChangeRequest::TYPE_CREATE){
                      //delete from curation collection
@@ -670,7 +697,10 @@ class CurationController extends Controller
                            $noteModel->change_request_id = $changeRequest->id;
                            $noteModel->user_id = Yii::app()->user->getState('user_id');
                            $noteModel->note = $note;
-                           $noteModel->save();
+                           if($noteModel->save())
+                                echo TbHtml::alert(TbHtml::ALERT_COLOR_SUCCESS,'Create request rejected');
+                           else
+                                echo TbHtml::alert(TbHtml::ALERT_COLOR_ERROR,'Rejection failed');
                 }
                 elseif($requestType == ChangeRequest::TYPE_UPDATE){
                            $url = Yii::app()->params['api-domain']."/api/collections/".
@@ -718,7 +748,10 @@ class CurationController extends Controller
                             $noteModel->change_request_id = $changeRequest->id;
                             $noteModel->user_id = Yii::app()->user->getState('user_id');
                             $noteModel->note = $note;
-                            $noteModel->save();
+                             if($noteModel->save())
+                                echo TbHtml::alert(TbHtml::ALERT_COLOR_SUCCESS,'Update request rejected');
+                             else
+                                echo TbHtml::alert(TbHtml::ALERT_COLOR_ERROR,'Rejection failed');
                            }
                 }
             }

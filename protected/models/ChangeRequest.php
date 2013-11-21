@@ -128,14 +128,10 @@ class ChangeRequest extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-        
+       
         
          public static function getFieldValues($properties,$collection_id){
-//            $url = Yii::app()->params['api-domain']."/collections/".
-//                   $collection_id.
-//                   "/sites/$site_id.json"; 
-//            $response = RestUtility::execCurl($url);
-//            $site = CJSON::decode($response,true);
+             
             $siteProperties = array();
             
            if($properties){
@@ -188,4 +184,116 @@ class ChangeRequest extends CActiveRecord
             
             return $siteProperties;
         }
+        
+       public function retrieveNewSiteFields(){
+           $curationController = new CurationController('curation');
+           $site = $curationController->loadFacility($this->cc_site_id, 
+                    Yii::app()->params['resourceMapConfig']['curation_collection_id']
+                   );
+           $fields = self::getFieldValues($site['properties'],
+                    Yii::app()->params['resourceMapConfig']['curation_collection_id']);
+           $fieldsArray = array();
+           foreach($fields as $key=>$field){
+               if(!is_array($field)){
+                   $fieldsArray[$key] = $field;
+               }
+               else{
+                   $concatValues = '';
+                   foreach($field as $k=>$value){
+                       $concatValues.=$value.'<br />';
+                   }
+                   $fieldsArray[$key] = $concatValues;
+               }
+           }
+           
+           return $fieldsArray;
+       }
+       /*
+        * 
+        * @return array('fieldName'=>array('from'=>'','to'=>''))
+        */
+       public function retrieveFieldsChanges(){
+          $fromToFieldsArray = array();
+          //look for modified fields in the change_request_fields table
+          $modifiedFields = ChangeRequestFields::model()->findAllByAttributes(array('change_request_id'=>$this->id ));
+           
+          $responseArray = self::getSiteHistoryByVersion(
+                        Yii::app()->params['resourceMapConfig']['curation_collection_id'],
+                        $this->cc_site_id, 
+                        $this->version_id
+                  );
+          
+          $proposedProperties = $responseArray[0]['properties'];
+          //retrieve new values
+          $newFields = array();
+          foreach($proposedProperties as $key=>$property){
+              foreach($modifiedFields as $modifiedField){
+                  if($modifiedField->field_id == $key){
+                      $newFields[$key] = $property;
+                  }
+              }
+          }
+           
+          //retrieve public values
+           $curationController = new CurationController('curation');
+           $results = $curationController->loadFacilityByPSC($this->primary_site_code,Yii::app()->params['resourceMapConfig']['public_collection_id']);
+           $pc_site_id = $results['sites'][0]['id'];
+           $site = $curationController->loadFacility($pc_site_id, 
+                         Yii::app()->params['resourceMapConfig']['public_collection_id']
+                        ); 
+           $siteProperties = $site['properties'];
+           $pubFields = array();
+           foreach($siteProperties as $key=>$property){
+               foreach($modifiedFields as $modifiedField){
+                   $fieldMapping = FieldMapping::model()->findByAttributes(array('cc_field_id'=>$modifiedField->field_id));
+                   if($fieldMapping->pc_field_id == $key){
+                       $pubFields[$key]=$property;
+                   }
+               }
+           }    
+          
+          $curationFields = self::getFieldValues($newFields, Yii::app()->params['resourceMapConfig']['curation_collection_id']);
+          
+          $publicFields = self::getFieldValues($pubFields,Yii::app()->params['resourceMapConfig']['public_collection_id']);
+
+          foreach($curationFields as $key=>$field){
+              if(!is_array($field)){
+                  $publicValue = 'Not set';
+                  if(array_key_exists($key, $publicFields)){
+                      $publicValue = $publicFields[$key];
+                  }
+                  $fromToFieldsArray[$key] = array(
+                      'cur'=>$field,
+                      'pub'=>$publicValue,
+                  );
+              }
+              else{
+                  $curConcatValues = '';
+                  foreach($field as $k=>$value){
+                      $curConcatValues.= $value.'<br />';
+                  }
+                  $pubConcatValues = 'Not set';
+                  if(array_key_exists($key, $publicFields)){
+                      $pubConcatValues = '';
+                      foreach($publicFields[$key] as $k=>$value){
+                          $pubConcatValues.= $value.'<br />';
+                      }
+                  }
+                   $fromToFieldsArray[$key] = array(
+                      'cur'=>$curConcatValues,
+                      'pub'=>$pubConcatValues,
+                  );
+              }
+          }
+          
+          return $fromToFieldsArray;
+       }
+       
+       public static function getSiteHistoryByVersion($collection_id,$id,$version){
+          $url = Yii::app()->params['api-domain']."/api/collections/".
+                         $collection_id.
+                         "/sites/{$id}/histories.json?version=$version";
+          $response = RestUtility::execCurl($url);
+          return  CJSON::decode($response, true);
+       }
 }

@@ -67,3 +67,39 @@ $this->breadcrumbs=array(
 
 </div><!-- form -->
 
+<script language ="javascript">
+    $("li a").click(
+        function(){
+           
+            $("#"+$(this).closest('div').children('label').attr('for')).val(this.id);
+            //clear previously selected
+            $(this).closest('div').find('a').each(
+                      function(){
+                          $(this).css('background-color','#fff');
+                          $(this).children(0).attr('class','icon-folder-close');
+                      }
+            );
+            $(this).css('background-color','#ccc');
+            $(this).css('color','#000');
+            $(this).children(0).attr('class','icon-folder-open');
+            
+        }
+        
+  );
+  
+$(document).ready(function(){
+   
+   $(".hierarchy-field input").each(function(){
+        var identifier = $(this).val();
+        $("#"+identifier).css('background-color','#ccc');
+        $("#"+identifier).css('color','#000');
+        $("#"+identifier).children(0).attr('class','icon-folder-open');  
+   }
+   
+   
+   );
+});
+
+  
+  
+</script>

@@ -16,17 +16,51 @@ return array(
     'import' => array(
         'application.models.*',
         'application.components.*',
+        'application.extensions.*',
+        'application.extensions.openID.*',
         'bootstrap.helpers.TbHtml',
     ),
     'modules' => array(
         // uncomment the following to enable the Gii tool
-
+        
         'gii' => array(
             'generatorPaths' => array('bootstrap.gii'),
             'class' => 'system.gii.GiiModule',
             'password' => 'gii',
             // If removed, Gii defaults to localhost only. Edit carefully to taste.
             'ipFilters' => array('127.0.0.1', '::1'),
+        ),
+        
+        'hybridauth'=> array(
+            'baseUrl' => 'http://'. $_SERVER['SERVER_NAME'] . '/ihfr_curation/index.php?r=hybridauth',
+            'withYiiUser' => false, // Set to true if using yii-user
+            "providers" => array ( 
+                "openid" => array (
+                    "enabled" => true
+                ),
+ 
+                "yahoo" => array ( 
+                    "enabled" => false 
+                ),
+ 
+                "google" => array ( 
+                    "enabled" => false,
+                    "keys"    => array ( "id" => "", "secret" => "" ),
+                    "scope"   => ""
+                ),
+ 
+                "facebook" => array ( 
+                    "enabled" => false,
+                    "keys"    => array ( "id" => "", "secret" => "" ),
+                    "scope"   => "email,publish_stream", 
+                    "display" => "" 
+                ),
+ 
+                "twitter" => array ( 
+                    "enabled" => false,
+                    "keys"    => array ( "key" => "", "secret" => "" ) 
+                )
+            )
         ),
     ),
     // application components
@@ -101,7 +135,12 @@ return array(
             'api-username'=>'mkambenga@gmail.com',
             'api-password'=>'Michael',
             'public_collection_id' => '409',
-            'curation_collection_id' => '463'
+            'curation_collection_id' => '463',
+            'lower_bound_latitude'=>-3.8940,
+            'upper_bound_latitude'=>-1.7478,
+            'lower_bound_longitude'=>30,9889,
+            'upper_bound_longitude'=>45.0809,
+            
         ),
     ),
 );
