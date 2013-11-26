@@ -30,38 +30,6 @@ return array(
             // If removed, Gii defaults to localhost only. Edit carefully to taste.
             'ipFilters' => array('127.0.0.1', '::1'),
         ),
-        
-        'hybridauth'=> array(
-            'baseUrl' => 'http://'. $_SERVER['SERVER_NAME'] . '/ihfr_curation/index.php?r=hybridauth',
-            'withYiiUser' => false, // Set to true if using yii-user
-            "providers" => array ( 
-                "openid" => array (
-                    "enabled" => true
-                ),
- 
-                "yahoo" => array ( 
-                    "enabled" => false 
-                ),
- 
-                "google" => array ( 
-                    "enabled" => false,
-                    "keys"    => array ( "id" => "", "secret" => "" ),
-                    "scope"   => ""
-                ),
- 
-                "facebook" => array ( 
-                    "enabled" => false,
-                    "keys"    => array ( "id" => "", "secret" => "" ),
-                    "scope"   => "email,publish_stream", 
-                    "display" => "" 
-                ),
- 
-                "twitter" => array ( 
-                    "enabled" => false,
-                    "keys"    => array ( "key" => "", "secret" => "" ) 
-                )
-            )
-        ),
     ),
     // application components
     'components' => array(
@@ -130,7 +98,7 @@ return array(
         // this is used in contact page
         'adminEmail' => 'webmaster@example.com',
         'api-domain'=>'http://resourcemap.instedd.org',
-        
+        'openidServerAddress'=>'http://login-stg.instedd.org/openid', 
         'resourceMapConfig' => array(
             'api-username'=>'mkambenga@gmail.com',
             'api-password'=>'Michael',

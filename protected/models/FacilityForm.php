@@ -108,17 +108,23 @@ public function rules(){
 }
 
 public function isLocationWithinRange(){
-    $geoCodeArray = explode(',', $this->location);
-    $latitude = $geoCodeArray[0];
-    $longitude = $geoCodeArray[1];
+   
+    if(!empty($this->location)){
+        $geoCodeArray = explode(',', $this->location);
+        $latitude = $geoCodeArray[0];
+        $longitude = $geoCodeArray[1];
     
     if(Yii::app()->params['resourceMapConfig']['lower_bound_latitude']<=$latitude && $latitude<=Yii::app()->params['resourceMapConfig']['upper_bound_latitude']){
         if(Yii::app()->params['resourceMapConfig']['lower_bound_longitude'] <=$longitude && $longitude<=Yii::app()->params['resourceMapConfig']['upper_bound_longitude']){
             return true;
         }
     }
-    $this->addError('location','Location out of range');
-    return false;
+      $this->addError('location','Location out of range');
+      return false;
+    }
+    else{
+       return true;
+    }
 }
 
 public function attributeLabels() { 

@@ -14,7 +14,7 @@ class CurationController extends Controller
             
             return array(
                 array('allow',
-                    'actions'=>array('Reject','Approve','UpdateSite','CreateSite','Facilities','pendingRequests','SearchFacilityByPSCode','viewFacility','view'),
+                    'actions'=>array('DeleteSite','Reject','Approve','UpdateSite','CreateSite','Facilities','pendingRequests','SearchFacility','viewFacility','view'),
                     'users'=>array('@'),
                     ),
                 array('deny', // deny all users
@@ -92,12 +92,21 @@ class CurationController extends Controller
             $this->render('exploreFacilities',array('data'=>$data,'sites'=>$sites));
         }
         
-        public function actionSearchFacilityByPSCode($search_query){
-            if(isset($search_query)){
+        public function actionSearchFacility($code='',$name=''){
+            $url = '';
+            if(!empty($code)){
                 $url = Yii::app()->params['api-domain']."/api/collections/".
                        Yii::app()->params['resourceMapConfig']['public_collection_id'].
-                       ".json?page=all&Fac_IDNumber={$search_query}";
+                       ".json?page=all&Fac_IDNumber={$code}";
                        
+            }  
+            if(!empty($name)){
+                $url = Yii::app()->params['api-domain']."/api/collections/".
+                       Yii::app()->params['resourceMapConfig']['public_collection_id'].
+                       ".json?page=all&Comm_FacName={$name}";
+                       
+            }
+            
                 $response = RestUtility::execCurl($url);
                 $result = CJSON::decode($response,true);
                 $totalItemCount = (int)$result['count'];
@@ -111,7 +120,7 @@ class CurationController extends Controller
                     );
                  
                 $this->renderPartial('_facilityGrid', array('sites'=>$sites));
-            }
+            
         }
         
         
@@ -183,7 +192,7 @@ class CurationController extends Controller
             
             $model->note = $site['note'];
             $model->cc_site_id = $site['id'];
-            $model->primary_site_code = $site['saved_properties'][FieldMapping::CC_PRIMARY_SITE_CODE];
+            $model->primary_site_code = isset($site['saved_properties'][FieldMapping::CC_PRIMARY_SITE_CODE])?$site['saved_properties'][FieldMapping::CC_PRIMARY_SITE_CODE]:'';
             $model->version_id = $site['version'];
             $model->requested_by = Yii::app()->user->getState('user_id');
             $model->request_type = $site['request_type'];
@@ -259,9 +268,7 @@ class CurationController extends Controller
                      $site = CJSON::decode($response);
                      $site['note'] = $model->note;
                      $site['request_type'] = ChangeRequest::TYPE_CREATE;
-                     $site['saved_properties'] = $site['properties'];
-                     
-                     
+                     $site['saved_properties'] = $site['properties'];  
                          if(isset($site['id'])){
 
                              $this->onSiteCreateRequest = array($this,'logChangeRequest');
@@ -369,19 +376,32 @@ class CurationController extends Controller
         }
         
         public function actionDeleteSite($psc,$pc_id){
-            $result = $this->loadFacilityByPSC($psc,  
+            
+            if(Yii::app()->request->isAjaxRequest){
+                $result = $this->loadFacilityByPSC($psc,  
                     Yii::app()->params['resourceMapConfig']['curation_collection_id']);
-            $cc_site_id = $result['sites'][0]['id'];
-            $changeRequest = new ChangeRequest();
-            $changeRequest->request_type = ChangeRequest::TYPE_DELETE;
-            $changeRequest->primary_site_code = $psc;
-            $changeRequest->cc_site_id = $cc_site_id;
-            $changeRequest->pc_site_id = $pc_id;
-            $changeRequest->status = ChangeRequest::STATUS_PENDING;
-            $changeRequest->requested_date = date('Y-m-d H:i:s');
-            $changeRequest->requested_by = Yii::app()->user->getState('id');
-           
-            echo TbHtml::alert (TbHtml::ALERT_COLOR_SUCCESS, 'Site delete request sent');
+                $cc_site_id = $result['sites'][0]['id'];
+                $changeRequest = new ChangeRequest();
+                $changeRequest->request_type = ChangeRequest::TYPE_DELETE;
+                $changeRequest->primary_site_code = $psc;
+                $changeRequest->cc_site_id = $cc_site_id;
+                $changeRequest->pc_site_id = $pc_id;
+                $changeRequest->status = ChangeRequest::STATUS_PENDING;
+                $changeRequest->requested_date = date('Y-m-d H:i:s');
+                $changeRequest->requested_by = Yii::app()->user->getState('user_id');
+                if($changeRequest->save()){
+                 $note = new ChangeRequestNote();
+                 $note->change_request_id = $changeRequest->id;
+                 $note->user_id = Yii::app()->user->getState('user_id');
+                 $note->note = 'Wants to delete';//need to be changed to get from the user
+                 $note->save();
+                 echo 'Site delete request sent';
+                }else{
+                    echo 'Site delete request not sent';
+                }
+            }
+            
+            
         }
         
         public function generateCurationForm($formModel){
@@ -553,6 +573,18 @@ class CurationController extends Controller
                        $response = RestUtility::execCurlPost($url, $params);
                        $site = CJSON::decode($response,true);
                        if(isset($site['id'])){
+                           $data = array(
+                               'properties'=>array(
+                                 ''.FieldMapping::CC_PRIMARY_SITE_CODE.''=>$site['properties'][FieldMapping::PC_PRIMARY_SITE_CODE]
+                               )
+                           );
+                           $json = CJSON::encode($data);
+                           $params = array('site'=>$json);
+                            $url = Yii::app()->params['api-domain']."/collections/".
+                            Yii::app()->params['resourceMapConfig']['curation_collection_id'].
+                           "/sites/{$changeRequest->cc_site_id}/partial_update";
+                           $response = RestUtility::execCurlPost($url, $params);
+                           $changeRequest->primary_site_code = $site['properties'][FieldMapping::PC_PRIMARY_SITE_CODE];
                            $changeRequest->pc_site_id = $site['id'];
                            $changeRequest->status = ChangeRequest::STATUS_APPROVED;
                            $changeRequest->reviewed_by = Yii::app()->user->getState('user_id');

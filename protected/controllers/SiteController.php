@@ -97,6 +97,60 @@ class SiteController extends Controller
 		// display the login form
 		$this->render('login',array('model'=>$model));
 	}
+        
+        public function actionOpenid(){
+           
+            try{
+                 
+                $openid = new LightOpenID(Yii::app()->request->serverName);
+                if(!$openid->mode){
+                     
+                    if(isset($_GET['login'])){
+                        
+                        $openid->identity = Yii::app()->params['openidServerAddress'];
+                        $openid->required = array(
+                            'contact/email',
+                        );
+                        header('Location: '.$openid->authUrl());
+                    }
+                }elseif($openid->mode == 'cancel'){
+                    $this->redirect(array('site/login'));
+                }else{
+                    if($openid->validate()){
+                        $attributes = $openid->getAttributes();
+                        $user_check = User::model()->findByAttributes(array(
+                            'openid_identity'=>$openid->identity
+                        ));
+                                
+                        if($user_check == null){
+                           
+                            $new_user = new User();
+                            $new_user->email = $attributes['contact/email'];
+                            $new_user->openid_identity = $openid->identity;
+                            $new_user->validate();
+                            if($new_user->validate()){
+                                $new_user->save();
+                            }
+                        }
+                        
+                        $identity = new OpenIDUserIdentity($attributes['contact/email'], '');
+                        $identity->authenticate();
+                        if($identity->errorCode === OpenIDUserIdentity::ERROR_NONE){
+                            $duration = 3600*24*30; //30 days
+                            Yii::app()->user->login($identity,$duration);
+                        }
+                        
+                        $this->redirect(Yii::app()->homeUrl);
+                        
+                    }else{
+                         $this->redirect(array('site/login'));
+                    }
+                }
+                
+            }catch(Exception $ex){
+                echo TbHtml::alert(TbHtml::ALERT_COLOR_ERROR, $ex->getMessage());
+            }
+        }
 
 	/**
 	 * Logs out the current user and redirect to homepage.

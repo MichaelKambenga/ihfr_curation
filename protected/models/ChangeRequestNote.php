@@ -96,4 +96,13 @@ class ChangeRequestNote extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        public function sanitize(){
+            $sentences ='';
+            $sentencesArray = str_split(CHtml::encode($this->note), 100);
+                foreach($sentencesArray as $sentence){
+                    $sentences.= $sentence."<br >";
+                }
+            return $sentences;
+        }
 }

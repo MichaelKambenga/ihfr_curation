@@ -29,19 +29,32 @@
   
     <div id="right-panel" style="padding: 1%;padding-left: 2%;width: 68%;clear:right;float:left;min-height: 300px; border-left: 1px solid #D9DEE4;">
    
-    <?php echo TbHtml::beginFormTb(TbHtml::FORM_LAYOUT_SEARCH); ?>
-    <?php echo TbHtml::searchQueryField('search','',array('id'=>'search_text_field','placeholder'=>'Search by public site code')); ?>
-    <?php echo TbHtml::ajaxButton('Search',$this->createUrl('SearchFacilityByPSCode'),
-                      array(
-                                'type'=>'GET',
-                                'data'=>array('search_query'=>'js: $("#search_text_field").val()'),
-                                'update'=>'#facilityGrid'
-                           )
-            )
+    <?php //echo TbHtml::beginFormTb(TbHtml::FORM_LAYOUT_SEARCH); ?>
+    <?php //echo TbHtml::searchQueryField('search','',array('id'=>'search_text_field','placeholder'=>'Search by public site code')); ?>
+    <?php 
+//    echo TbHtml::ajaxButton('Search',$this->createUrl('SearchFacilityByPSCode'),
+//                      array(
+//                                'type'=>'GET',
+//                                'data'=>array('search_query'=>'js: $("#search_text_field").val()'),
+//                                'update'=>'#facilityGrid'
+//                           )
+//            )
     ?>
     <?php echo TbHtml::endForm(); ?>
-
-   
+    
+    <?php echo TbHtml::textField('search-text-field', '', 
+            array(
+                'append'=>  TbHtml::buttonDropdown('Search by',
+                        array(
+                        array('label' => 'Public site code', 'url' => '#','id'=>'ps_code'),
+                        array('label' => 'Facility Name', 'url' => '#','id'=>'facName'),
+                        ), 
+                 array('span'=>1)),
+            )
+            )
+                ;?>
+    <br /><br />
+    
     <?php echo TbHtml::link('Create facility',$this->createUrl('createSite'), array('class'=>'btn btn-info')) ?>
     <br /><br />
     <div id="gridContainer">
@@ -49,19 +62,17 @@
     </div>
     
     </div>
-    
 </div>
 
 <script type="text/javascript">
-/*<![CDATA[*/
 
-jQuery(document).on('click','ul#menu-treeview a',function() {
+$(document).on('click','ul#menu-treeview a',function() {
 	
 	var th = this,
 		afterAjaxUpdate = function(){};
-	jQuery('#facilityGrid').yiiGridView('update', {
+	$('#facilityGrid').yiiGridView('update', {
 		type: 'GET',
-		url: jQuery(this).attr('href'),
+		url: $(this).attr('href'),
 		success: function(data) {
                         $('#gridContainer').html(data);
 		
@@ -73,6 +84,31 @@ jQuery(document).on('click','ul#menu-treeview a',function() {
 	return false;
 });
 
-/*]]>*/
+
+$(document).on('click','.dropdown-menu #ps_code a',function(){
+    
+    var query = $("#search-text-field").val();
+    $.get("<?php echo $this->createUrl("SearchFacility"); ?>",
+           {'code':query},
+           function(data,status){
+               $("#facilityGrid").html(data);
+           }
+     );
+    
+    return false;
+});
+
+$(document).on('click','.dropdown-menu #facName a',function(){
+    
+    var query = $("#search-text-field").val();
+    $.get("<?php echo $this->createUrl("SearchFacility"); ?>",
+           {'name':query},
+           function(data,status){
+               $("#facilityGrid").html(data);
+           }
+     );
+    
+    return false;
+});
 </script>
 

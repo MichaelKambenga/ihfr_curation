@@ -59,7 +59,7 @@ class ChangeRequest extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('primary_site_code, requested_by, request_type, requested_date', 'required'),
+			array('requested_by, request_type, requested_date', 'required'),
 			array('cc_site_id, requested_by, reviewed_by', 'numerical', 'integerOnly'=>true),
 			array('primary_site_code, version_id, request_type, status', 'length', 'max'=>45),
 			array('reviewed_date', 'safe'),
@@ -186,12 +186,38 @@ class ChangeRequest extends CActiveRecord
         }
         
        public function retrieveNewSiteFields(){
+           $fieldsArray = array();
            $curationController = new CurationController('curation');
            $site = $curationController->loadFacility($this->cc_site_id, 
                     Yii::app()->params['resourceMapConfig']['curation_collection_id']
                    );
+           if($site){
+                $fields = self::getFieldValues($site['properties'],
+                         Yii::app()->params['resourceMapConfig']['curation_collection_id']);
+
+                foreach($fields as $key=>$field){
+                    if(!is_array($field)){
+                        $fieldsArray[$key] = $field;
+                    }
+                    else{
+                        $concatValues = '';
+                        foreach($field as $k=>$value){
+                            $concatValues.=$value.'<br />';
+                        }
+                        $fieldsArray[$key] = $concatValues;
+                    }
+                }
+            }
+           return $fieldsArray;
+       }
+       
+       public function retrieveSiteFields($id,$collection_id){
+           $curationController = new CurationController('curation');
+           $site = $curationController->loadFacility($id, 
+                   $collection_id
+                   );
            $fields = self::getFieldValues($site['properties'],
-                    Yii::app()->params['resourceMapConfig']['curation_collection_id']);
+                    $collection_id);
            $fieldsArray = array();
            foreach($fields as $key=>$field){
                if(!is_array($field)){

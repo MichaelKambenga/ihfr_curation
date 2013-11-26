@@ -24,9 +24,9 @@
     </div>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'node_id'); ?>
-        <?php echo $form->textField($model, 'node_id', array('size' => 45, 'maxlength' => 45)); ?>
-        <?php echo $form->error($model, 'node_id'); ?>
+        <?php //echo $form->labelEx($model, 'node_id'); ?>
+        <?php //echo $form->textField($model, 'node_id', array('size' => 45, 'maxlength' => 45)); ?>
+        <?php //echo $form->error($model, 'node_id'); ?>
     </div>
 
     <div class="row">

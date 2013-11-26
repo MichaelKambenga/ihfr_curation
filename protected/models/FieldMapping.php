@@ -7,6 +7,7 @@
  * @property integer $id
  * @property string $cc_field_id
  * @property string $pc_field_id
+ * @property string $field_name
  * @property string $semantics
  * @property string $cc_field_structure cache
  * @property string $pc_field_structure cache
@@ -20,6 +21,8 @@ class FieldMapping extends CActiveRecord
 	 */
         const PC_HIERARCHY_FIELD_ID = 1629;
         const CC_HIERARCHY_FIELD_ID = 1810;
+        
+        const PC_PRIMARY_SITE_CODE = 1714;
         const CC_PRIMARY_SITE_CODE = 1814;
         
 	public static function model($className=__CLASS__)
@@ -44,7 +47,7 @@ class FieldMapping extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('cc_field_id, pc_field_id', 'length', 'max'=>45),
-			array('semantics', 'length', 'max'=>255),
+			array('field_name', 'length', 'max'=>255),
 			array('cc_field_structure,pc_field_structure', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -72,6 +75,7 @@ class FieldMapping extends CActiveRecord
 			'id' => 'ID',
 			'cc_field_id' => 'Cc Field',
 			'pc_field_id' => 'Pc Field',
+                        'field_name'=>'Field Name',
 			'semantics' => 'Semantics',
 			'cc_field_structure' => 'Cc Field Structure',
                         'pc_field_structure' => 'Pc Fieald Structure',
@@ -93,6 +97,7 @@ class FieldMapping extends CActiveRecord
 		$criteria->compare('cc_field_id',$this->cc_field_id,true);
 		$criteria->compare('pc_field_id',$this->pc_field_id,true);
 		$criteria->compare('semantics',$this->semantics,true);
+                $criteria->compare('field_name',$this->field_name,true);
 		$criteria->compare('cc_field_structure',$this->cc_field_structure,true);
 
 		return new CActiveDataProvider($this, array(
@@ -111,7 +116,7 @@ class FieldMapping extends CActiveRecord
               $attr ="public function attributeLabels() {
                   return array(";
               foreach($models as $model){
-                  $attr.= " '_".$model->cc_field_id."'=>'"."$model->semantics"."',<br />";
+                  $attr.= " '_".$model->cc_field_id."'=>'"."$model->field_name"."',<br />";
               }      
               $attr .= " );<br />}";
               
