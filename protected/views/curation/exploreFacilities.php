@@ -64,6 +64,7 @@
     </div>
 </div>
 
+
 <script type="text/javascript">
 
 $(document).on('click','ul#menu-treeview a',function() {
@@ -81,6 +82,18 @@ $(document).on('click','ul#menu-treeview a',function() {
 			return afterAjaxUpdate('#facilityGrid', data,XHR);
 		}
 	});
+        
+            //highlight treeview on selected node
+            $(this).closest('div').find('a').each(
+                      function(){
+                          $(this).css('background-color','#fff');
+                          $(this).children(0).attr('class','icon-folder-close');
+                      }
+            );
+            $(this).css('background-color','#ccc');
+            $(this).css('color','#000');
+            $(this).children(0).attr('class','icon-folder-open');
+            
 	return false;
 });
 

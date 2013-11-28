@@ -189,7 +189,6 @@ class CurationController extends Controller
         public function logChangeRequest($event){
             $model = new ChangeRequest();
             $site = $event->params;
-            
             $model->note = $site['note'];
             $model->cc_site_id = $site['id'];
             $model->primary_site_code = isset($site['saved_properties'][FieldMapping::CC_PRIMARY_SITE_CODE])?$site['saved_properties'][FieldMapping::CC_PRIMARY_SITE_CODE]:'';
@@ -198,7 +197,6 @@ class CurationController extends Controller
             $model->request_type = $site['request_type'];
             $model->status = ChangeRequest::STATUS_PENDING;
             $model->requested_date = date('Y-m-d H:i:s');
-            
             $model->save();
             $this->logChangeRequestNote($model);
             $this->logChangeRequestFields($model->id, $site);
