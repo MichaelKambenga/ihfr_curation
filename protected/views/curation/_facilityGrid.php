@@ -6,20 +6,21 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 //    'filter' => $person,
 //    'template' => "{items}",
     'columns' => array(
+//    array(
+//    'name' => 'id',
+//    'header' => '#',
+//    'htmlOptions' => array('color' =>'width: 60px'),
+//    ),
     array(
-    'name' => 'id',
-    'header' => '#',
-    'htmlOptions' => array('color' =>'width: 60px'),
+    'name' => 'psc',
+    'header' => 'Primary Site Code',
+    'value'=>'isset($data["properties"]["Fac_IDNumber"])?$data["properties"]["Fac_IDNumber"]:"Not set"'
     ),
     array(
     'name' => 'name',
     'header' => 'Name',
     ),
-    array(
-    'name' => 'psc',
-    'header' => 'PSC',
-    'value'=>'isset($data["properties"]["Fac_IDNumber"])?$data["properties"]["Fac_IDNumber"]:"Not set"'
-    ),
+    
 //    array(
 //    'name' => 'location',
 //    'header' => 'Location',
@@ -37,7 +38,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     ),
     array(
         'class'=>'bootstrap.widgets.TbButtonColumn',
-        'template'=>'{view}{update}{remove}',
+        'template'=>'{update}{remove}',
         'buttons'=>array(
             'remove'=>array(
                 'label'=>'',
@@ -63,9 +64,9 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                 ),
             
             'update'=>array('url'=>'$this->grid->controller->createUrl("curation/updateSite",array("id"=>$data["properties"]["Fac_IDNumber"]))'),
-            'view'=>array(
-                'url'=>'$this->grid->controller->createUrl("curation/view",array("id"=>$data["id"]))',
-                ),
+//            'view'=>array(
+//                'url'=>'$this->grid->controller->createUrl("curation/view",array("id"=>$data["id"]))',
+//                ),
         ),
     ),
     ),

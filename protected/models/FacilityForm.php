@@ -127,6 +127,14 @@ public function isLocationWithinRange(){
     }
 }
 
+public function validateCTCID(){
+    
+    //FIXME
+    preg_match('/00-00-0000/', $this->_1817);
+}
+
+
+
 public function attributeLabels() { 
     return array( 
             '_1810'=>'Administrative Divisions',

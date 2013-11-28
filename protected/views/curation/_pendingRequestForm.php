@@ -30,14 +30,14 @@
 <tr >
 <td></td>
 <td>
-    <?php echo TbHtml::button('Reject', array(
+    <?php echo TbHtml::button('Reject creation', array(
                 'class'=>'btn btn-default',
                 'onclick'=>'$("'.'#reject-dialog'.$model->id.'").dialog("open");return false;',
                )
     )?>
     <span>&nbsp;&nbsp;</span>
 
-    <?php echo TbHtml::button('Approve', array(
+    <?php echo TbHtml::button('Approve creation', array(
                 'class'=>'btn btn-info',
                 'onclick'=>'$("'.'#approve-dialog'.$model->id.'").dialog("open");return false;',
                )
@@ -122,14 +122,14 @@
 <tr >
 <td></td>
 <td>
-    <?php echo TbHtml::button('Reject', array(
+    <?php echo TbHtml::button('Reject update', array(
                 'class'=>'btn btn-default',
                 'onclick'=>'$("'.'#reject-dialog'.$model->id.'").dialog("open");return false;',
                )
     )?>
     <span>&nbsp;&nbsp;</span>
 
-    <?php echo TbHtml::button('Approve', array(
+    <?php echo TbHtml::button('Approve update', array(
                 'class'=>'btn btn-info',
                 'onclick'=>'$("'.'#approve-dialog'.$model->id.'").dialog("open");return false;',
                )
@@ -207,14 +207,14 @@
 <tr >
 <td></td>
 <td>
-    <?php echo TbHtml::button('Reject', array(
+    <?php echo TbHtml::button('Reject deletion', array(
                 'class'=>'btn btn-default',
                 'onclick'=>'$("'.'#reject-dialog'.$model->id.'").dialog("open");return false;',
                )
     )?>
     <span>&nbsp;&nbsp;</span>
 
-    <?php echo TbHtml::button('Approve', array(
+    <?php echo TbHtml::button('Approve deletion', array(
                 'class'=>'btn btn-info',
                 'onclick'=>'$("'.'#approve-dialog'.$model->id.'").dialog("open");return false;',
                )
