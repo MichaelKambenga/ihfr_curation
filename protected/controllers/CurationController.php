@@ -132,9 +132,9 @@ class CurationController extends Controller
                         if(array_key_exists('name', $node)){
                             if(array_key_exists('sub', $node)){
                                 $subNodes = $this->parseHierarchy($node['sub']);
-                                $treeNodeArray = array('text'=>'<span style="color:#3AA1BF;">'.CHtml::link(TbHtml::icon(TbHtml:: ICON_FOLDER_CLOSE).$node['name'],$this->createUrl('facilities',array('node_id'=>$node['id']))).'</span>','children'=>$subNodes);
+                                $treeNodeArray = array('text'=>'<span style="color:#000;">'.CHtml::link(TbHtml::icon(TbHtml:: ICON_FOLDER_CLOSE).$node['name'],$this->createUrl('facilities',array('node_id'=>$node['id']))).'</span>','children'=>$subNodes);
                             }else{
-                                $treeNodeArray = array('text'=>'<span style="color:#3AA1BF;">'.CHtml::link(TbHtml::icon(TbHtml:: ICON_FOLDER_CLOSE).$node['name'],$this->createUrl('facilities',array('node_id'=>$node['id']))).'</span>');
+                                $treeNodeArray = array('text'=>'<span style="color:#000;">'.CHtml::link(TbHtml::icon(TbHtml:: ICON_FOLDER_CLOSE).$node['name'],$this->createUrl('facilities',array('node_id'=>$node['id']))).'</span>');
                             }
                             array_push($treeArray, $treeNodeArray);                       
                         }
