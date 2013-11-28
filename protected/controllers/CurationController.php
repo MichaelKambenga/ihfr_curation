@@ -10,12 +10,18 @@ class CurationController extends Controller
            );
        }
        
-        public function accessRules() {
+          public function accessRules() {
             
             return array(
-                array('allow',
-                    'actions'=>array('DeleteSite','Reject','Approve','UpdateSite','CreateSite','Facilities','pendingRequests','SearchFacility','viewFacility','view'),
-                    'users'=>array('@'),
+                array(
+                    'allow',
+                    'actions'=>array('DeleteSite','UpdateSite','CreateSite','Facilities','SearchFacility','viewFacility','view'),
+                    'roles'=>array('Request Change Privilege'),
+                    ),
+                array(
+                    'allow',
+                    'actions'=>array('Reject','Approve','Facilities','pendingRequests'),
+                    'roles'=>array('Approval Change Privilege'),
                     ),
                 array('deny', // deny all users
                 'users' => array('*'),

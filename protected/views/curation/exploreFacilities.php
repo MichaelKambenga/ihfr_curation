@@ -55,7 +55,12 @@
                 ;?>
     <br /><br />
     
-    <?php echo TbHtml::link('Create facility',$this->createUrl('createSite'), array('class'=>'btn btn-info')) ?>
+    <?php 
+    if(Yii::app()->user->checkAccess('Request Change Privilege')){
+        
+        echo TbHtml::link('Create facility',$this->createUrl('createSite'), array('class'=>'btn btn-info')) ;
+      }   
+     ?>
     <br /><br />
     <div id="gridContainer">
        <?php $this->renderPartial('_facilityGrid',array('sites'=>$sites));?>
