@@ -28,15 +28,6 @@ class OpenIDUserIdentity extends CUserIdentity{
         }
         else{
                
-            //FIXME: change this to use database cache
-                if(!Yii::app()->cache->get('hierarchy')){
-                    Yii::app()->cache->set('hierarchy', Layer::loadHierarchy(), 0); 
-                }
-                
-                if(!Yii::app()->cache->get('layers')){
-                    Yii::app()->cache->set('layers',  Layer::loadLayers(),0);   
-                }
-                
                 Yii::app()->user->setState('node_id',$user->node_id);
                 Yii::app()->user->setState('user_id',$user->id);
                 $this->_id = $user->id;

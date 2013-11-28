@@ -17,4 +17,3 @@ $this->pageTitle=Yii::app()->name;
 array('color' => TbHtml::BUTTON_COLOR_INFO, 'size' => TbHtml::BUTTON_SIZE_LARGE))
         );
         ?>
- 

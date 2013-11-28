@@ -91,7 +91,8 @@ class CurationController extends Controller
                 Yii::app()->end();
             }
             
-            $result = Yii::app()->cache->get('hierarchy');
+            $hierarchyCache =SystemCache::model()->findByAttributes(array('name'=>'hierarchy'));
+            $result = CJSON::decode($hierarchyCache->value);
             $rootNode = Yii::app()->user->getState('node_id');
             $filteredData = Layer::search($result['config']['hierarchy'],'id',$rootNode);
             $data = $this->parseHierarchy($filteredData);

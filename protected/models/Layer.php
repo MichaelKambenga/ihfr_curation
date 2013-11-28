@@ -18,7 +18,6 @@ class Layer {
                 ."/layers.json";
         $response = RestUtility::execCurl($url);
         $layers = CJSON::decode($response, true);
-        
         return $layers;
     }
     
@@ -27,7 +26,6 @@ class Layer {
                Yii::app()->params['resourceMapConfig']['public_collection_id'].
                "/fields/".FieldMapping::PC_HIERARCHY_FIELD_ID.".json";
          $response = RestUtility::execCurl($url);
-         
          return CJSON::decode($response,true);
     }
     
