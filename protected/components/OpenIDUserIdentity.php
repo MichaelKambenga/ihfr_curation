@@ -12,6 +12,7 @@
  */
 class OpenIDUserIdentity extends CUserIdentity{
     
+    private $_id;
     public function authenticate() {
         
         $user = User::model()->find('email=:email',
@@ -38,12 +39,17 @@ class OpenIDUserIdentity extends CUserIdentity{
                 
                 Yii::app()->user->setState('node_id',$user->node_id);
                 Yii::app()->user->setState('user_id',$user->id);
+                $this->_id = $user->id;
                 Yii::app()->user->setState('active',$user->active);
                 $this->errorCode = self::ERROR_NONE;
         }
           
         return !$this->errorCode;
 
+    }
+    
+    public function getId() {
+        return $this->_id;
     }
 }
 
