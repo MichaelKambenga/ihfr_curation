@@ -1,3 +1,17 @@
+<?php ?>
+
+<script type="text/javascript">
+    var trashButton ='link';
+    
+    function deleteFacility(){
+      $.get(trashButton,function(data,status){
+         //alert(data);
+         $("#delete-model-message .modal-body p").html(data);
+         $("#delete-model-message").modal();
+      });
+   }
+</script>
+
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
     'id'=>'facilityGrid',
@@ -46,21 +60,24 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                 'options'=>array(
                     'class'=>  TbHtml::ICON_TRASH,
                     'title'=>'Delete',
-                    'data-toggle'=>'#modal',
-                    'data-target'=>'#myModal'
                  ),
                 'click'=>'js:function(){
-                    var flag = confirm("Are you sure you want to request deletion of this health facility?  Note that if a facility has closed down, its operational status should be changed and it should not be deleted.  Deletion should only be for cases of facility duplication or mistaken facility records representing a facility which never existed.");
-                    if(flag==true){
-                      $.get(this,function(data,status){
-                         alert(data);
-                      });
-                    }
-                    else{
-                      return false;
-                    }
-                    return false;
-                    }'
+                           $("#delete-model-dialog").modal();
+                           trashButton = this;
+                           return false;
+                      }'
+//                'click'=>'js:function(){
+//                    var flag = confirm("Are you sure you want to request deletion of this health facility?  Note that if a facility has closed down, its operational status should be changed and it should not be deleted.  Deletion should only be for cases of facility duplication or mistaken facility records representing a facility which never existed.");
+//                    if(flag==true){
+//                      $.get(this,function(data,status){
+//                         alert(data);
+//                      });
+//                    }
+//                    else{
+//                      return false;
+//                    }
+//                    return false;
+//                    }'
                 ),
             
             'update'=>array('url'=>'$this->grid->controller->createUrl("curation/updateSite",array("id"=>$data["properties"]["Fac_IDNumber"]))'),
@@ -72,3 +89,33 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     ),
     )); 
 ?>
+
+ <?php
+    $this->widget('bootstrap.widgets.TbModal', array(
+        'id' => 'delete-model-dialog',
+        'header' => 'Confirm delete',
+        'content' => '<p>
+           Are you sure you want to request deletion of this health facility?  
+           Note that if a facility has closed down, 
+           its operational status should be changed and it should not be deleted.  
+           Deletion should only be for cases of facility duplication or mistaken facility records
+           representing a facility which never existed. 
+        </p>',
+        'footer' => array(
+            TbHtml::button('Cancel', array('data-dismiss' => 'modal')),
+            TbHtml::button('OK', array('data-dismiss' => 'modal','onclick'=>'js:deleteFacility();' ,'color' => TbHtml::BUTTON_COLOR_PRIMARY)),
+            
+        ),
+    ));
+   ?>
+
+<?php
+    $this->widget('bootstrap.widgets.TbModal', array(
+        'id' => 'delete-model-message',
+        'header' => 'Alert',
+        'content' => '<p></p>',
+        'footer' => array(
+            TbHtml::button('Close', array('data-dismiss' => 'modal')),
+        ),
+    ));
+   ?>

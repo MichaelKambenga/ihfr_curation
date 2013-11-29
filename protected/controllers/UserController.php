@@ -28,7 +28,7 @@ class UserController extends Controller {
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update'),
+                'actions' => array('create', 'update','LoadHierarchy'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -76,12 +76,31 @@ class UserController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
+    
+    public function actionLoadHierarchy(){
+        
+        $hierarchyModel = SystemCache::model()->findByAttributes(array('name'=>'hierarchy'));
+        $hierarchyArray = CJSON::decode($hierarchyModel->value);
+        $data = Layer::parseHierarchy($hierarchyArray['config']['hierarchy']);
+        $this->widget('CTreeView',array(
+                    'id'=>'tree-node-id',
+                    'data'=>$data,
+                    'control'=>'#treecontrol',
+                    'animated'=>'fast',
+                    'collapsed'=>true,
+                    'htmlOptions'=>array(
+                    'class'=>'treeview-gray',
+                                    ) 
+                              ) 
+                     );
+    }
+    
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
-
+       
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
             if ($model->save()) {
@@ -97,7 +116,7 @@ class UserController extends Controller {
             $this->layout = '//layouts/iframe';
 
         $this->render('update', array(
-            'model' => $model,
+            'model' => $model
         ));
     }
 

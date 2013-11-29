@@ -46,7 +46,43 @@
         <?php echo $form->textField($model, 'phone_number', array('size' => 45, 'maxlength' => 45)); ?>
         <?php echo $form->error($model, 'phone_number'); ?>
     </div>
-
+    <div class="row">
+       
+    <?php 
+        $data = array();
+        $options = Layer::getAreaOptions();
+        foreach($options['zones'] as $option){
+            $data[$option['id']] = $option['name'];
+        }
+        echo TbHtml::dropDownListControlGroup('zone', '', $data);
+    ?>
+                       
+    </div>
+    <div class="row">
+       
+    <?php 
+        $data = array();
+        $options = Layer::getAreaOptions();
+        foreach($options['regions'] as $option){
+            $data[$option['id']] = $option['name'];
+        }
+        echo TbHtml::dropDownListControlGroup('region', '', $data);
+    ?>
+                       
+    </div>
+    
+    <div class="row">
+       
+    <?php 
+        $data = array();
+        $options = Layer::getAreaOptions();
+        foreach($options['districts'] as $option){
+            $data[$option['id']] = $option['name'];
+        }
+        echo TbHtml::activeDropDownListControlGroup($model, 'node_id',$data);
+    ?>
+                       
+    </div>
     <div class="row buttons">
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save', array('class' => 'btn btn-info')); ?>
     </div>
@@ -54,3 +90,7 @@
     <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+
+
+
+    

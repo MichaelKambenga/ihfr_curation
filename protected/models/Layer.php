@@ -69,6 +69,50 @@ class Layer {
 
             return $results;
       }
+      
+      public static function getAdministrativeDivisions($hierarchy){
+        
+        $arrayElements = array();
+        if (is_array($hierarchy)) {
+            foreach ($hierarchy as $node) {
+                if (!is_array($node)) {
+                    $arrayElements[] = $node;
+                } else {
+                   $returnedArray = self::getAdministrativeDivisions($node);
+                   $arrayElements = array_merge($arrayElements, $returnedArray);
+                }
+            }
+        }
+      return $arrayElements;
+
+
+    }
+      
+      public static function getAreaOptions() {
+          
+        $hierarchyModel = SystemCache::model()->findByAttributes(array('name'=>'hierarchy'));
+        $hierarchyArray = CJSON::decode($hierarchyModel->value);
+        $arrayElements = self::getAdministrativeDivisions($hierarchyArray['config']['hierarchy']);
+        
+        $adminDivisions = array('zones'=>array(),'regions'=>array(),'districts'=>array());
+        foreach($arrayElements as $key=>$value){
+         
+          if(preg_match('/^[A-Z][A-Z]\.[A-Z][A-Z]$/', $value)){
+              array_push($adminDivisions['zones'],array('id'=>$value,'name'=>$arrayElements[$key+1]));
+             
+          }
+          if(preg_match('/^[A-Z][A-Z]\.[A-Z][A-Z]\.[A-Z][A-Z]$/', $value)){
+              array_push($adminDivisions['regions'],array('id'=>$value,'name'=>$arrayElements[$key+1]));
+          }
+          if(preg_match('/^[A-Z][A-Z]\.[A-Z][A-Z]\.[A-Z][A-Z]\.[A-Z][A-Z]$/', $value)){
+               array_push($adminDivisions['districts'],array('id'=>$value,'name'=>$arrayElements[$key+1]));
+          }
+      }
+      
+      return $adminDivisions;
+      
+      }
+   
    
 }
 
