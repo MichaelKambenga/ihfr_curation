@@ -3,7 +3,7 @@
 
 $this->pageTitle=Yii::app()->name;
 ?>
-<img src="<?php echo Yii::app()->request->baseUrl?>/images/banner.jpg" />
+<img src="<?php echo Yii::app()->request->baseUrl?>/images/logo.jpg"/><img src="<?php echo Yii::app()->request->baseUrl?>/images/banner.jpg" />
 <p></p>
 <?php if((Yii::app()->user->getState('active')== User::INACTIVE) && !Yii::app()->user->isGuest):?>
 <div class="well">
