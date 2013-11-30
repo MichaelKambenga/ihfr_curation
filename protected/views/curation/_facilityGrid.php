@@ -66,18 +66,6 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                            trashButton = this;
                            return false;
                       }'
-//                'click'=>'js:function(){
-//                    var flag = confirm("Are you sure you want to request deletion of this health facility?  Note that if a facility has closed down, its operational status should be changed and it should not be deleted.  Deletion should only be for cases of facility duplication or mistaken facility records representing a facility which never existed.");
-//                    if(flag==true){
-//                      $.get(this,function(data,status){
-//                         alert(data);
-//                      });
-//                    }
-//                    else{
-//                      return false;
-//                    }
-//                    return false;
-//                    }'
                 ),
             
             'update'=>array('url'=>'$this->grid->controller->createUrl("curation/updateSite",array("id"=>$data["properties"]["Fac_IDNumber"]))'),

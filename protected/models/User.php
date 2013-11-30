@@ -47,7 +47,7 @@ class User extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('email', 'required'),
+            array('email,node_id', 'required'),
             array('id, active,position_id, organization_id', 'numerical', 'integerOnly' => true),
             array('email,phone_number,node_id', 'length', 'max' => 45),
             // The following rule is used by search().
@@ -78,7 +78,7 @@ class User extends CActiveRecord {
             'id' => 'ID',
             'firstname'=>'Firstname',
             'lastname'=>'Lastname',
-            'node_id' => 'Hierachy NodeID',
+            'node_id' => 'District',
             'position_id' => 'Position',
             'organization_id' => 'Organization',
             'email' => 'Email',

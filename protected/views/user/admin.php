@@ -20,6 +20,17 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
+<script type="text/javascript">
+    var trashButton ='link';
+    
+    function deleteUser(){
+      $.get(trashButton,function(data,status){
+         $("#delete-model-message .modal-body p").html(data);
+         $("#delete-model-message").modal();
+         $.fn.yiiGridView.update('user-grid');
+      });
+   }
+</script>
 
 <?php echo TbHtml::pageHeader('', 'User Management') ?>
 
@@ -56,6 +67,10 @@ $('.search-form form').submit(function(){
                 'htmlOptions' => array('id' => 'text', 'class' => 'name_text', 'size' => 30),
             ),
             array(
+                'header'=>'Status',
+                'value'=>'$data->active==1?"Active":"Inactive"'
+            ),
+            array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
                 'template' => '{view} {update} {delete}',
                 'header' => 'Options',
@@ -63,10 +78,16 @@ $('.search-form form').submit(function(){
                     'view' => array(
                     ),
                     'update' => array(
-                        'url' => '#',
-                        'click' => 'js: function(){$("#myModal").modal();}',
+//                        'url' => '#',
+//                        'click' => 'js: function(){$("#user-edit-modal").modal();}',
                     ),
                     'delete' => array(
+                        'url' => '$this->grid->controller->createUrl("user/delete",array("id"=>$data->id))',
+                        'click' => 'js: function(){
+                            $("#user-delete-modal").modal();
+                            trashButton = this;
+                            return false;
+                            }',
                     ),
                 ),
             ),
@@ -76,30 +97,25 @@ $('.search-form form').submit(function(){
 
     <?php
     $this->widget('bootstrap.widgets.TbModal', array(
-        'id' => 'myModal',
-        'header' => 'Modal Heading',
-        'content' => '<p>One fine body...</p>',
+        'id' => 'user-delete-modal',
+        'header' => 'Confirm delete',
+        'content' => '<p>Are you sure you want to delete this user?</p>',
         'footer' => array(
-            TbHtml::button('Save Changes', array('data-dismiss' => 'modal', 'color' => TbHtml::BUTTON_COLOR_PRIMARY)),
+           TbHtml::button('Cancel', array('data-dismiss' => 'modal')),
+           TbHtml::button('OK', array('data-dismiss' => 'modal','onclick'=>'js:deleteUser();' , 'color' => TbHtml::BUTTON_COLOR_PRIMARY)),
+        ),
+    ));
+    ?>
+    
+    <?php
+    $this->widget('bootstrap.widgets.TbModal', array(
+        'id' => 'delete-model-message',
+        'header' => 'Alert',
+        'content' => '<p></p>',
+        'footer' => array(
             TbHtml::button('Close', array('data-dismiss' => 'modal')),
         ),
     ));
-    ?>
- 
-    <?php
-    $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
-        'id' => 'edit-dialog',
-        'options' => array(
-            'title' => 'Edit User Details',
-            'autoOpen' => false,
-            'modal' => false,
-            'width' => '670',
-            'height' => '450',
-        ),
-    ));
-    ?>
+   ?>
 
-    <?php
-    $this->endWidget();
-    ?>
 </div>

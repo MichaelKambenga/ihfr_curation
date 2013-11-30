@@ -54,7 +54,8 @@
         foreach($options['zones'] as $option){
             $data[$option['id']] = $option['name'];
         }
-        echo TbHtml::dropDownListControlGroup('zone', '', $data);
+        echo TbHtml::label('Zone', 'zone');
+        echo TbHtml::dropDownListControlGroup('zone', '', $data,array('prompt'=>'--Please select--'));
     ?>
                        
     </div>
@@ -66,7 +67,8 @@
         foreach($options['regions'] as $option){
             $data[$option['id']] = $option['name'];
         }
-        echo TbHtml::dropDownListControlGroup('region', '', $data);
+        echo TbHtml::label('Region','region');
+        echo TbHtml::dropDownListControlGroup('region', '', $data,array('prompt'=>'--Please select--'));
     ?>
                        
     </div>
@@ -79,7 +81,8 @@
         foreach($options['districts'] as $option){
             $data[$option['id']] = $option['name'];
         }
-        echo TbHtml::activeDropDownListControlGroup($model, 'node_id',$data);
+        echo TbHtml::label('District', 'node_id');
+        echo TbHtml::activeDropDownList($model, 'node_id',$data,array('prompt'=>'--Please select--'));
     ?>
                        
     </div>

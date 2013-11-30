@@ -18,5 +18,8 @@ $this->pageTitle=Yii::app()->name;
         .'<br />'
         .TbHtml::link('Learn more',$this->createUrl('site/page',array('view'=>'about')),
 array('class'=>'btn btn-large btn-info'))
+        .'<span>&nbsp;&nbsp;</span>'
+        .$link = Yii::app()->user->isGuest?TbHtml::link('Sign up',Yii::app()->params['openidSignupPage'],
+array('class'=>'btn btn-large btn-success')):''
         );
         ?>
