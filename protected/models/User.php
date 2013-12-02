@@ -8,6 +8,8 @@
  * @property integer $position_id
  * @property integer $organization_id
  * @property string $email
+ * @property string $firstname
+ * @property string $lastname
  * @property string $openid_identity
  * @property string $node_id max hierarchy node
  *
@@ -47,9 +49,9 @@ class User extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('email,node_id', 'required'),
+            array('email', 'required'),
             array('id, active,position_id, organization_id', 'numerical', 'integerOnly' => true),
-            array('email,phone_number,node_id', 'length', 'max' => 45),
+            array('email,firstname,lastname,phone_number,node_id', 'length', 'max' => 45),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id,firstname,lastname,node_id, position_id, organization_id, email,openid_identity,phone_number,active', 'safe', 'on' => 'search'),
@@ -99,9 +101,11 @@ class User extends CActiveRecord {
 
         $criteria = new CDbCriteria;
         $criteria->compare('id', $this->id);
+        $criteria->compare('firstname', $this->firstname,true);
+        $criteria->compare('lastname', $this->lastname,true);
         $criteria->compare('node_id', $this->node_id);
-        $criteria->compare('position_id', $this->position_id);
-        $criteria->compare('organization_id', $this->organization_id);
+        $criteria->compare('position_id', $this->position_id,true);
+        $criteria->compare('organization_id', $this->organization_id,true);
         $criteria->compare('email', $this->email, true);
         $criteria->compare('phone_number', $this->phone_number, true);
 
@@ -110,6 +114,12 @@ class User extends CActiveRecord {
         ));
     }
     
+    public static function hasAccess(){
+        $user_id = Yii::app()->user->id;
+        return count(AuthAssignment::model()->findAll('userid=:id',array(':id'=>$user_id)));
+    }
+    
+
     public static function getUserSignature($id){
         $model = self::model()->find(
                 'id=:id',array(':id'=>$id)

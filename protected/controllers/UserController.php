@@ -88,17 +88,14 @@ class UserController extends Controller {
             $model->attributes = $_POST['User'];
             if ($model->save()) {
                 $model->active = 1;//activate user
+                Yii::app()->user->setState('active',$model->active);
                 $model->save();
-                //$this->redirect(array('view','id'=>$model->id));
-                if (!empty($_GET['asDialog'])) {
-                    //Close the dialog, reset the iframe and update the grid
-                    echo CHtml::script("window.parent.$('#edit-dialog').dialog('close');window.parent.$('#edit-frame').attr('src','');window.parent.$.fn.yiiGridView.update('{$_GET['gridId']}');");
-                    Yii::app()->end();
-                }
+                Yii::app()->user->setFlash('completed_profile_msg',
+                        'Your profile is complete...you will have to wait for the system administrator to activate you'
+                        );
+                $this->redirect(array('site/index'));
             }
         }
-        if (!empty($_GET['asDialog']))
-            $this->layout = '//layouts/iframe';
 
         $this->render('update', array(
             'model' => $model

@@ -17,7 +17,7 @@ This curation tool is a tool to facilitate collaboration between the Ministry of
 To request the addition of a new facilities go <?php echo TbHtml::link('here',$this->createUrl('curation/createSite'), array('class'=>'btn btn-info'))?>
 </p>
 <p>
-To request an update to a facility, first search for the facility <?php echo TbHtml::link('here',$this->createUrl('curation/facility'), array('class'=>'btn btn-success'))?>
+To request an update to a facility, first search for the facility <?php echo TbHtml::link('here',$this->createUrl('curation/facilities'), array('class'=>'btn btn-success'))?>
 </p>
 <p>
 Changes that you make, if approved by MOHSW, will appear in the Online Health Facility Registry.
