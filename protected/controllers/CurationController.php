@@ -474,7 +474,7 @@ class CurationController extends Controller
                            else{
                              $data = Layer::parseHierarchy($filteredData);
                            }
-                           echo "<div class='row'>";
+                           echo "<div class='row tree-widget'>";
                            
                            echo TbHtml::activeLabel($formModel, '_'.$fieldDetails['id']);
                            $this->widget('CTreeView',array(
