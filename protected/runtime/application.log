@@ -4041,3 +4041,80 @@ Stack trace:
 REQUEST_URI=/ihfr_curation/index.php?r=user/delete&id=6
 HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=user/admin
 ---
+2013/12/03 15:33:33 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /var/www/ihfr_curation/framework/web/auth/CAccessControlFilter.php:179
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/auth/CAccessControlFilter.php(142): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /var/www/ihfr_curation/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/ihfr_curation/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/ihfr_curation/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('admin')
+#8 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('position/admin')
+#9 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=position/admin
+HTTP_REFERER=http://localhost/ihfr_curation/
+---
+2013/12/03 15:33:36 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /var/www/ihfr_curation/framework/web/auth/CAccessControlFilter.php:179
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/auth/CAccessControlFilter.php(142): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /var/www/ihfr_curation/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/ihfr_curation/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/ihfr_curation/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('admin')
+#8 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('position/admin')
+#9 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=position/admin
+HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=position/admin
+---
+2013/12/03 15:35:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "roles/admin".' in /var/www/ihfr_curation/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('roles/admin')
+#1 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#2 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=roles/admin
+HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=site/index
+---
+2013/12/03 15:35:36 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "role/admin".' in /var/www/ihfr_curation/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('role/admin')
+#1 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#2 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=role/admin
+HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=site/index
+---
+2013/12/03 15:47:51 [error] [exception.CException] exception 'CException' with message 'PositionController cannot find the requested view "//position/navigations".' in /var/www/ihfr_curation/framework/web/CController.php:878
+Stack trace:
+#0 /var/www/ihfr_curation/protected/views/position/admin.php(4): CController->renderPartial('//position/navi...')
+#1 /var/www/ihfr_curation/framework/web/CBaseController.php(126): require('/var/www/ihfr_c...')
+#2 /var/www/ihfr_curation/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/ihfr_c...', Array, true)
+#3 /var/www/ihfr_curation/framework/web/CController.php(869): CBaseController->renderFile('/var/www/ihfr_c...', Array, true)
+#4 /var/www/ihfr_curation/framework/web/CController.php(782): CController->renderPartial('admin', Array, true)
+#5 /var/www/ihfr_curation/protected/controllers/PositionController.php(146): CController->render('admin', Array)
+#6 /var/www/ihfr_curation/framework/web/actions/CInlineAction.php(49): PositionController->actionAdmin()
+#7 /var/www/ihfr_curation/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#9 /var/www/ihfr_curation/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#10 /var/www/ihfr_curation/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#11 /var/www/ihfr_curation/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#12 /var/www/ihfr_curation/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#13 /var/www/ihfr_curation/framework/web/CController.php(291): CFilterChain->run()
+#14 /var/www/ihfr_curation/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 /var/www/ihfr_curation/framework/web/CWebApplication.php(282): CController->run('admin')
+#16 /var/www/ihfr_curation/framework/web/CWebApplication.php(141): CWebApplication->runController('position/admin')
+#17 /var/www/ihfr_curation/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#18 /var/www/ihfr_curation/index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/ihfr_curation/index.php?r=position/admin
+HTTP_REFERER=http://localhost/ihfr_curation/index.php?r=user/admin
+---

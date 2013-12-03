@@ -55,6 +55,8 @@ Yii::app()->bootstrap->register();
                                     'items' => array(
                                         array('label' => 'User Accounts', 'url' => array('user/admin'), 'visible' => Yii::app()->user->checkAccess('Administrator')),
                                         array('label' => 'User Privileges', 'url' => array('authItem/roles'), 'visible' => Yii::app()->user->checkAccess('Administrator')),
+                                        array('label' => 'Positions', 'url' => array('position/admin'), 'visible' => Yii::app()->user->checkAccess('Administrator')),
+                                        array('label' => 'Organizations', 'url' => array('organization/admin'), 'visible' => Yii::app()->user->checkAccess('Administrator')),
                                     )),
                                 array('label' => 'Logout (' . Yii::app()->user->name . ')', 'icon' => TbHtml::ICON_USER, 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
                             ),

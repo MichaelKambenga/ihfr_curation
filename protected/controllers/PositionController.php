@@ -2,11 +2,7 @@
 
 class PositionController extends Controller
 {
-	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
-	 */
-	public $layout='//layouts/column2';
+
 
 	/**
 	 * @return array action filters
@@ -33,11 +29,11 @@ class PositionController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update'),
-				'users'=>array('@'),
+				'roles'=>array('Administrator'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
-				'users'=>array('@'),
+				'roles'=>array('Administrator'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -67,11 +63,11 @@ class PositionController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Position']))
-		{
+		if (isset($_POST['Position'])) {
 			$model->attributes=$_POST['Position'];
-			if($model->save())
+			if ($model->save()) {
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('create',array(
@@ -91,11 +87,11 @@ class PositionController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Position']))
-		{
+		if (isset($_POST['Position'])) {
 			$model->attributes=$_POST['Position'];
-			if($model->save())
+			if ($model->save()) {
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('update',array(
@@ -110,11 +106,17 @@ class PositionController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		if (Yii::app()->request->isPostRequest) {
+			// we only allow deletion via POST request
+			$this->loadModel($id)->delete();
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if (!isset($_GET['ajax'])) {
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			}
+		} else {
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+		}
 	}
 
 	/**
@@ -135,8 +137,9 @@ class PositionController extends Controller
 	{
 		$model=new Position('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Position']))
+		if (isset($_GET['Position'])) {
 			$model->attributes=$_GET['Position'];
+		}
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -153,8 +156,9 @@ class PositionController extends Controller
 	public function loadModel($id)
 	{
 		$model=Position::model()->findByPk($id);
-		if($model===null)
+		if ($model===null) {
 			throw new CHttpException(404,'The requested page does not exist.');
+		}
 		return $model;
 	}
 
@@ -164,8 +168,7 @@ class PositionController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='position-form')
-		{
+		if (isset($_POST['ajax']) && $_POST['ajax']==='position-form') {
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}

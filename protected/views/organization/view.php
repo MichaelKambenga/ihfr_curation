@@ -1,7 +1,9 @@
 <?php
 /* @var $this OrganizationController */
 /* @var $model Organization */
+?>
 
+<?php
 $this->breadcrumbs=array(
 	'Organizations'=>array('index'),
 	$model->id,
@@ -18,9 +20,12 @@ $this->menu=array(
 
 <h1>View Organization #<?php echo $model->id; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
+<?php $this->widget('zii.widgets.CDetailView',array(
+    'htmlOptions' => array(
+        'class' => 'table table-striped table-condensed table-hover',
+    ),
+    'data'=>$model,
+    'attributes'=>array(
 		'id',
 		'organization_name',
 	),
