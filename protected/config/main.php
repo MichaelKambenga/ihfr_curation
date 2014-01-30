@@ -107,7 +107,7 @@ return array(
             'curation_collection_id' => '463',
             'lower_bound_latitude'=>-3.8940,
             'upper_bound_latitude'=>-1.7478,
-            'lower_bound_longitude'=>30,9889,
+            'lower_bound_longitude'=>30.9889,
             'upper_bound_longitude'=>45.0809,
             
         ),
