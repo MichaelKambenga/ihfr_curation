@@ -32,7 +32,7 @@ class ChangeRequestController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','myRecentlyPendingRequests'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -139,6 +139,22 @@ class ChangeRequestController extends Controller
 			$model->attributes=$_GET['ChangeRequest'];
 
 		$this->render('admin',array(
+			'model'=>$model,
+		));
+	}
+        
+        
+        	/**
+	 * Manages all models.
+	 */
+	public function actionmyRecentlyPendingRequests()
+	{
+		$model=new ChangeRequest('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['ChangeRequest']))
+			$model->attributes=$_GET['ChangeRequest'];
+
+		$this->render('myPendingRequests',array(
 			'model'=>$model,
 		));
 	}

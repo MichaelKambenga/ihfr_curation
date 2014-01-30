@@ -51,13 +51,17 @@ Yii::app()->bootstrap->register();
                                 array('label' => 'Facilities', 'icon' => TbHtml::ICON_BRIEFCASE, 'url' => array('/curation/facilities'), 'visible' => Yii::app()->user->checkAccess('Request Change Privilege')),
                                 array('label' => 'Pending Requests', 'icon' => TbHtml::ICON_REFRESH, 'url' => array('/curation/pendingRequests'), 'visible' => Yii::app()->user->checkAccess('Approval Change Privilege')),
                                 array('label' => 'Login', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
+                                array('label' => 'Notifications', 'icon' => TbHtml::ICON_WRENCH, 'url' => '#', 'visible' => !Yii::app()->user->isGuest,
+                                    'items' => array(
+                                        array('label' => 'My Requests', 'url' => array('changeRequest/myRecentlyPendingRequests'), 'visible' => Yii::app()->user->checkAccess('Request Change Privilege')),
+                                    )),
                                 array('label' => 'System Settings', 'icon' => TbHtml::ICON_WRENCH, 'url' => '#', 'visible' => Yii::app()->user->checkAccess('Administrator'),
                                     'items' => array(
                                         array('label' => 'User Accounts', 'url' => array('user/admin'), 'visible' => Yii::app()->user->checkAccess('Administrator')),
                                         array('label' => 'User Privileges', 'url' => array('authItem/roles'), 'visible' => Yii::app()->user->checkAccess('Administrator')),
                                         array('label' => 'Positions', 'url' => array('position/admin'), 'visible' => Yii::app()->user->checkAccess('Administrator')),
                                         array('label' => 'Organizations', 'url' => array('organization/admin'), 'visible' => Yii::app()->user->checkAccess('Administrator')),
-                                    )),
+                                    )),                
                                 array('label' => 'Logout (' . Yii::app()->user->name . ')', 'icon' => TbHtml::ICON_USER, 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
                             ),
                         )
