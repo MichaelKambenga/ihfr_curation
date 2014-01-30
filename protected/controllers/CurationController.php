@@ -744,19 +744,28 @@ class CurationController extends Controller
                                 echo TbHtml::alert(TbHtml::ALERT_COLOR_ERROR,'Rejection failed');
                 }
                 elseif($requestType == ChangeRequest::TYPE_UPDATE){
+                    
                            $url = Yii::app()->params['api-domain']."/api/collections/".
                                     Yii::app()->params['resourceMapConfig']['public_collection_id'].
                                     ".json?Fac_IDNumber={$changeRequest->primary_site_code}";
+                            
+                                
                        
                             $response = RestUtility::execCurl($url);
-                            $site = CJSON::decode($response,true);
+                            $results = CJSON::decode($response,true);
+                            $site = $this->loadFacility($results['sites'][0]['id'], 
+                                    Yii::app()->params['resourceMapConfig']['public_collection_id']
+                                   );
+                            
                            if($site){
+                              
                                //get changed fields from change_request_fields table
                                $changedFields = ChangeRequestFields::model()->findAllByAttributes(
                                       array( 
                                           'change_request_id'=>$changeRequest->id,
                                        )
                                      );
+                                 
                            //filter out non-updated fields
                            $properties = array();
                            foreach($site['properties'] as $key=>$property){
@@ -770,7 +779,7 @@ class CurationController extends Controller
                            $data = array(
                                'properties'=>$properties,
                            );
-                       
+                     
                            //encode the data into json format
                            $json = CJSON::encode($data);
                            $params = array('site'=>$json);
@@ -779,7 +788,7 @@ class CurationController extends Controller
                            $url = Yii::app()->params['api-domain']."/collections/".
                                   Yii::app()->params['resourceMapConfig']['curation_collection_id'].
                                   "/sites/{$changeRequest->cc_site_id}/partial_update";
-                      
+                       
                             $response = RestUtility::execCurlPost($url, $params);
                             $changeRequest->status = ChangeRequest::STATUS_REJECTED;
                             $changeRequest->reviewed_by = Yii::app()->user->getState('user_id');
@@ -793,6 +802,9 @@ class CurationController extends Controller
                                 echo TbHtml::alert(TbHtml::ALERT_COLOR_SUCCESS,'Update request rejected');
                              else
                                 echo TbHtml::alert(TbHtml::ALERT_COLOR_ERROR,'Rejection failed');
+                           }
+                           else{
+                               echo TbHtml::alert(TbHtml::ALERT_COLOR_ERROR,'Rejection failed');
                            }
                 }
             }

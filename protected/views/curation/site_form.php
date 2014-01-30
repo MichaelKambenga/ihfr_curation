@@ -74,7 +74,9 @@ $this->breadcrumbs=array(
     $this->widget('bootstrap.widgets.TbModal', array(
         'id' => 'submit-model-dialog',
         'header' => 'Confirm Submit',
-        'content' => isset($model->_1814)? '<p>Are you sure you want to send [update request] of this health facility?</p>':'<p>Are you sure you want to send [create request] of this health facility?</p>',
+        'content' => isset($model->_1814)? 
+        '<p>Are you sure you want to send [update request] of this health facility?</p>':
+        '<p>Are you sure you want to send [create request] of this health facility?</p>',
         'footer' => array(
             TbHtml::button('Cancel', array('data-dismiss' => 'modal')),
             TbHtml::button('OK', array('data-dismiss' => 'modal','onclick'=>'js:$("#site-form").submit();' ,'color' => TbHtml::BUTTON_COLOR_PRIMARY)),
