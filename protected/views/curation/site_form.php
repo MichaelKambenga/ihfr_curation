@@ -68,7 +68,7 @@ $this->breadcrumbs=array(
 </div><!-- form -->
 
 <script language ="javascript">
-    $("li a").click(
+    $(".tree-widget li a").click(
         function(){
            
             $("#"+$(this).closest('div').children('label').attr('for')).val(this.id);

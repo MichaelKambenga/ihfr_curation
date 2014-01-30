@@ -61,7 +61,13 @@
         echo TbHtml::link('Create facility',$this->createUrl('createSite'), array('class'=>'btn btn-info')) ;
       }   
      ?>
-    <br /><br />
+     <br /><br />
+    <?php if(Yii::app()->user->hasFlash('edit_message')):?>
+        <div class="alert alert-error" >
+            <?php echo Yii::app()->user->getFlash('edit_message');?>
+        </div>
+    <?php endif;?>
+ 
     <div id="gridContainer">
        <?php $this->renderPartial('_facilityGrid',array('sites'=>$sites));?>
     </div>

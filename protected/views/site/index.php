@@ -13,6 +13,22 @@ $this->pageTitle=Yii::app()->name;
 </div>
 <?php endif; ?>
 
+<?php if((Yii::app()->user->getState('active')== User::ACTIVE) && !Yii::app()->user->isGuest && !User::hasAccess() && !Yii::app()->user->hasFlash('completed_profile_msg')):?>
+<div>
+<?php echo TbHtml::alert(TbHtml::ALERT_COLOR_WARNING, 
+        'Your activation by the system administrator is pending...please be patient');
+?>
+</div>
+<?php endif; ?>
+
+<?php if((Yii::app()->user->hasFlash('completed_profile_msg'))):?>
+<div>
+<?php echo TbHtml::alert(TbHtml::ALERT_COLOR_SUCCESS, 
+        Yii::app()->user->getFlash('completed_profile_msg'));
+?>
+</div>
+<?php endif; ?>
+
 <?php echo TbHtml::heroUnit(CHtml::encode(Yii::app()->name),
         'Facility Curation Tool which works on top of InSTEDD ResourceMap'
         .'<br />'

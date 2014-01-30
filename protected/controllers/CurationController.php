@@ -300,6 +300,10 @@ class CurationController extends Controller
             $site = $this->loadFacility($results['sites'][0]['id'], 
                      Yii::app()->params['resourceMapConfig']['curation_collection_id']
                     ); 
+            if(is_null($site)){
+                Yii::app()->user->setFlash('edit_message','The site you want to edit is missing in the curation collection...');
+                $this->redirect(Yii::app()->request->urlReferrer);
+            }
             $site_id = $site['id'];
             $form = new FacilityForm();
             $form->name = $site['name'];
@@ -474,7 +478,7 @@ class CurationController extends Controller
                            else{
                              $data = Layer::parseHierarchy($filteredData);
                            }
-                           echo "<div class='row'>";
+                           echo "<div class='row tree-widget'>";
                            
                            echo TbHtml::activeLabel($formModel, '_'.$fieldDetails['id']);
                            $this->widget('CTreeView',array(

@@ -127,7 +127,6 @@ class SiteController extends Controller
                             $new_user = new User();
                             $new_user->email = $attributes['contact/email'];
                             $new_user->openid_identity = $openid->identity;
-                            $new_user->validate();
                             if($new_user->validate()){
                                 $new_user->save();
                             }
@@ -136,7 +135,7 @@ class SiteController extends Controller
                         $identity = new OpenIDUserIdentity($attributes['contact/email'], '');
                         $identity->authenticate();
                         if($identity->errorCode === OpenIDUserIdentity::ERROR_NONE){
-                            $duration = 3600*24*30; //30 days
+                            $duration = 1200; //1 hr
                             Yii::app()->user->login($identity,$duration);
                         }
                         
