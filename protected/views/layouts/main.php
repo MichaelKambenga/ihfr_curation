@@ -51,7 +51,7 @@ Yii::app()->bootstrap->register();
                                 array('label' => 'Facilities', 'icon' => TbHtml::ICON_BRIEFCASE, 'url' => array('/curation/facilities'), 'visible' => Yii::app()->user->checkAccess('Request Change Privilege')),
                                 array('label' => 'Pending Requests', 'icon' => TbHtml::ICON_REFRESH, 'url' => array('/curation/pendingRequests'), 'visible' => Yii::app()->user->checkAccess('Approval Change Privilege')),
                                 array('label' => 'Login', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-                                array('label' => 'Notifications', 'icon' => TbHtml::ICON_WRENCH, 'url' => '#', 'visible' => !Yii::app()->user->isGuest,
+                                array('label' => 'Notifications', 'icon' => TbHtml::ICON_ENVELOPE, 'url' => '#', 'visible' => !Yii::app()->user->isGuest,
                                     'items' => array(
                                         array('label' => 'My Requests', 'url' => array('changeRequest/myRecentlyPendingRequests'), 'visible' => Yii::app()->user->checkAccess('Request Change Privilege')),
                                     )),
