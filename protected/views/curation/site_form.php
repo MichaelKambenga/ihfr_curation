@@ -60,12 +60,28 @@ $this->breadcrumbs=array(
 ?>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton(isset($model->_1814)?'Send Site Update Request':'Send Site Create Request',array('class'=>'btn btn-info')); ?>
+        <?php echo CHtml::submitButton(    
+                isset($model->_1814)?'Send Site Update Request':'Send Site Create Request',
+                array('class'=>'btn btn-info','onclick'=>'js:$("#submit-model-dialog").modal();return false;')); 
+        ?>
     </div>
 
 <?php $this->endWidget();?>
 
 </div><!-- form -->
+
+<?php
+    $this->widget('bootstrap.widgets.TbModal', array(
+        'id' => 'submit-model-dialog',
+        'header' => 'Confirm Submit',
+        'content' => isset($model->_1814)? '<p>Are you sure you want to send [update request] of this health facility?</p>':'<p>Are you sure you want to send [create request] of this health facility?</p>',
+        'footer' => array(
+            TbHtml::button('Cancel', array('data-dismiss' => 'modal')),
+            TbHtml::button('OK', array('data-dismiss' => 'modal','onclick'=>'js:$("#site-form").submit();' ,'color' => TbHtml::BUTTON_COLOR_PRIMARY)),
+            
+        ),
+    ));
+ ?>
 
 <script language ="javascript">
     $(".tree-widget li a").click(
@@ -100,6 +116,5 @@ $(document).ready(function(){
    );
 });
 
-  
   
 </script>
