@@ -39,7 +39,8 @@ class ChangeRequest extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-
+    
+    
     /**
      * @return string the associated database table name
      */
@@ -127,9 +128,10 @@ class ChangeRequest extends CActiveRecord {
         $criteria = new CDbCriteria;
         $criteria->compare('requested_by', Yii::app()->user->getState('user_id'));
         $criteria->limit = 5;
-
+        $criteria->order = 'requested_date DESC';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'pagination' => false
         ));
     }
 
@@ -312,5 +314,44 @@ class ChangeRequest extends CActiveRecord {
         $response = RestUtility::execCurl($url);
         return CJSON::decode($response, true);
     }
+    
+    
+    public function  getRequestStatus($val){
+        if(self::STATUS_PENDING == $val){
+            return "Pending Approval";
+        }
+        elseif(self::STATUS_APPROVED == $val){
+            return "Approved";
+        }
+        elseif(self::STATUS_REJECTED == $val){
+            return "Rejected";
+        }
+        return 'UNKNOWN';
+    }
+    
+    public function  getRequestType($val){
+        if(self::TYPE_CREATE == $val){
+            return "CREATE";
+        }
+        elseif(self::TYPE_UPDATE == $val){
+            return "UPDATE";
+        }
+        elseif(self::TYPE_DELETE == $val){
+            return "DELETE";
+        }
+        return 'UNKNOWN';
+    }
+    
+    public static function getChangeRequestNotes($changeRequest){
+        $notes = '';
+        foreach($changeRequest->changeRequestNotes as $changeRequestNote){
+            $notes .= "<b>".$changeRequestNote->note."</b>"."-".User::getUserSignature($changeRequestNote->user_id).
+                   "<br />"."<br />"
+                    ;
+        }
+        
+        return $notes;
+    }
+
 
 }

@@ -8,27 +8,51 @@
         'type' => TbHtml::GRID_TYPE_BORDERED,
 	'id'=>'change-request-grid',
 	'dataProvider'=>$model->myRecentlyPendingRequests(),
-	'filter'=>$model,
+	//'filter'=>$model,
 	'columns'=>array(
-		'id',
+		//'id',
 //		'primary_site_code',
-                array('header' => 'Luhn ID',
+                array('header' => 'Primary Site Code',
                     'value' => '$data->primary_site_code',
-                    'htmlOptions' => array('id' => 'text', 'class' => 'name_text', 'width' => 100),
                 ),
-		'cc_site_id',
-		'version_id',
-		'requested_by',
-		'request_type',
-		/*
-		'status',
-		'requested_date',
+		//'version_id',
+		//'requested_by',
+		//'request_type',
+                array('header'=> 'Request Type',
+                     'value'=>'$data->getRequestType($data->request_type)',
+                     
+                    
+                ),
+                array('header' => 'Status',
+                    'value' => '$data->getRequestStatus($data->status)',
+                ),
+                array(
+                    'header'=>'Reviewed By',
+                    'type'=>'html',
+                    'value'=>'User::getUserSignature($data->reviewed_by)'
+                ),
+            
+                array(
+                    'header'=>'Requested Date',
+                    'value'=>'$data->requested_date'
+                ),
+            
+               array(
+                    'header'=>'Reason',
+                    'type'=>'html',
+                    'value'=>'ChangeRequest::getChangeRequestNotes($data)'
+                ),
+                
+                /*
+                'cc_site_id',
+                'pc_site_id',
+		
 		'reviewed_date',
-		'reviewed_by',
+		
 		*/
-		array(
-			'class'=>'CButtonColumn',
-		),
+//		array(
+//			'class'=>'CButtonColumn',
+//		),
 	),
 )); ?>
  </div>
