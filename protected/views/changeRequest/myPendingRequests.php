@@ -1,6 +1,6 @@
 
 
-<?php echo TbHtml::pageHeader('', 'My requests') ?>
+<?php echo TbHtml::pageHeader('', 'My Recent Requests') ?>
 
 <div class="well">
 <?php   

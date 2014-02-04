@@ -127,7 +127,7 @@ class ChangeRequest extends CActiveRecord {
         // should not be searched.
         $criteria = new CDbCriteria;
         $criteria->compare('requested_by', Yii::app()->user->getState('user_id'));
-        $criteria->limit = 5;
+        $criteria->limit = 10;
         $criteria->order = 'requested_date DESC';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -242,8 +242,7 @@ class ChangeRequest extends CActiveRecord {
         $responseArray = self::getSiteHistoryByVersion(
                         Yii::app()->params['resourceMapConfig']['curation_collection_id'], $this->cc_site_id, $this->version_id
         );
-
-        $proposedProperties = $responseArray[0]['properties'];
+        $proposedProperties = isset($responseArray[0]['properties'])?$responseArray[0]['properties']:array();
         //retrieve new values
         $newFields = array();
         foreach ($proposedProperties as $key => $property) {
