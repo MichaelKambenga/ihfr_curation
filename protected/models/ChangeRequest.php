@@ -259,7 +259,7 @@ class ChangeRequest extends CActiveRecord {
         $pc_site_id = $results['sites'][0]['id'];
         $site = $curationController->loadFacility($pc_site_id, Yii::app()->params['resourceMapConfig']['public_collection_id']
         );
-        $siteProperties = $site['properties'];
+        $siteProperties = isset($site['properties'])?$site['properties']:array();
         $pubFields = array();
         foreach ($siteProperties as $key => $property) {
             foreach ($modifiedFields as $modifiedField) {
