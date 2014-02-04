@@ -41,6 +41,7 @@ class User extends CActiveRecord {
     }
 
     public $number;
+    public $admin_hierarchy;
 
     /**
      * @return array validation rules for model attributes.

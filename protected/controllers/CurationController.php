@@ -110,7 +110,7 @@ class CurationController extends Controller
             if(!empty($name)){
                 $url = Yii::app()->params['api-domain']."/api/collections/".
                        Yii::app()->params['resourceMapConfig']['public_collection_id'].
-                       ".json?page=all&Comm_FacName={$name}";
+                       ".json?search={$name}";
                        
             }
             

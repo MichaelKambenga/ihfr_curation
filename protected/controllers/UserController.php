@@ -32,7 +32,7 @@ class UserController extends Controller {
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete', 'assignRoles'),
+                'actions' => array('admin', 'delete', 'assignRoles','GetLowerAdminHierarchy'),
                 'users' => array('@'),
             ),
             array('deny', // deny all users
@@ -201,6 +201,15 @@ class UserController extends Controller {
         $this->render('batch', array(
             'dataProvider' => $dataProvider, 'id' => $id, 'email' => $email
         ));
+    }
+    
+    public function actionGetLowerAdminHierarchy($nodeId){
+        //echo $nodeId;
+        $subNodes = Layer::getLowerAdminDivisionsByNodeId($nodeId);
+        echo CHtml::tag('option',array('value'=>''),CHtml::encode('--Please select--'),true);
+        foreach($subNodes as $subNode){
+                echo CHtml::tag('option',array('value'=>$subNode['id']),CHtml::encode($subNode['name']),true);
+        }
     }
 
 }

@@ -101,15 +101,52 @@ class Layer {
               array_push($adminDivisions['zones'],array('id'=>$value,'name'=>$arrayElements[$key+1]));
              
           }
-          if(preg_match('/^[A-Z][A-Z]\.[A-Z][A-Z]\.[A-Z][A-Z]$/', $value)){
+          elseif(preg_match('/^[A-Z][A-Z]\.[A-Z][A-Z]\.[A-Z][A-Z]$/', $value)){
               array_push($adminDivisions['regions'],array('id'=>$value,'name'=>$arrayElements[$key+1]));
           }
-          if(preg_match('/^[A-Z][A-Z]\.[A-Z][A-Z]\.[A-Z][A-Z]\.[A-Z][A-Z]$/', $value)){
+          elseif(preg_match('/^[A-Z][A-Z]\.[A-Z][A-Z]\.[A-Z][A-Z]\.[A-Z][A-Z]$/', $value)){
                array_push($adminDivisions['districts'],array('id'=>$value,'name'=>$arrayElements[$key+1]));
           }
       }
       
       return $adminDivisions;
+      
+      }
+      
+      public static function getLowerAdminDivisionsByNodeId($nodeId) {
+        $hierarchyModel = SystemCache::model()->findByAttributes(array('name'=>'hierarchy'));
+        $hierarchyArray = CJSON::decode($hierarchyModel->value);
+        $arrayElements = self::getAdministrativeDivisions($hierarchyArray['config']['hierarchy']);
+        
+        $subNodes = array();
+        //get node specifics
+          $node = explode('.', $nodeId);
+          $nodeLastIndexValue = end($node);//equivalent to $node[count($node)-1] to retrieve last index
+         
+        //determine it's level
+          if(preg_match('/^[A-Z][A-Z]\.[A-Z][A-Z]$/', $nodeId)){
+                //is zonal
+              //take all that are under it 
+                foreach($arrayElements as $key=>$value){
+                    
+                    if(preg_match("/^[A-Z][A-Z]\.$nodeLastIndexValue\.[A-Z][A-Z]$/", $value)){
+                        array_push($subNodes,array('id'=>$value,'name'=>$arrayElements[$key+1]));
+                    }
+                }
+                
+          }
+          elseif(preg_match('/^[A-Z][A-Z]\.[A-Z][A-Z]\.[A-Z][A-Z]$/', $nodeId)){
+              //is regional
+              //take all that are under it
+              foreach($arrayElements as $key=>$value){
+                    if(preg_match("/^[A-Z][A-Z]\.[A-Z][A-Z]\.$nodeLastIndexValue\.[A-Z][A-Z]$/", $value)){
+                        array_push($subNodes,array('id'=>$value,'name'=>$arrayElements[$key+1]));
+                    }
+                }
+          }
+        
+        return $subNodes;
+        
       
       }
    
