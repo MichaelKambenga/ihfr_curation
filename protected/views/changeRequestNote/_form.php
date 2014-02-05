@@ -30,14 +30,24 @@
             <?php echo TbHtml::ajaxSubmitButton('Confirm Reject',$this->createUrl('curation/reject',array('id'=>$id)),
                     array(
                         'type'=>'POST',
-                        'update'=>'#reject-status'.$id
+                        //'update'=>'#reject-status'.$id,
+                        'success'=>"function(response,status){
+                            $('#'+'reject-status'+'$id').html(response);
+                            location.reload();
+                          }"
+                        
                     ),
                     array('class'=>'btn btn-info')) ?>
 	    <?php elseif($actionType == 'approve'):?>
             <?php echo TbHtml::ajaxSubmitButton('Confirm Approval', $this->createUrl('curation/approve',array('id'=>$id)),
                      array(
                         'type'=>'POST',
-                        'update'=>'#approve-status'.$id
+                        //'update'=>'#approve-status'.$id,
+                        'success'=>"function(response,status){
+                            $('#'+'approve-status'+'$id').html(response);
+                            location.reload();
+                          }"
+                       
                     ),
                     array('class'=>'btn btn-info')) ?>
             <?php endif;?>
