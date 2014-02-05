@@ -30,7 +30,7 @@ $this->pageTitle=Yii::app()->name;
 <?php endif; ?>
 
 <?php echo TbHtml::heroUnit(CHtml::encode(Yii::app()->name),
-        'Facility Curation Tool which works on top of InSTEDD ResourceMap'
+        ''
         .'<br />'
         .TbHtml::link('Learn more',$this->createUrl('site/page',array('view'=>'about')),
 array('class'=>'btn btn-large btn-info'))

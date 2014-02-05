@@ -39,7 +39,7 @@ Yii::app()->bootstrap->register();
                 ob_clean();
 
                 $this->widget('bootstrap.widgets.TbNavbar', array(
-                    'brandLabel' => '<strong><span style="color:#47ADCB">MFL</span>Curation Tool</strong>',
+                    'brandLabel' => '<strong><span style="color:#47ADCB">HFR</span>Curation Tool</strong>',
                     'display' => TbHtml::NAVBAR_DISPLAY_FIXEDTOP,
                     'items' => array(
                         array(
