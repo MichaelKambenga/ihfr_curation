@@ -533,11 +533,23 @@ class CurationController extends Controller
                            break;
                        
                        default:
+                          /*
+                           * FIXME: can be achieved by adding a field to a field mapping table to indicate whether it's readonly or not
+                           */
+                          if($fieldDetails['id']==FieldMapping::CC_PRIMARY_SITE_CODE){
+                          echo "<div class='row'>".
+                                TbHtml::activeLabel($formModel, '_'.$fieldDetails['id']).
+                                TbHtml::activeTextField($formModel, '_'.$fieldDetails['id'],array('disabled'=>'disabled')).
+                                TbHtml::error($formModel, '_'.$fieldDetails['id']).
+                          "</div>";
+                           }
+                           else{
                            echo "<div class='row'>".
                            TbHtml::activeLabel($formModel, '_'.$fieldDetails['id']).
                            TbHtml::activeTextField($formModel, '_'.$fieldDetails['id']).
                            TbHtml::error($formModel, '_'.$fieldDetails['id']).
                           "</div>";
+                           }
                          
                    } 
         }

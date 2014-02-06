@@ -14,6 +14,7 @@
 
 <div class="row">
 		<?php echo $form->labelEx($model,'location'); ?>
-		<?php echo $form->textField($model,'location',array('placeholder'=>'example: latitude , longitude')); ?>
-		<?php echo $form->error($model,'location'); ?>
+		<?php echo $form->textField($model,'location'); ?>
+                <p class="hint"><i>Latitude , Longitude (example: -6.45678,38.2145 )</i></p>
+                <?php echo $form->error($model,'location'); ?>
 </div>

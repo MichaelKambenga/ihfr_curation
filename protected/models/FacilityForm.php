@@ -99,6 +99,7 @@ public $note;
 public function rules(){ 
     return array(
         array('note,name','required'),
+        array('note','length','min'=>20),
         array('location','isLocationWithinRange'),
         array('_1817','validateCTCID'),
 //        array('_1814','readOnly'=>true),
@@ -145,6 +146,7 @@ public function validateCTCID(){
 
 public function attributeLabels() { 
     return array( 
+            'name'=>'Registered Facility Name',
             '_1810'=>'Administrative Divisions',
             '_1815'=>'Common Facility Name',
             '_1839'=>'Ownership Detail / Name',
