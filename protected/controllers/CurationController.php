@@ -542,7 +542,7 @@ class CurationController extends Controller
                           if($fieldDetails['id']==FieldMapping::CC_PRIMARY_SITE_CODE){
                           echo "<div class='row'>".
                                 TbHtml::activeLabel($formModel, '_'.$fieldDetails['id']).
-                                TbHtml::activeTextField($formModel, '_'.$fieldDetails['id'],array('disabled'=>'disabled')).
+                                TbHtml::activeTextField($formModel, '_'.$fieldDetails['id'],array('readonly'=>true)).
                                 TbHtml::error($formModel, '_'.$fieldDetails['id']).
                           "</div>";
                            }
