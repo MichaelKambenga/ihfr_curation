@@ -509,9 +509,12 @@ class CurationController extends Controller
                                  $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                                     'model'=>$formModel,
                                     'attribute'=>'_'.$fieldDetails['id'],
-                                    'options'=>array(
+                                     'options'=>array(
                                         'showAnim'=>'fold',
                                         'showOn'=>'both',//focus,button,both
+                                        'changeMonth'=>true,
+                                        'changeYear'=>true,
+                                        'yearRange'=>'-100:+0',//last hundred years
                                         'buttonText'=>'Please select date',
                                         'buttonImage'=>Yii::app()->request->baseUrl."/images/calendar.png",
                                         'buttonImageOnly'=>true,
