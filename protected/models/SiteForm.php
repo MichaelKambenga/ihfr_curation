@@ -48,7 +48,7 @@ class SiteForm extends CFormModel {
     //classification
     public $ownershipDetailOrName;
     public $registrationStatus;
-    public $licensingStatus;
+//    public $licensingStatus;
     public $otherClinic;
     
     //infrastucture
@@ -103,14 +103,15 @@ class SiteForm extends CFormModel {
     
     
     //temp fields
-    public $oldHFRId;
+   //public $oldHFRId;
+    public $grades;
     
     public $note;
     
     public function rules() {
         return array(
             array('officialEmail,note','length','max'=>255),
-            array('registrationStatus,licensingStatus','numerical','integerOnly'=>true),
+            array('registrationStatus','numerical','integerOnly'=>true),
             array('
                  administrativeDivision,
                  ownership，
@@ -186,7 +187,8 @@ class SiteForm extends CFormModel {
                  ENTServices,
                  supportServices,
                  emergencyPreparedness,
-                 otherServices,','safe'),
+                 otherServices,
+                 grades,','safe'),
         );
     }
     
