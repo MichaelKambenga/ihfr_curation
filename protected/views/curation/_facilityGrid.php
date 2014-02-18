@@ -34,16 +34,16 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'name' => 'name',
     'header' => 'Name',
     ),
-    
-//    array(
-//    'name' => 'location',
-//    'header' => 'Location',
-//    ),
 //    
+//    array(
+//        'name'=>'nodeID',
+//        'header'=>'Node ID',
+//        'value'=>'isset($data["properties"]["Admin_div"])?$data["properties"]["Admin_div"]:"Not set"'
+//    ),
     array(
-        'name'=>'nodeID',
-        'header'=>'Node ID',
-        'value'=>'isset($data["properties"]["Admin_div"])?$data["properties"]["Admin_div"]:"Not set"'
+        'name'=>'Facility Type',
+        'header'=>'Facility Type',
+        'value'=>'isset($data["properties"]["Fac_Type"])?$data["properties"]["Fac_Type"]:"Not set"'
     ),
     array(
     'name' => 'ownership',
