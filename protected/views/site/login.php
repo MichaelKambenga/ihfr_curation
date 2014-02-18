@@ -58,7 +58,7 @@ $this->breadcrumbs=array(
 
 	<div class="row buttons">
 		<?php //echo CHtml::submitButton('Login',array('class'=>'btn btn-info','id'=>'btn-login','onclick'=>'showProgress()')); ?>
-                <?php echo TbHtml::link('Login with InSTEDD OpenID',
+                <?php echo TbHtml::link('Login',
                         $this->createUrl('site/openid',array('login'=>true)),array('class'=>'btn btn-info'))
                         ?>
 	</div>

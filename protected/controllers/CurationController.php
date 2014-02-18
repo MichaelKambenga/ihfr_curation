@@ -101,16 +101,19 @@ class CurationController extends Controller
         
         public function actionSearchFacility($code='',$name=''){
             $url = '';
+            $node_id = Yii::app()->user->getState('node_id');
             if(!empty($code)){
+                $code = trim($code);
                 $url = Yii::app()->params['api-domain']."/api/collections/".
                        Yii::app()->params['resourceMapConfig']['public_collection_id'].
-                       ".json?page=all&Fac_IDNumber={$code}";
+                       ".json?page=all&Fac_IDNumber={$code}&Admin_div[under]={$node_id}";
                        
             }  
             if(!empty($name)){
+                $name = trim($name);
                 $url = Yii::app()->params['api-domain']."/api/collections/".
                        Yii::app()->params['resourceMapConfig']['public_collection_id'].
-                       ".json?search={$name}&page=all";
+                       ".json?search={$name}&page=all&Admin_div[under]=$node_id";
                        
             }
             
