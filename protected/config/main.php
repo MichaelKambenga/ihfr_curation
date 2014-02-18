@@ -98,8 +98,8 @@ return array(
         // this is used in contact page
         'adminEmail' => 'webmaster@example.com',
         'api-domain'=>'http://resourcemap.instedd.org',
-        'openidServerAddress'=>'http://login-stg.instedd.org/openid',
-        'openidSignupPage'=>'http://login-stg.instedd.org/users/sign_up',
+        'openidServerAddress'=>'http://login.instedd.org/openid',
+        'openidSignupPage'=>'http://login.instedd.org/users/sign_up',
         'resourceMapConfig' => array(
             'api-username'=>'mkambenga@gmail.com',
             'api-password'=>'Michael',

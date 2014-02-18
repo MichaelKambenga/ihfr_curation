@@ -116,6 +116,7 @@ class SiteController extends Controller
                 }elseif($openid->mode == 'cancel'){
                     $this->redirect(array('site/login'));
                 }else{
+//                    echo '<pre>';print_r($openid);die;
                     if($openid->validate()){
                         $attributes = $openid->getAttributes();
                         $user_check = User::model()->findByAttributes(array(
