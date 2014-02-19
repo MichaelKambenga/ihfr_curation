@@ -14,10 +14,12 @@ class FacilityForm extends CFormModel{
     //put your code here
 public $_1810;
 public $_1815;
+public $_1825;
 public $_1839;
 public $_1831;
 public $_1819;
 public $_1843;
+public $_1846;
 public $_1872;
 public $_1814;
 public $_1832;
@@ -170,7 +172,9 @@ public function attributeLabels() {
             '_1817'=>'CTC ID',
             '_1833'=>'Altitude (Meters)',
             '_1822'=>'Official Phone Number',
+            '_1825'=> 'Website',
             '_1845'=>'Dressing Room',
+            '_1846'=> 'Injection Room',
             '_1874'=>'TB Diagnosis, Care and Treatment',
 //            '_1841'=>'Licensing Status',
             '_1842'=>'Other Clinic (Please Specify)',
