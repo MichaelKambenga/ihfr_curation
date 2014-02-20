@@ -33,10 +33,10 @@
            $typeTag = TbHtml::badge('NEW', array('color'=>  TbHtml::BADGE_COLOR_SUCCESS));
        }
        elseif($model->request_type == ChangeRequest::TYPE_UPDATE){
-           $typeTag = TbHtml::badge('UPDATE', array('color'=>  TbHtml::BADGE_COLOR_DEFAULT));
+           $typeTag = TbHtml::badge('UPDATE', array('color'=>  TbHtml::BADGE_COLOR_WARNING));
        }
        elseif($model->request_type == ChangeRequest::TYPE_DELETE){
-           $typeTag = TbHtml::badge('DELETE', array('color'=>  TbHtml::BADGE_COLOR_WARNING));
+           $typeTag = TbHtml::badge('DELETE', array('color'=>  TbHtml::BADGE_COLOR_IMPORTANT));
        }
        ob_start();
        $this->renderPartial('_pendingRequestForm',array('model'=>$model));

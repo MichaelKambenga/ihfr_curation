@@ -332,29 +332,37 @@ class ChangeRequest extends CActiveRecord {
     }
     
     
-    public function  getRequestStatus($val){
+    public function  getRequestStatus($val,$style=false){
         if(self::STATUS_PENDING == $val){
+            if($style == true) return TbHtml::badge('Pending Approval', array('color'=>  TbHtml::BADGE_COLOR_WARNING));
             return "Pending Approval";
         }
         elseif(self::STATUS_APPROVED == $val){
+            if($style == true) return TbHtml::badge('Approved', array('color'=>  TbHtml::BADGE_COLOR_SUCCESS));
             return "Approved";
         }
         elseif(self::STATUS_REJECTED == $val){
+            if($style == true) return TbHtml::badge('Rejected', array('color'=>  TbHtml::BADGE_COLOR_IMPORTANT));
             return "Rejected";
         }
+        if($style == true) return TbHtml::badge('UNKNOWN', array('color'=>  TbHtml::BADGE_COLOR_DEFAULT));
         return 'UNKNOWN';
     }
     
-    public function  getRequestType($val){
+    public function  getRequestType($val,$style=false){
         if(self::TYPE_CREATE == $val){
+            if($style == true) return TbHtml::badge('CREATE', array('color'=>  TbHtml::BADGE_COLOR_SUCCESS));
             return "CREATE";
         }
         elseif(self::TYPE_UPDATE == $val){
+            if($style == true) return TbHtml::badge('UPDATE', array('color'=>  TbHtml::BADGE_COLOR_WARNING));
             return "UPDATE";
         }
         elseif(self::TYPE_DELETE == $val){
+            if($style == true) return TbHtml::badge('DELETE', array('color'=>  TbHtml::BADGE_COLOR_IMPORTANT));
             return "DELETE";
         }
+        if($style == true) return TbHtml::badge('UNKNOWN', array('color'=>  TbHtml::BADGE_COLOR_DEFAULT));
         return 'UNKNOWN';
     }
     

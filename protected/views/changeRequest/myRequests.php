@@ -19,12 +19,14 @@
 		//'requested_by',
 		//'request_type',
                 array('header'=> 'Request Type',
-                     'value'=>'$data->getRequestType($data->request_type)',
+                     'type'=>'html',
+                     'value'=>'$data->getRequestType($data->request_type,$style=true)',
                      
                     
                 ),
                 array('header' => 'Status',
-                    'value' => '$data->getRequestStatus($data->status)',
+                    'type'=>'html',
+                    'value' => '$data->getRequestStatus($data->status,$style=true)',
                 ),
                 array(
                     'header'=>'Reviewed By',
