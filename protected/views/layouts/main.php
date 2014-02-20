@@ -53,7 +53,8 @@ Yii::app()->bootstrap->register();
                                 array('label' => 'Login', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
                                 array('label' => 'Notifications', 'icon' => TbHtml::ICON_ENVELOPE, 'url' => '#', 'visible' => !Yii::app()->user->isGuest,
                                     'items' => array(
-                                        array('label' => 'My Requests', 'url' => array('changeRequest/myRecentlyPendingRequests'), 'visible' => Yii::app()->user->checkAccess('Request Change Privilege')),
+                                        array('label' => 'My Requests', 'url' => array('changeRequest/MyRequests'), 'visible' => Yii::app()->user->checkAccess('Request Change Privilege')),
+                                        array('label' => 'My Approvals/Rejections', 'url' => array('changeRequest/MyApprovals'), 'visible' => Yii::app()->user->checkAccess('Approval Change Privilege')),
                                     )),
                                 array('label' => 'System Settings', 'icon' => TbHtml::ICON_WRENCH, 'url' => '#', 'visible' => Yii::app()->user->checkAccess('Administrator'),
                                     'items' => array(
@@ -89,7 +90,7 @@ Yii::app()->bootstrap->register();
             <div class="clear"></div>
 
             <div id="footer" class="well" style="clear: both;">
-                Copyright &copy; <?php echo date('Y'); ?> by UCC.<br/>
+                Copyright &copy; <?php echo date('Y'); ?> Ministry of Health and Social Welfare.<br/>
                 All Rights Reserved.<br/>
 <?php //echo Yii::powered();  ?>
             </div><!-- footer -->

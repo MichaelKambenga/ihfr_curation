@@ -122,16 +122,33 @@ class ChangeRequest extends CActiveRecord {
         ));
     }
 
-    public function myRecentlyPendingRequests() {
+    public function myRequests() {
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
         $criteria = new CDbCriteria;
         $criteria->compare('requested_by', Yii::app()->user->getState('user_id'));
-        $criteria->limit = 10;
+        //$criteria->limit = 10;
         $criteria->order = 'requested_date DESC';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
-            'pagination' => false
+            //'pagination' => false
+            'pagination'=>array(
+                'pageSize'=>10
+            )
+            
+        ));
+    }
+    
+    public function myApprovals(){
+        
+        $criteria = new CDbCriteria();
+        $criteria->compare('reviewed_by', Yii::app()->user->getState('user_id'));
+        $criteria->order = 'reviewed_date DESC';
+        return new CActiveDataProvider($this,array(
+            'criteria' => $criteria,
+            'pagination'=>array(
+                'pageSize'=>10
+            )
         ));
     }
 

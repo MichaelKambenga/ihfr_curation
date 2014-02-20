@@ -1,13 +1,13 @@
 
 
-<?php echo TbHtml::pageHeader('', 'My Recent Requests') ?>
+<?php echo TbHtml::pageHeader('', 'My Recent Approvals/Rejections') ?>
 
 <div class="well">
 <?php   
         $this->widget('bootstrap.widgets.TbGridView', array(
         'type' => TbHtml::GRID_TYPE_BORDERED,
 	'id'=>'change-request-grid',
-	'dataProvider'=>$model->myRecentlyPendingRequests(),
+	'dataProvider'=>$model->myApprovals(),
 	//'filter'=>$model,
 	'columns'=>array(
 		//'id',

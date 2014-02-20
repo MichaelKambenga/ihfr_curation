@@ -32,7 +32,7 @@ class ChangeRequestController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','myRecentlyPendingRequests'),
+				'actions'=>array('create','update','MyRequests','MyApprovals'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -147,17 +147,28 @@ class ChangeRequestController extends Controller
         	/**
 	 * Manages all models.
 	 */
-	public function actionmyRecentlyPendingRequests()
+	public function actionMyRequests()
 	{
 		$model=new ChangeRequest('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['ChangeRequest']))
 			$model->attributes=$_GET['ChangeRequest'];
 
-		$this->render('myPendingRequests',array(
+		$this->render('myRequests',array(
 			'model'=>$model,
 		));
 	}
+        
+        public function actionMyApprovals(){
+            $model = new ChangeRequest('search');
+            $model->unsetAttributes();
+            if(isset($_GET['ChangeRequest']))
+                $model->attributes = $_GET['ChangeRequest'];
+            
+            $this->render('myApprovals',array(
+                 'model'=>$model,
+            ));
+        }
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

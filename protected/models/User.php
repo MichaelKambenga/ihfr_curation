@@ -122,6 +122,9 @@ class User extends CActiveRecord {
     
 
     public static function getUserSignature($id){
+        if(is_null($id)){
+            return 'NONE';
+        }
         $model = self::model()->find(
                 'id=:id',array(':id'=>$id)
                 );
