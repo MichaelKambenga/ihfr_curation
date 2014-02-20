@@ -15,7 +15,7 @@
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
     'id'=>'facilityGrid',
-    'type'=>  TbHtml::GRID_TYPE_BORDERED,
+    'type'=>  TbHtml::GRID_TYPE_STRIPED,
     'dataProvider' => $sites,
 //    'filter' => $person,
 //    'template' => "{items}",

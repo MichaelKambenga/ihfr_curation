@@ -5,7 +5,7 @@
 <div class="well">
 <?php   
         $this->widget('bootstrap.widgets.TbGridView', array(
-        'type' => TbHtml::GRID_TYPE_BORDERED,
+        'type' => TbHtml::GRID_TYPE_STRIPED,
 	'id'=>'change-request-grid',
 	'dataProvider'=>$model->myRequests(),
 	//'filter'=>$model,
