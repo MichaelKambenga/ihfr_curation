@@ -8,7 +8,7 @@ $url = Yii::app()->params['api-domain']."/collections/".
 ?>
 <?php $fields = ChangeRequest::getFieldValues($site['properties'],Yii::app()->params['resourceMapConfig']['curation_collection_id'])?>
 
-<?php echo TbHtml::pageHeader('', 'View/Change Facility');?>
+<?php echo TbHtml::pageHeader('', 'View Facility');?>
 <div class="well">
       <?php if(Yii::app()->user->hasFlash('success')):?>
         <div class="alert alert-success">
@@ -44,7 +44,7 @@ $url = Yii::app()->params['api-domain']."/collections/".
 
 <?php endforeach;?>
 <td></td>
-<td><p></p><?php echo TbHtml::link('Update',$this->createUrl('curation/updateSite',array('id'=>$model['id'])),array('class'=>'btn btn-info'));?></td>
+<td></td>
 </table>
   
 </div>
