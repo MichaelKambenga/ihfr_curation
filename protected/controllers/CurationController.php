@@ -285,7 +285,8 @@ class CurationController extends Controller
                              $this->render('facility',array('model'=>$site));
                              Yii::app()->end();
                          }
-                         else{  
+                         else{ 
+                             echo $response;die;
                              Yii::app()->user->setFlash('failure','Site create request failed');
                          }
                    }

@@ -47,7 +47,7 @@
                 'append'=>  TbHtml::buttonDropdown('Search by',
                         array(
                         array('label' => 'Primary site code', 'url' => '#','id'=>'ps_code'),
-                        array('label' => 'Facility Name', 'url' => '#','id'=>'facName'),
+                        array('label' => 'Facility Details', 'url' => '#','id'=>'facName'),
                         ), 
                  array('span'=>1)),
             )

@@ -6,7 +6,7 @@
 // CWebApplication properties can be configured here.
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
-    'name' => 'MFL Curation Tool',
+    'name' => 'HFR Curation Tool',
     // preloading 'log' component
     'preload' => array('log'),
     'aliases' => array(
@@ -16,6 +16,8 @@ return array(
     'import' => array(
         'application.models.*',
         'application.components.*',
+        'application.extensions.*',
+        'application.extensions.openID.*',
         'bootstrap.helpers.TbHtml',
     ),
     'modules' => array(
@@ -28,8 +30,6 @@ return array(
             // If removed, Gii defaults to localhost only. Edit carefully to taste.
             'ipFilters' => array('127.0.0.1', '::1'),
         ),
-        
-        'hybridauth',
     ),
     // application components
     'components' => array(
@@ -98,7 +98,8 @@ return array(
         // this is used in contact page
         'adminEmail' => 'webmaster@example.com',
         'api-domain'=>'http://resourcemap.instedd.org',
-        
+        'openidServerAddress'=>'http://login.instedd.org/openid',
+        'openidSignupPage'=>'http://login.instedd.org/users/sign_up',
         'resourceMapConfig' => array(
             'api-username'=>'mkambenga@gmail.com',
             'api-password'=>'Michael',
@@ -106,7 +107,7 @@ return array(
             'curation_collection_id' => '463',
             'lower_bound_latitude'=>-3.8940,
             'upper_bound_latitude'=>-1.7478,
-            'lower_bound_longitude'=>30,9889,
+            'lower_bound_longitude'=>30.9889,
             'upper_bound_longitude'=>45.0809,
             
         ),
