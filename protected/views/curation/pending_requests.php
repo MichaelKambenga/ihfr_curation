@@ -14,7 +14,9 @@
 <?php echo TbHtml::pageHeader('', 'Pending Change Requests')?>
 
 <div class="well" >
-    
+    <div style="float:right;">
+    <?php $this->widget('bootstrap.widgets.TbPager',array('pages'=>$pages));?>
+   </div>
     <?php 
         echo TbHtml::button("<strong>Change Requests</strong> $requestCount",
         array('block' => true, 
@@ -45,6 +47,7 @@
        $panels["(Luhn-ID:{$model->primary_site_code}"." "."Requested By:{$model->requestedBy->email})"." "."Date:{$model->requested_date}"." $typeTag"] = $view;
    }
    
+   
    $this->widget('zii.widgets.jui.CJuiAccordion', array(
        'panels'=>$panels,
        'options' => array(
@@ -57,7 +60,19 @@
            'style' => 'width:100%;'
        ),
    ));
+   
+   
    ?>
-    
+  <div style="float:right;">
+    <?php 
+         $this->widget('bootstrap.widgets.TbPager',
+                 array(
+                     'pages'=>$pages,
+                     )
+                 );
+    ?>
+  </div>
+    <br /><br />
 </div>
+
 

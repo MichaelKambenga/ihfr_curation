@@ -161,13 +161,28 @@ class CurationController extends Controller
         public function actionPendingRequests(){  
             
                 $myPendingRequests = array();
-                $models = ChangeRequest::model()->findAllByAttributes(array('status'=>ChangeRequest::STATUS_PENDING));
+                $criteria = new CDbCriteria();
+                $criteria->compare('status',  ChangeRequest::STATUS_PENDING);
+                $criteria->limit = 5;
+                $criteria->order = 'requested_date DESC';
+                
+                //Adding pagination to the result set
+                $count = ChangeRequest::model()->count($criteria);
+                $pages = new CPagination($count);
+                $pages->pageSize = 5;
+                $pages->applyLimit($criteria);
+                
+                $models = ChangeRequest::model()->findAll($criteria);
                 foreach($models as $model){
                     if($this->hasApprovePrivilegesForRequest($model->requestedBy->node_id)){
                         array_push($myPendingRequests, $model);
                     }
                 }
-                $this->render('pending_requests',array('models'=>$myPendingRequests));
+                $this->render('pending_requests',
+                        array(
+                            'models'=>$myPendingRequests,
+                               'pages'=>$pages,
+                            ));
               
         }
         
