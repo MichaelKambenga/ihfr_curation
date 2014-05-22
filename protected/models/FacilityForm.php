@@ -153,7 +153,7 @@ public function validateCTCID(){
 
 public function attributeLabels() { 
     return array( 
-            'name'=>'Registered Facility Name',
+            'name'=>'Registered/Official Facility Name',
             '_1810'=>'Administrative Divisions',
             '_1815'=>'Common Facility Name',
             '_1839'=>'Ownership Detail / Name',
