@@ -42,6 +42,7 @@ Yii::app()->bootstrap->register();
                     'brandLabel' => '<strong><span style="color:#47ADCB">HFR</span>Curation Tool</strong>',
                     'display' => TbHtml::NAVBAR_DISPLAY_FIXEDTOP,
                     'items' => array(
+                      !Yii::app()->user->isGuest?Notification::loadRequestsNotifier():"",
                         array(
                             'class' => 'bootstrap.widgets.TbNav',
                             'items' => array(
@@ -51,11 +52,11 @@ Yii::app()->bootstrap->register();
                                 array('label' => 'Facilities', 'icon' => TbHtml::ICON_BRIEFCASE, 'url' => array('/curation/facilities'), 'visible' => Yii::app()->user->checkAccess('Request Change Privilege')),
                                 array('label' => 'Pending Requests', 'icon' => TbHtml::ICON_REFRESH, 'url' => array('/curation/pendingRequests'), 'visible' => Yii::app()->user->checkAccess('Approval Change Privilege')),
                                 array('label' => 'Login', 'url' => array('/site/openid/login/1'), 'visible' => Yii::app()->user->isGuest),
-                                array('label' => 'Notifications', 'icon' => TbHtml::ICON_ENVELOPE, 'url' => '#', 'visible' => !Yii::app()->user->isGuest,
-                                    'items' => array(
-                                        array('label' => 'My Requests', 'url' => array('changeRequest/MyRequests'), 'visible' => Yii::app()->user->checkAccess('Request Change Privilege')),
-                                        array('label' => 'My Approvals/Rejections', 'url' => array('changeRequest/MyApprovals'), 'visible' => Yii::app()->user->checkAccess('Approval Change Privilege')),
-                                    )),
+//                                array('label' => 'Notifications', 'icon' => TbHtml::ICON_ENVELOPE, 'url' => '#', 'visible' => !Yii::app()->user->isGuest,
+//                                    'items' => array(
+//                                        array('label' => 'My Requests', 'url' => array('changeRequest/MyRequests'), 'visible' => Yii::app()->user->checkAccess('Request Change Privilege')),
+//                                        array('label' => 'My Approvals/Rejections', 'url' => array('changeRequest/MyApprovals'), 'visible' => Yii::app()->user->checkAccess('Approval Change Privilege')),
+//                                    )),
                                 array('label' => 'System Settings', 'icon' => TbHtml::ICON_WRENCH, 'url' => '#', 'visible' => Yii::app()->user->checkAccess('Administrator'),
                                     'items' => array(
                                         array('label' => 'User Accounts', 'url' => array('user/admin'), 'visible' => Yii::app()->user->checkAccess('Administrator')),

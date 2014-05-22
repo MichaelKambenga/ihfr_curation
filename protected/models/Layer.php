@@ -113,6 +113,24 @@ class Layer {
       
       }
       
+      public static function getHierarchyNodeName($node_id) {
+          
+        $hierarchyModel = SystemCache::model()->findByAttributes(array('name'=>'hierarchy'));
+        $hierarchyArray = CJSON::decode($hierarchyModel->value);
+        $arrayElements = self::getAdministrativeDivisions($hierarchyArray['config']['hierarchy']);
+        
+        foreach($arrayElements as $key=>$value){
+         
+          if( $value == $node_id){
+              return $arrayElements[$key+1];
+          }
+          
+        }
+      
+      return "Not set";
+      
+      }
+      
       public static function getLowerAdminDivisionsByNodeId($nodeId) {
         $hierarchyModel = SystemCache::model()->findByAttributes(array('name'=>'hierarchy'));
         $hierarchyArray = CJSON::decode($hierarchyModel->value);
@@ -149,8 +167,9 @@ class Layer {
         
       
       }
-   
-   
+      
+      
+     
 }
 
 ?>

@@ -29,6 +29,7 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
+            
 		$this->render('index');
 	}
 
@@ -98,10 +99,8 @@ class SiteController extends Controller
 		$this->render('login',array('model'=>$model));
 	}
         
-        public function actionOpenid(){
-           
-            try{
-                 
+        public function actionOpenid(){   
+            try{  
                 $openid = new LightOpenID(Yii::app()->request->serverName);
                 if(!$openid->mode){
                      
@@ -116,8 +115,9 @@ class SiteController extends Controller
                 }elseif($openid->mode == 'cancel'){
                     $this->redirect(array('site/login'));
                 }else{
-//                    echo '<pre>';print_r($openid);die;
+                    
                     if($openid->validate()){
+                        //echo '<pre>';print_r($openid);die;
                         $attributes = $openid->getAttributes();
                         $user_check = User::model()->findByAttributes(array(
                             'openid_identity'=>$openid->identity
@@ -136,7 +136,7 @@ class SiteController extends Controller
                         $identity = new OpenIDUserIdentity($attributes['contact/email'], '');
                         $identity->authenticate();
                         if($identity->errorCode === OpenIDUserIdentity::ERROR_NONE){
-                            $duration = 1200; //1 hr
+                            $duration = 0;
                             Yii::app()->user->login($identity,$duration);
                         }
                         
@@ -158,6 +158,7 @@ class SiteController extends Controller
 	public function actionLogout()
 	{
 		Yii::app()->user->logout();
-		$this->redirect(Yii::app()->homeUrl);
+                $this->redirect(Yii::app()->homeUrl);  
+//                $this->redirect("https://login.instedd.org");
 	}
 }

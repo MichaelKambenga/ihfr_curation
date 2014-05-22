@@ -127,6 +127,7 @@ class ChangeRequest extends CActiveRecord {
         // should not be searched.
         $criteria = new CDbCriteria;
         $criteria->compare('requested_by', Yii::app()->user->getState('user_id'));
+        $criteria->compare('status', ChangeRequest::STATUS_PENDING);
         //$criteria->limit = 10;
         $criteria->order = 'requested_date DESC';
         return new CActiveDataProvider($this, array(
@@ -146,6 +147,7 @@ class ChangeRequest extends CActiveRecord {
         $criteria->order = 'reviewed_date DESC';
         return new CActiveDataProvider($this,array(
             'criteria' => $criteria,
+            //'pagination' => false,
             'pagination'=>array(
                 'pageSize'=>10
             )
@@ -373,7 +375,6 @@ class ChangeRequest extends CActiveRecord {
                    "<br />"."<br />"
                     ;
         }
-        
         return $notes;
     }
 

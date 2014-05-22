@@ -186,6 +186,7 @@ class CurationController extends Controller
               
         }
         
+        
         public function hasApprovePrivilegesForRequest($node_id){
             
             $url = Yii::app()->params['api-domain']."/collections/".

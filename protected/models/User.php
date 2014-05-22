@@ -133,7 +133,24 @@ class User extends CActiveRecord {
                $model->phone_number."<br />".
                $model->email."<br />".
                $model->position->position_name."<br />".
-               $model->organization->organization_name;
+               $model->organization->organization_name."<br />".
+               self::getFullLocationName($model->node_id);
+    }
+    
+    public static function getFullLocationName($node_id){
+        $userLocation = "";
+        $nodeArray = explode('.', $node_id);
+        $levels = count($nodeArray);// e.g TZ.ET.DS.KN.2
+        for($i=0;$i < $levels ;$i++){
+           if($i==0){
+               $userLocation.= Layer::getHierarchyNodeName(implode('.', array_slice($nodeArray, 0, $i+1, true)));
+           }
+           else{
+               $userLocation.= " - ".Layer::getHierarchyNodeName(implode('.', array_slice($nodeArray, 0, $i+1, true)));
+           }
+        }
+        
+        return $userLocation;
     }
     
 }
