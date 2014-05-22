@@ -64,7 +64,11 @@ Yii::app()->bootstrap->register();
                                         array('label' => 'Positions', 'url' => array('position/admin'), 'visible' => Yii::app()->user->checkAccess('Administrator')),
                                         array('label' => 'Organizations', 'url' => array('organization/admin'), 'visible' => Yii::app()->user->checkAccess('Administrator')),
                                     )),                
-                                array('label' => 'Logout (' . Yii::app()->user->name . ')', 'icon' => TbHtml::ICON_USER, 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
+                                  array('label' => 'My Account', 'icon' => TbHtml::ICON_USER, 'url' => '#', 'visible' => !Yii::app()->user->isGuest,
+                                    'items' => array(
+                                        array('label' => 'Edit Account Details', 'url' => array('user/update','id'=>Yii::app()->user->getState('user_id')), 'visible' => !Yii::app()->user->isGuest),
+                                        array('label' => 'Logout (' . Yii::app()->user->name . ')', 'icon' => TbHtml::ICON_USER, 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
+                                    )),  
                             ),
                         )
                     )

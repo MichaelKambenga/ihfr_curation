@@ -90,7 +90,7 @@ class CurationController extends Controller
                 $this->renderPartial('_facilityGrid',array('sites'=>$sites));
                 Yii::app()->end();
             }
-            
+            https://www.youtube.com/watch?v=ZXvtXwEKgFU
             $hierarchyCache =SystemCache::model()->findByAttributes(array('name'=>'hierarchy'));
             $result = CJSON::decode($hierarchyCache->value);
             $rootNode = Yii::app()->user->getState('node_id');
@@ -185,7 +185,6 @@ class CurationController extends Controller
                             ));
               
         }
-        
         
         public function hasApprovePrivilegesForRequest($node_id){
             
@@ -302,7 +301,15 @@ class CurationController extends Controller
                              Yii::app()->end();
                          }
                          else{ 
-                             echo $response;die;
+                             $errors = CJSON::decode($response);
+                             if(isset($errors['properties'])){
+                                foreach($errors['properties'] as $error){
+                                    foreach($error as $key=>$value){
+                                        $model->addError("_$key",$value);
+                                    }
+                                }
+                             }
+                            
                              Yii::app()->user->setFlash('failure','Site create request failed');
                          }
                    }
@@ -407,6 +414,11 @@ class CurationController extends Controller
         public function actionDeleteSite($psc,$pc_id){
             
             if(Yii::app()->request->isAjaxRequest){
+                $remarks =  $_POST["remarks"];
+                if(empty($remarks)){
+                    echo 'Please fill the reason for deletion';
+                    Yii::app()->end();
+                }
                 $result = $this->loadFacilityByPSC($psc,  
                     Yii::app()->params['resourceMapConfig']['curation_collection_id']);
                 $cc_site_id = $result['sites'][0]['id'];
@@ -422,7 +434,7 @@ class CurationController extends Controller
                  $note = new ChangeRequestNote();
                  $note->change_request_id = $changeRequest->id;
                  $note->user_id = Yii::app()->user->getState('user_id');
-                 $note->note = 'Wants to delete';//need to be changed to get from the user
+                 $note->note = $remarks;
                  $note->save();
                  echo 'Site delete request sent';
                 }else{

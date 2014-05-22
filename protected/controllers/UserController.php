@@ -79,6 +79,7 @@ class UserController extends Controller {
     
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
+        $model->setAdditionalAttributes();
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);

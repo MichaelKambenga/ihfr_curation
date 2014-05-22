@@ -4,7 +4,8 @@
     var trashButton ='link';
     
     function deleteFacility(){
-      $.get(trashButton,function(data,status){
+      var remarks = $("#delete-textarea").val();
+      $.post(trashButton,"remarks="+remarks,function(data,status){
          //alert(data);
          $("#delete-model-message .modal-body p").html(data);
          $("#delete-model-message").modal();
@@ -88,6 +89,10 @@ $this->widget('bootstrap.widgets.TbGridView', array(
            its operational status should be changed and it should not be deleted.  
            Deletion should only be for cases of facility duplication or mistaken facility records
            representing a facility which never existed. 
+           <form id="delete-message">
+            <label for="delete-textarea">Remarks</label>
+            <textarea id="delete-textarea" required="true" style="width:400px;height:100px"></textarea>
+           </form>
         </p>',
         'footer' => array(
             TbHtml::button('Cancel', array('data-dismiss' => 'modal')),

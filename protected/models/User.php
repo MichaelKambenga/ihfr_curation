@@ -12,7 +12,7 @@
  * @property string $lastname
  * @property string $openid_identity
  * @property string $node_id max hierarchy node
- *
+   
  * The followings are the available model relations:
  * @property ChangeRequest[] $changeRequests
  * @property ChangeRequestNote[] $changeRequestNotes
@@ -21,9 +21,14 @@
  */
 class User extends CActiveRecord {
 
-    
     const INACTIVE = 0;
     const ACTIVE = 1;
+    const CENTRAL = 1;
+    const ZONE = 2;
+    const REGION = 3;
+    const DISTRICT = 4;
+    const COUNCIL = 5;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -42,6 +47,10 @@ class User extends CActiveRecord {
 
     public $number;
     public $admin_hierarchy;
+    public $zone;
+    public $region;
+    public $district;
+    public $council;
 
     /**
      * @return array validation rules for model attributes.
@@ -50,9 +59,10 @@ class User extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('email', 'required'),
+            array('email,position_id,organization_id,phone_number,firstname,lastname,admin_hierarchy', 'required'),
             array('id, active,position_id, organization_id', 'numerical', 'integerOnly' => true),
-            array('email,firstname,lastname,phone_number,node_id', 'length', 'max' => 45),
+            array('admin_hierarchy','validateAdminHierarchy'),
+            array('email,firstname,lastname,phone_number,node_id,zone,region,district,council', 'length', 'max' => 45),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id,firstname,lastname,node_id, position_id, organization_id, email,openid_identity,phone_number,active', 'safe', 'on' => 'search'),
@@ -79,16 +89,20 @@ class User extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'firstname'=>'Firstname',
-            'lastname'=>'Lastname',
+            'firstname' => 'Firstname',
+            'lastname' => 'Lastname',
             'node_id' => 'District',
             'position_id' => 'Position',
             'organization_id' => 'Organization',
             'email' => 'Email',
-            'openid_identity'=>'OpenID',
-            'active'=>'Active',
+            'openid_identity' => 'OpenID',
+            'active' => 'Active',
             'number' => 'Number',
-            'phone_number' => 'Phone Number'
+            'phone_number' => 'Phone Number',
+            'zone' => 'Zone',
+            'region' => 'Region',
+            'district' => 'District',
+            'council' => 'Council'
         );
     }
 
@@ -102,11 +116,11 @@ class User extends CActiveRecord {
 
         $criteria = new CDbCriteria;
         $criteria->compare('id', $this->id);
-        $criteria->compare('firstname', $this->firstname,true);
-        $criteria->compare('lastname', $this->lastname,true);
+        $criteria->compare('firstname', $this->firstname, true);
+        $criteria->compare('lastname', $this->lastname, true);
         $criteria->compare('node_id', $this->node_id);
-        $criteria->compare('position_id', $this->position_id,true);
-        $criteria->compare('organization_id', $this->organization_id,true);
+        $criteria->compare('position_id', $this->position_id, true);
+        $criteria->compare('organization_id', $this->organization_id, true);
         $criteria->compare('email', $this->email, true);
         $criteria->compare('phone_number', $this->phone_number, true);
 
@@ -114,12 +128,11 @@ class User extends CActiveRecord {
             'criteria' => $criteria,
         ));
     }
-    
-    public static function hasAccess(){
+
+    public static function hasAccess() {
         $user_id = Yii::app()->user->id;
-        return count(AuthAssignment::model()->findAll('userid=:id',array(':id'=>$user_id)));
+        return count(AuthAssignment::model()->findAll('userid=:id', array(':id' => $user_id)));
     }
-    
 
     public static function getUserSignature($id){
         if(is_null($id)){
@@ -153,4 +166,81 @@ class User extends CActiveRecord {
         return $userLocation;
     }
     
+    public function setAdditionalAttributes(){
+        $node_id = $this->node_id;
+        $nodeArray = explode('.', $node_id);
+        $level = count($nodeArray);
+        if($level == self::CENTRAL){
+            $this->admin_hierarchy = self::CENTRAL;
+        }
+        elseif($level == self::ZONE){
+            $this->admin_hierarchy = self::ZONE;
+            $this->zone = $nodeArray[0].".".$nodeArray[1]; // e.g TZ.ET
+        }
+        elseif($level == self::REGION){
+            $this->admin_hierarchy = self::REGION;
+            $this->zone = $nodeArray[0].".".$nodeArray[1];
+            $this->region = $nodeArray[0].".".$nodeArray[1].".".$nodeArray[2];
+        }
+        elseif($level == self::DISTRICT){
+            $this->admin_hierarchy = self::DISTRICT;
+            $this->zone = $nodeArray[0].".".$nodeArray[1];
+            $this->region = $nodeArray[0].".".$nodeArray[1].".".$nodeArray[2];
+            $this->district = $nodeArray[0].".".$nodeArray[1].".".$nodeArray[2].".".$nodeArray[3];
+        }
+        elseif($level == self::COUNCIL){
+            $this->admin_hierarchy = self::COUNCIL;
+            $this->zone = $nodeArray[0].".".$nodeArray[1];
+            $this->region = $nodeArray[0].".".$nodeArray[1].".".$nodeArray[2];
+            $this->district = $nodeArray[0].".".$nodeArray[1].".".$nodeArray[2].".".$nodeArray[3];
+            $this->council = $nodeArray[0].".".$nodeArray[1].".".$nodeArray[2].".".$nodeArray[3].".".$nodeArray[4];
+        }
+        
+        
+    }
+
+    public function validateAdminHierarchy() {
+           if($this->admin_hierarchy == self::COUNCIL){
+                if(empty($this->zone)){
+                   $this->addError('zone', 'Zone cannot be blank'); 
+                }
+                if(empty($this->region)){
+                   $this->addError('region', 'Region cannot be blank'); 
+                }
+                if(empty($this->district)){
+                   $this->addError('district', 'District cannot be blank'); 
+                }
+                if(empty($this->council)){
+                   $this->addError('council', 'Council cannot be blank'); 
+                }
+            }
+            elseif($this->admin_hierarchy == self::DISTRICT){
+                if(empty($this->zone)){
+                   $this->addError('zone', 'Zone cannot be blank'); 
+                }
+                if(empty($this->region)){
+                   $this->addError('region', 'Region cannot be blank'); 
+                }
+                if(empty($this->district)){
+                   $this->addError('district', 'District cannot be blank'); 
+                }
+            }
+            elseif($this->admin_hierarchy == self::REGION){
+                if(empty($this->zone)){
+                   $this->addError('zone', 'Zone cannot be blank'); 
+                }
+                if(empty($this->region)){
+                   $this->addError('region', 'Region cannot be blank'); 
+                }       
+            }
+            elseif($this->admin_hierarchy == self::ZONE){
+                if(empty($this->zone)){
+                   $this->addError('zone', 'Zone cannot be blank'); 
+                } 
+                
+            }
+            
+            return true;
+    }
+
 }

@@ -94,7 +94,7 @@ class Layer {
         $hierarchyArray = CJSON::decode($hierarchyModel->value);
         $arrayElements = self::getAdministrativeDivisions($hierarchyArray['config']['hierarchy']);
         
-        $adminDivisions = array('zones'=>array(),'regions'=>array(),'districts'=>array());
+        $adminDivisions = array('zones'=>array(),'regions'=>array(),'districts'=>array(),'councils'=>array());
         foreach($arrayElements as $key=>$value){
          
           if(preg_match('/^[A-Z][A-Z]\.[A-Z][A-Z]$/', $value)){
@@ -107,13 +107,16 @@ class Layer {
           elseif(preg_match('/^[A-Z][A-Z]\.[A-Z][A-Z]\.[A-Z][A-Z]\.[A-Z][A-Z]$/', $value)){
                array_push($adminDivisions['districts'],array('id'=>$value,'name'=>$arrayElements[$key+1]));
           }
+          elseif(preg_match('/^[A-Z][A-Z]\.[A-Z][A-Z]\.[A-Z][A-Z]\.[A-Z][A-Z]\.\d{1,2}$/', $value)){
+               array_push($adminDivisions['councils'],array('id'=>$value,'name'=>$arrayElements[$key+1]));
+          }
       }
       
       return $adminDivisions;
       
       }
       
-      public static function getHierarchyNodeName($node_id) {
+        public static function getHierarchyNodeName($node_id) {
           
         $hierarchyModel = SystemCache::model()->findByAttributes(array('name'=>'hierarchy'));
         $hierarchyArray = CJSON::decode($hierarchyModel->value);
@@ -162,14 +165,22 @@ class Layer {
                     }
                 }
           }
+          elseif(preg_match('/^[A-Z][A-Z]\.[A-Z][A-Z]\.[A-Z][A-Z]\.[A-Z][A-Z]$/', $nodeId)){
+              //is a district
+              //take all that are under it
+              foreach($arrayElements as $key=>$value){
+                    if(preg_match("/^[A-Z][A-Z]\.[A-Z][A-Z]\.{$node[count($node)-2]}\.$nodeLastIndexValue\.\d{1,2}$/", $value)){
+                        array_push($subNodes,array('id'=>$value,'name'=>$arrayElements[$key+1]));
+                    }
+                }
+          }
         
         return $subNodes;
         
       
       }
-      
-      
-     
+   
+   
 }
 
 ?>
