@@ -144,7 +144,7 @@ class Layer {
           $node = explode('.', $nodeId);
           $nodeLastIndexValue = end($node);//equivalent to $node[count($node)-1] to retrieve last index
          
-        //determine it's level
+        //determine its level
           if(preg_match('/^[A-Z][A-Z]\.[A-Z][A-Z]$/', $nodeId)){
                 //is zonal
               //take all that are under it 

@@ -371,7 +371,19 @@ class ChangeRequest extends CActiveRecord {
     public static function getChangeRequestNotes($changeRequest){
         $notes = '';
         foreach($changeRequest->changeRequestNotes as $changeRequestNote){
-            $notes .= "<b>".$changeRequestNote->note."</b>"."-".User::getUserSignature($changeRequestNote->user_id).
+            $notes .= "<b>".$changeRequestNote->note."</b>"."-"
+                   .User::getUserSignature($changeRequestNote->user_id).
+                   "<br />"."<br />"
+                    ;
+        }
+        return $notes;
+    }
+    
+    public static function getRequestNotes($changeRequest){
+        $notes = '';
+        foreach($changeRequest->changeRequestNotes as $changeRequestNote){
+            $notes .= "<b>".$changeRequestNote->note."</b>"."-"
+                   .User::getSignature($changeRequestNote->user_id).
                    "<br />"."<br />"
                     ;
         }

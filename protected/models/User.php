@@ -150,6 +150,22 @@ class User extends CActiveRecord {
                self::getFullLocationName($model->node_id);
     }
     
+    public static function getSignature($id){
+        if(is_null($id)){
+            return 'NONE';
+        }
+        $model = self::model()->find(
+                'id=:id',array(':id'=>$id)
+                );
+        return "<br />".
+               $model->firstname." ".$model->lastname."<br />".
+               $model->phone_number."<br />".
+               $model->email."<br />".
+               $model->position->position_name."<br />".
+               $model->organization->organization_name."<br />";
+       
+    }
+    
     public static function getFullLocationName($node_id){
         $userLocation = "";
         $nodeArray = explode('.', $node_id);

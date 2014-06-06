@@ -31,7 +31,7 @@
                 array(
                     'header'=>'Reviewed By',
                     'type'=>'html',
-                    'value'=>'User::getUserSignature($data->reviewed_by)'
+                    'value'=>'User::getSignature($data->reviewed_by)'
                 ),
             
                 array(
@@ -42,7 +42,7 @@
                array(
                     'header'=>'Reason',
                     'type'=>'html',
-                    'value'=>'ChangeRequest::getChangeRequestNotes($data)'
+                    'value'=>'ChangeRequest::getRequestNotes($data)'
                 ),
                 
                 /*
