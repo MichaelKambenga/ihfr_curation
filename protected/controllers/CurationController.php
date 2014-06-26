@@ -402,6 +402,14 @@ class CurationController extends Controller
                              Yii::app()->end();
                          }
                          else{  
+                             $errors = CJSON::decode($response);
+                             if(isset($errors['properties'])){
+                                foreach($errors['properties'] as $error){
+                                    foreach($error as $key=>$value){
+                                        $form->addError("_$key",$value);
+                                    }
+                                }
+                             }
                              Yii::app()->user->setFlash('failure','Site update request failed');
                          }
                          
