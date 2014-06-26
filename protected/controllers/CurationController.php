@@ -90,7 +90,7 @@ class CurationController extends Controller
                 $this->renderPartial('_facilityGrid',array('sites'=>$sites));
                 Yii::app()->end();
             }
-            https://www.youtube.com/watch?v=ZXvtXwEKgFU
+            
             $hierarchyCache =SystemCache::model()->findByAttributes(array('name'=>'hierarchy'));
             $result = CJSON::decode($hierarchyCache->value);
             $rootNode = Yii::app()->user->getState('node_id');
