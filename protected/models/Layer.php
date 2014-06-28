@@ -13,7 +13,7 @@
 class Layer {
    
     public static function loadLayers(){
-        $url = Yii::app()->params['api-domain']."/collections/".
+        $url = Yii::app()->params['api-domain']."/en/collections/".
                Yii::app()->params['resourceMapConfig']['public_collection_id']
                 ."/layers.json";
         $response = RestUtility::execCurl($url);
@@ -22,7 +22,7 @@ class Layer {
     }
     
     public static function loadHierarchy(){
-         $url= Yii::app()->params['api-domain']."/collections/".
+         $url= Yii::app()->params['api-domain']."/en/collections/".
                Yii::app()->params['resourceMapConfig']['public_collection_id'].
                "/fields/".FieldMapping::PC_HIERARCHY_FIELD_ID.".json";
          $response = RestUtility::execCurl($url);

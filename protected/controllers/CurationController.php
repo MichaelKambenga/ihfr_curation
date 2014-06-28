@@ -41,7 +41,7 @@ class CurationController extends Controller
                 ));
         }
         public function loadFacility($id,$collection_id){
-            $url = Yii::app()->params['api-domain']."/collections/".
+            $url = Yii::app()->params['api-domain']."/en/collections/".
                    $collection_id.
                    "/sites/$id.json"; 
             $response = RestUtility::execCurl($url);
@@ -66,7 +66,8 @@ class CurationController extends Controller
             
             $url = Yii::app()->params['api-domain']."/api/collections/".
                    Yii::app()->params['resourceMapConfig']['public_collection_id'].".json?page=all&Admin_div[under]=".
-                   Yii::app()->user->getState('node_id');          
+                   Yii::app()->user->getState('node_id');
+          
             if(isset($node_id))
                 $url = Yii::app()->params['api-domain']."/api/collections/".
                        Yii::app()->params['resourceMapConfig']['public_collection_id'].
@@ -188,7 +189,7 @@ class CurationController extends Controller
         
         public function hasApprovePrivilegesForRequest($node_id){
             
-            $url = Yii::app()->params['api-domain']."/collections/".
+            $url = Yii::app()->params['api-domain']."/en/collections/".
                    Yii::app()->params['resourceMapConfig']['curation_collection_id']."/fields/".
                    FieldMapping::CC_HIERARCHY_FIELD_ID."/hierarchy?under=".Yii::app()->user->getState('node_id')."&node={$node_id}";
             
@@ -254,7 +255,7 @@ class CurationController extends Controller
             
             if(isset($_POST['FacilityForm'])){
                
-               $url = Yii::app()->params['api-domain']."/collections/".
+               $url = Yii::app()->params['api-domain']."/en/collections/".
                       Yii::app()->params['resourceMapConfig']['curation_collection_id'].
                       "/sites.json";
              
@@ -382,7 +383,7 @@ class CurationController extends Controller
                 $json = CJSON::encode($data);
                 //echo $json;exit;
                 $params = array('site'=>$json);
-                $url = Yii::app()->params['api-domain']."/collections/".
+                $url = Yii::app()->params['api-domain']."/en/collections/".
                        Yii::app()->params['resourceMapConfig']['curation_collection_id'].
                       "/sites/{$site_id}/partial_update";
                 
@@ -630,7 +631,7 @@ class CurationController extends Controller
                        
                        $json = CJSON::encode($data);
                        $params = array('site'=>$json);
-                       $url = Yii::app()->params['api-domain']."/collections/".
+                       $url = Yii::app()->params['api-domain']."/en/collections/".
                               Yii::app()->params['resourceMapConfig']['public_collection_id'].
                                "/sites.json";
                        
@@ -644,7 +645,7 @@ class CurationController extends Controller
                            );
                            $json = CJSON::encode($data);
                            $params = array('site'=>$json);
-                            $url = Yii::app()->params['api-domain']."/collections/".
+                            $url = Yii::app()->params['api-domain']."/en/collections/".
                             Yii::app()->params['resourceMapConfig']['curation_collection_id'].
                            "/sites/{$changeRequest->cc_site_id}/partial_update";
                            $response = RestUtility::execCurlPost($url, $params);
@@ -701,7 +702,7 @@ class CurationController extends Controller
                                );
                        $pc_site_id = $result['sites'][0]['id'];
                        //update site in the public collection
-                       $url = Yii::app()->params['api-domain']."/collections/".
+                       $url = Yii::app()->params['api-domain']."/en/collections/".
                               Yii::app()->params['resourceMapConfig']['public_collection_id'].
                               "/sites/{$pc_site_id}/partial_update";
                       
@@ -727,13 +728,13 @@ class CurationController extends Controller
                    elseif($requestType == ChangeRequest::TYPE_DELETE){
                           
                        //delete from public collection
-                           $url = Yii::app()->params['api-domain']."/collections/".
+                           $url = Yii::app()->params['api-domain']."/en/collections/".
                               Yii::app()->params['resourceMapConfig']['public_collection_id'].
                                "/sites/{$changeRequest->pc_site_id}";
                            RestUtility::execCurlDelete($url);
                        
                        //delete from curation collection
-                           $url = Yii::app()->params['api-domain']."/collections/".
+                           $url = Yii::app()->params['api-domain']."/en/collections/".
                                    Yii::app()->params['resourceMapConfig']['curation_collection_id'].
                                     "/sites/{$changeRequest->cc_site_id}";
                            RestUtility::execCurlDelete($url);
@@ -780,7 +781,7 @@ class CurationController extends Controller
                 }
                 elseif($requestType == ChangeRequest::TYPE_CREATE){
                      //delete from curation collection
-                           $url = Yii::app()->params['api-domain']."/collections/".
+                           $url = Yii::app()->params['api-domain']."/en/collections/".
                                   Yii::app()->params['resourceMapConfig']['curation_collection_id'].
                                     "/sites/{$changeRequest->cc_site_id}";
                            RestUtility::execCurlDelete($url);
@@ -840,7 +841,7 @@ class CurationController extends Controller
                            $params = array('site'=>$json);
                        
                            //update site in the curation collection
-                           $url = Yii::app()->params['api-domain']."/collections/".
+                           $url = Yii::app()->params['api-domain']."/en/collections/".
                                   Yii::app()->params['resourceMapConfig']['curation_collection_id'].
                                   "/sites/{$changeRequest->cc_site_id}/partial_update";
                        
@@ -889,7 +890,7 @@ class CurationController extends Controller
         public function batchCache(){
             $fieldMappings = FieldMapping::model()->findAll();
              foreach($fieldMappings as $fieldMapping){
-               $url = Yii::app()->params['api-domain']."/collections/".
+               $url = Yii::app()->params['api-domain']."/en/collections/".
                    Yii::app()->params['resourceMapConfig']['public_collection_id'].
                    "/fields/{$fieldMapping->pc_field_id}.json";
                    
