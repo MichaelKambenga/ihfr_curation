@@ -62,8 +62,10 @@ class UserController extends Controller {
 
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
+            if ($model->save()){
+            $this->logAudit("User ".$model->email."  was created");
+            $this->redirect(array('view', 'id' => $model->id));            
+            }
         }
 
         $this->render('create', array(
@@ -80,7 +82,9 @@ class UserController extends Controller {
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
         $model->setAdditionalAttributes();
-
+        if ($model->active == 1){
+            User::model()->is_user_active = 1;
+        }
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
        
@@ -91,9 +95,18 @@ class UserController extends Controller {
                 $model->active = 1;//activate user
                 Yii::app()->user->setState('active',$model->active);
                 $model->save();
-                Yii::app()->user->setFlash('completed_profile_msg',
+                $this->logAudit("Details for user ".User::model()->findByPk($id)->email."  were Updated");
+                if((User::model()->is_user_active != 1) && ($id == Yii::app()->user->getState('user_id'))){
+                    Yii::app()->user->setFlash('completed_profile_msg',
                         'Your profile is complete...you will have to wait for the system administrator to activate you'
                         );
+                }
+                else {
+                   Yii::app()->user->setFlash('completed_profile_msg',
+                        'User details were successfully updated'
+                        ); 
+                }
+                
                 $this->redirect(array('site/index'));
             }
         }
@@ -178,14 +191,16 @@ class UserController extends Controller {
         $criteria->compare('userid', $id);
 
         if (isset($_POST['submit'])) {
-
-            AuthAssignment::model()->deleteAll($criteria);
-
+           
             if (isset($_POST['name'])) {
+                AuthAssignment::model()->deleteAll($criteria);
+                $this->logAudit("All Roles ".$var." were revoked from user ".$email);
+                
                 foreach ($_POST['name'] as $var) {
                     if ($var != 1) {
                         $auth = Yii::app()->authManager; //Initialing The Authentication Manager
                         $auth->assign($var, $id);
+                        $this->logAudit("Role ".$var." was assigned to user ".$email);
                     }
                 }
             }

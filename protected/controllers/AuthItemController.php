@@ -62,8 +62,10 @@ class AuthItemController extends Controller {
 
         if (isset($_POST['AuthItem'])) {
             $model->attributes = $_POST['AuthItem'];
-            if ($model->save())
+            if ($model->save()){
+                $this->logAudit("Role ".$model->name."  was created");
                 $this->redirect(array('view', 'id' => $model->name));
+            }
         }
 
         $this->render('create', array(
@@ -85,6 +87,7 @@ class AuthItemController extends Controller {
         if (isset($_POST['AuthItem'])) {
             $model->attributes = $_POST['AuthItem'];
             if ($model->save()) {
+                $this->logAudit("Role ".$model->name."  was updated");
                 $this->redirect(array('view','id'=>$model->name));
 //                if (!empty($_GET['asDialog'])) {
 //                    //Close the dialog, reset the iframe and update the grid
@@ -190,16 +193,16 @@ class AuthItemController extends Controller {
     public function actionAssignItems($name) {
 
         if (isset($_POST['submit'])) {
-
-            AuthItemChild::clearAll($name);
-
+            
             if (isset($_POST['name'])) {
-
+                AuthItemChild::clearAll($name);
+                $this->logAudit("All actions ".$var." were revoked from role ".$name);
                 $auth = Yii::app()->authManager; //Initialing The Authentication Manager
                 $role = $auth->getAuthItem($name);
                 foreach ($_POST['name'] as $var) {
                     if ($var != 1)
                         $role->addChild($var); //Elements Checked
+                        $this->logAudit("Action ".$var." was added to role ".$name);
                 }
             }
 

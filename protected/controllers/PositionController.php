@@ -66,7 +66,8 @@ class PositionController extends Controller
 		if (isset($_POST['Position'])) {
 			$model->attributes=$_POST['Position'];
 			if ($model->save()) {
-				$this->redirect(array('view','id'=>$model->id));
+                            $this->logAudit("Position ".$model->position_name."  was created");
+			    $this->redirect(array('view','id'=>$model->id));
 			}
 		}
 
@@ -90,7 +91,8 @@ class PositionController extends Controller
 		if (isset($_POST['Position'])) {
 			$model->attributes=$_POST['Position'];
 			if ($model->save()) {
-				$this->redirect(array('view','id'=>$model->id));
+                            $this->logAudit("Position ".$model->position_name."  was updated");
+                            $this->redirect(array('view','id'=>$model->id));
 			}
 		}
 

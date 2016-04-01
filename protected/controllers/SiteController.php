@@ -99,13 +99,14 @@ class SiteController extends Controller
 		$this->render('login',array('model'=>$model));
 	}
         
-        public function actionOpenid(){   
+        public function actionOpenid(){            
             try{  
-                $openid = new LightOpenID(Yii::app()->request->serverName);
+                $openid = new LightOpenID(Yii::app()->request->serverName.':8080');
+//                echo Yii::app()->request->serverName.'<br/>';
+//                print_r($openid);die();
                 if(!$openid->mode){
                      
-                    if(isset($_GET['login'])){
-                        
+                    if(isset($_GET['login'])){                        
                         $openid->identity = Yii::app()->params['openidServerAddress'];
                         $openid->required = array(
                             'contact/email',
@@ -124,7 +125,6 @@ class SiteController extends Controller
                         ));
                                 
                         if($user_check == null){
-                           
                             $new_user = new User();
                             $new_user->email = $attributes['contact/email'];
                             $new_user->openid_identity = $openid->identity;
@@ -158,7 +158,8 @@ class SiteController extends Controller
 	public function actionLogout()
 	{
 		Yii::app()->user->logout();
-                $this->redirect(Yii::app()->homeUrl);  
-//                $this->redirect("https://login.instedd.org");
+                header('Location: '."https://login.instedd.org/users/sign_out?http://curation-stg.ucchosting.co.tz/");
+             // $this->redirect(Yii::app()->homeUrl);  
 	}
+        
 }

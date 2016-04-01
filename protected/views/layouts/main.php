@@ -57,18 +57,25 @@ Yii::app()->bootstrap->register();
 //                                        array('label' => 'My Requests', 'url' => array('changeRequest/MyRequests'), 'visible' => Yii::app()->user->checkAccess('Request Change Privilege')),
 //                                        array('label' => 'My Approvals/Rejections', 'url' => array('changeRequest/MyApprovals'), 'visible' => Yii::app()->user->checkAccess('Approval Change Privilege')),
 //                                    )),
-                                array('label' => 'System Settings', 'icon' => TbHtml::ICON_WRENCH, 'url' => '#', 'visible' => Yii::app()->user->checkAccess('Administrator'),
+                                array('label' => 'Settings', 'icon' => TbHtml::ICON_WRENCH, 'url' => '#', 'visible' => Yii::app()->user->checkAccess('Administrator'),
                                     'items' => array(
                                         array('label' => 'User Accounts', 'url' => array('user/admin'), 'visible' => Yii::app()->user->checkAccess('Administrator')),
                                         array('label' => 'User Privileges', 'url' => array('authItem/roles'), 'visible' => Yii::app()->user->checkAccess('Administrator')),
                                         array('label' => 'Positions', 'url' => array('position/admin'), 'visible' => Yii::app()->user->checkAccess('Administrator')),
                                         array('label' => 'Organizations', 'url' => array('organization/admin'), 'visible' => Yii::app()->user->checkAccess('Administrator')),
-                                    )),                
-                                  array('label' => 'My Account', 'icon' => TbHtml::ICON_USER, 'url' => '#', 'visible' => !Yii::app()->user->isGuest,
+                                        array('label' => 'Audit Trail', 'url' => array('systemAudit/admin'), 'visible' => Yii::app()->user->checkAccess('Administrator')),
+                                    )), 
+                                  array('label' => 'Reconciliatons', 'icon' => TbHtml::ICON_ENVELOPE, 'url' => '#', 'visible' => Yii::app()->user->checkAccess('Administrator'),
+                                    'items' => array(
+                                        array('label' => 'Deleted Health Facilities', 'url' => array('/curation/deletedFacilities'), 'visible' => Yii::app()->user->checkAccess('Administrator')),
+                                        array('label' => 'Unprocessed Requests', 'url' => array('curation/deletedFacilities'), 'visible' => Yii::app()->user->checkAccess('Administrator')),                                       
+                                    )),  
+                                array('label' => 'FAQs', 'url'=>array('/faqs/admin')),
+                                array('label' => 'My Account', 'icon' => TbHtml::ICON_USER, 'url' => '#', 'visible' => !Yii::app()->user->isGuest,
                                     'items' => array(
                                         array('label' => 'Edit Account Details', 'url' => array('user/update','id'=>Yii::app()->user->getState('user_id')), 'visible' => !Yii::app()->user->isGuest),
                                         array('label' => 'Logout (' . Yii::app()->user->name . ')', 'icon' => TbHtml::ICON_USER, 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
-                                    )),  
+                                    )),                  
                             ),
                         )
                     )

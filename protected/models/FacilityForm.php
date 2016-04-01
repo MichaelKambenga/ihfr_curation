@@ -10,236 +10,250 @@
  *
  * @author robert
  */
-class FacilityForm extends CFormModel{
+class FacilityForm extends CFormModel {
     //put your code here
-public $_1810;
-public $_1815;
-public $_1825;
-public $_1839;
-public $_1831;
-public $_1819;
-public $_1843;
-public $_1846;
-public $_1872;
-public $_1814;
-public $_1832;
-public $_1811;
-public $_1812;
-public $_1840;
-public $_1820;
-public $_1844;
-public $_1873;
-public $_1816;
-public $_1817;
-public $_1833;
-public $_1822;
-public $_1845;
-public $_1874;
-public $_1841;
-public $_1842;
-public $_1889;
-public $_1818;
-public $_1813;
-public $_1834;
-public $_1823;
-public $_1875;
-public $_1835;
-public $_1824;
-public $_1847;
-public $_1876;
-public $_1848;
-public $_1836;
-public $_1877;
-public $_1837;
-public $_1826;
-public $_1849;
-public $_1878;
-public $_1838;
-public $_1827;
-public $_1850;
-public $_1879;
-public $_1828;
-public $_1851;
-public $_1880;
-public $_1852;
-public $_1881;
-public $_1829;
-public $_1830;
-public $_1853;
-public $_1882;
-public $_1854;
-public $_1883;
-public $_1855;
-public $_1884;
-public $_1856;
-public $_1885;
-public $_1857;
-public $_1886;
-public $_1858;
-public $_1887;
-public $_1859;
-public $_1888;
-public $_1860;
-public $_1861;
-public $_1862;
-public $_1863;
-public $_1864;
-public $_1865;
-public $_1866;
-public $_1867;
-public $_1868;
-public $_1869;
-public $_1870;
-public $_1871;
-public $_2362;
-public $_2382;
-public $_2383;
-public $_2384;
-public $_2381;
-
+    public $_13274;
+    public $_13275;
+    public $_13285;
+    public $_13303;
+    public $_13291;
+    public $_13280;
+    public $_13306;
+    public $_13309;
+    public $_13335;
+    public $_13273;
+    public $_13292;
+    public $_13300;
+    public $_13302;
+    public $_13305;
+    public $_13281;
+    public $_13307;
+    public $_13336;
+    public $_13276;
+    public $_13277;
+    public $_13293;
+    public $_13282;
+    public $_13308;
+    public $_13337;
+//public $_1841;
+    public $_13301;
+//public $_1889;
+    public $_13278;
+    public $_13304;
+    public $_13294;
+    public $_13283;
+    public $_13338;
+    public $_13295;
+    public $_13284;
+    public $_13310;
+    public $_13339;
+    public $_13311;
+    public $_13296;
+    public $_13340;
+    public $_13297;
+    public $_13286;
+    public $_13312;
+    public $_13341;
+    public $_13298;
+    public $_13287;
+    public $_13313;
+    public $_13342;
+    public $_13290;
+    public $_13314;
+    public $_13343;
+    public $_13315;
+    public $_13344;
+    public $_13288;
+    public $_13289;
+    public $_13316;
+    public $_13345;
+    public $_13317;
+    public $_13346;
+    public $_13318;
+    public $_13347;
+    public $_13319;
+    public $_13348;
+    public $_13320;
+    public $_13349;
+    public $_13321;
+    public $_13350;
+    public $_13322;
+    public $_13351;
+    public $_13323;
+    public $_13324;
+    public $_13325;
+    public $_13326;
+    public $_13327;
+    public $_13328;
+    public $_13329;
+    public $_13330;
+    public $_13331;
+    public $_13332;
+    public $_13333;
+    public $_13334;
+//public $_2362;
+    public $_13352;
+    public $_13353;
+    public $_13354;
+    public $_13299;
+    public $_13279;
+    
 //main site fields
-public $name;
-public $location; //<$lat,$lng> pair
-public $note;
+    public $name;
+    public $location; //<$lat,$lng> pair
+    public $note;
 
-
-public function rules(){ 
-    return array(
-        array('note,name','required'),
-        array('note','length','min'=>20),
-        array('location','isLocationWithinRange'),
-        array('_1817','validateCTCID'),
-//        array('_1814','readOnly'=>true),
-        array('_1843,_1820,_1844,_1833,_1845,_1835,_1847,_1848,_1837,_1850,_1851,_1852,_1853,_1854,_1855,_1857','numerical','integerOnly'=>true),
-        array('location,_1810,_1815,_1839,_1831,_1819,_1872,_1814,_1832,_1811,_1812,_1840,_1873,_1816,_1817,_1822,_1874,_1842,_1889,_1818,_1813,_1834,_1823,_1875,_1824,_1876,_1836,_1877,_1826,_1849,_1878,_1838,_1827,_1879,_1828,_1880,_1881,_1829,_1830,_1882,_1883,_1884,_1856,_1885,_1886,_1858,_1887,_1859,_1888,_1860,_1861,_1862,_1863,_1864,_1865,_1866,_1867,_1868,_1869,_1870,_1871,_2362,_2382,_2383,_2384,_2381','safe'),
-
+    public function rules() {
+        return array(
+            array('note,name,_13274', 'required'),
+            array('note', 'length', 'min' => 20),
+            array('location', 'isLocationWithinRange'),
+            array('_13274', 'validateLevel'),
+            array('_13277', 'validateCTCID'),
+//        array('_13273','readOnly'=>true),
+            array('_13306,_13281,_13307,_13308,_13295,_13310,_13311,_13297,_13313,_13314,_13315,_13316,_13317,_13318,_13320', 'numerical', 'integerOnly' => true),
+            array('location,_13274,_13275,_13303,_13291,_13280,_13335,_13273,_13292,_13300,_13302,_13305,_13336,_13276,_13277,_13282,_13337,_13301,_13278,_13304,_13294,_13283,_13338,_13284,_13339,_13296,_13340,_13286,_13312,_13341,_13298,_13287,_13342,_13290,_13343,_13344,_13288,_13289,_13345,_13346,_13347,_13319,_13348,_13349,_13321,_13350,_13322,_13351,_13323,_13324,_13325,_13326,_13327,_13328,_13329,_13330,_13331,_13332,_13333,_13334,_13352,_13353,_13354,_13279,_13293,_13299,_13309', 'safe'),
         );
-}
+    }
 
-public function isLocationWithinRange(){
-   
-    if(!empty($this->location)){
-        $geoCodeArray = explode(',', $this->location);
-        $latitude = $geoCodeArray[0];
-        $longitude = $geoCodeArray[1];
-    
-    if(Yii::app()->params['resourceMapConfig']['lower_bound_latitude']<=$latitude && $latitude<=Yii::app()->params['resourceMapConfig']['upper_bound_latitude']){
-        if(Yii::app()->params['resourceMapConfig']['lower_bound_longitude'] <=$longitude && $longitude<=Yii::app()->params['resourceMapConfig']['upper_bound_longitude']){
+    public function isLocationWithinRange() {
+
+        if (!empty($this->location)) {
+            $geoCodeArray = explode(',', $this->location);
+            $latitude = $geoCodeArray[0];
+            $longitude = $geoCodeArray[1];
+
+            if (Yii::app()->params['resourceMapConfig']['lower_bound_latitude'] <= $latitude && $latitude <= Yii::app()->params['resourceMapConfig']['upper_bound_latitude']) {
+                if (Yii::app()->params['resourceMapConfig']['lower_bound_longitude'] <= $longitude && $longitude <= Yii::app()->params['resourceMapConfig']['upper_bound_longitude']) {
+                    return true;
+                }
+            }
+            $this->addError('location', 'Location out of range');
+            return false;
+        } else {
             return true;
         }
     }
-      $this->addError('location','Location out of range');
-      return false;
-    }
-    else{
-       return true;
-    }
-}
 
-public function validateCTCID(){
-    if(!empty($this->_1817)){
-        
-        if(preg_match('/\d\d-\d\d-\d\d\d\d$/', $this->_1817)){
-            return true;
+    public function validateCTCID() {
+        if (!empty($this->_13277)) {
+
+            if (preg_match('/\d\d-\d\d-\d\d\d\d$/', $this->_13277)) {
+                return true;
+            }
+            $this->addError('_13277', 'Invalid CTC ID');
+            return false;
         }
-        $this->addError('_1817', 'Invalid CTC ID');
-        return false;
+
+        return true;
     }
     
-    return true;
-}
+    public function validateLevel() {
+        if (!empty($this->_13274)) {
 
+            if (strlen($this->_13274) > 12) {
+                return true;
+            }
+            $this->addError('_13274', 'Select atleast the council level');
+            return false;
+        }
 
+        return true;
+    }
 
-public function attributeLabels() { 
-    return array( 
-            'name'=>'Registered/Official Facility Name',
-            '_1810'=>'Administrative Divisions',
-            '_1815'=>'Common Facility Name',
-            '_1839'=>'Ownership Detail / Name',
-            '_1831'=>'Location Description (e.g. Landmarks)',
-            '_1819'=>'Postal Address',
-            '_1843'=>'Reception Room',
-            '_1872'=>'General Clinical Services',
-            '_1814'=>'Facility Identifier Number',
-            '_1832'=>'Waypoint No.',
-            '_1811'=>'Facility Type',
-            '_1812'=>'Ownership',
-            '_1840'=>'Registration Status',
-            '_1820'=>'Postal Code',
-            '_1844'=>'Consultation Room',
-            '_1873'=>'Malaria Diagnosis and Treatment',
-            '_1816'=>'Registration ID',
-            '_1817'=>'CTC ID',
-            '_1833'=>'Altitude (Meters)',
-            '_1822'=>'Official Phone Number',
-            '_1825'=> 'Website',
-            '_1845'=>'Dressing Room',
-            '_1846'=> 'Injection Room',
-            '_1874'=>'TB Diagnosis, Care and Treatment',
+    public function attributeLabels() {
+        return array(
+            'name' => 'Registered/Official Facility Name',
+            'note' => 'Remarks',
+            '_13274' => 'Administrative Divisions',
+            '_13275' => 'Common Facility Name',
+            '_13303' => 'Ownership Detail / Name',
+            '_13291' => 'Location Description (e.g. Landmarks)',
+            '_13280' => 'Postal Address',
+            '_13306' => 'Reception Room',
+            '_13335' => 'General Clinical Services',
+            '_13273' => 'Facility Identifier Number',
+            '_13292' => 'Waypoint No.',
+            '_13300' => 'Facility Type',
+            '_13302' => 'Ownership',
+            '_13305' => 'Registration Status',
+            '_13281' => 'Postal Code',
+            '_13307' => 'Consultation Room',
+            '_13336' => 'Malaria Diagnosis and Treatment',
+            '_13276' => 'Registration ID',
+            '_13277' => 'CTC ID',
+            '_1833' => 'Altitude (Meters)',
+            '_13282' => 'Official Phone Number',
+            '_1825' => 'Website',
+            '_13308' => 'Dressing Room',
+            '_1846' => 'Injection Room',
+            '_13337' => 'TB Diagnosis, Care and Treatment',
 //            '_1841'=>'Licensing Status',
-            '_1842'=>'Other Clinic (Please Specify)',
+            '_13301' => 'Other Clinic (Please Specify)',
 //            '_1889'=>'Old HFR ID',
-            '_1818'=>'MTUHA Code',
-            '_1813'=>'Operating Status',
-            '_1834'=>'Service Areas (Villages) ',
-            '_1823'=>'Official Fax',
-            '_1875'=>'Cardiovascular Care and Treatment',
-            '_1835'=>'Service Area Population',
-            '_1824'=>'Official Email',
-            '_1847'=>'Ward Room',
-            '_1876'=>'HIV/AIDS Prevention',
-            '_1848'=>'Observation Room',
-            '_1836'=>'Catchment Area (Villages)',
-            '_1877'=>'HIV/AIDS Care and Treatment',
-            '_1837'=>'Catchment Population',
-            '_1826'=>'Facility In-Charge: Name',
-            '_1849'=>'Remarks',
-            '_1878'=>'Therapeutics',
-            '_1838'=>'Date Opened/Inaugurated/Upgraded (dd/mm/yyyy)',
-            '_2381'=>'Year',
-            '_1827'=>'Facility In-Charge: Cadre',
-            '_1850'=>'Patient Beds',
-            '_1879'=>'Prosthetics and Medical Devices',
-            '_1828'=>'Facility In-Charge: Email',
-            '_1851'=>'Delivery Beds',
-            '_1880'=>'Health Promotion and Disease Prevention',
-            '_1852'=>'Baby Cots',
-            '_1881'=>'Diagnostic Services',
-            '_1829'=>'Facility In-Charge: NID #',
-            '_1830'=>'Facility In-Charge: Mobile Phone #',
-            '_1853'=>'Ambulances',
-            '_1882'=>'Reproductive and Child Health Care Services',
-            '_1854'=>'Cars',
-            '_1883'=>'Growth Monitoring / Nutrition Surveillance',
-            '_1855'=>'Motorcycles',
-            '_1884'=>'Oral Health Service (Dental Services)',
-            '_1856'=>'Specify, Other Transport',
-            '_1885'=>'ENT Services',
-            '_1857'=>'# of Other Transport',
-            '_1886'=>'Support Services',
-            '_1858'=>'Sterilization and Infection Control',
-            '_1887'=>'Emergency Preparedness',
-            '_1859'=>'Means of Transport to Referral Point',
-            '_1888'=>'Other Services (Please Specify)',
-            '_1860'=>'Distance to Referral Point',
-            '_1861'=>'Challenges/Remarks to Reach Referral Point',
-            '_1862'=>'Source of Energy',
-            '_1863'=>'Specify Other Energy Source',
-            '_1864'=>'Mobile Networks',
-            '_1865'=>'Specify Other Mobile Network',
-            '_1866'=>'Source of Water',
-            '_1867'=>'Specify Other Water Source',
-            '_1868'=>'Toilet Facility',
-            '_1869'=>'Toilet Remarks',
-            '_1870'=>'Waste Management',
-            '_1871'=>'Specify Other Waste Management',
-            '_2362'=>'Grades',
-            '_2382'=>'Officer Filling Form',
-            '_2383'=>'Form Fill Date',
-            '_2384'=>'Officer Mobile Number',
-             
-       );
+            '_13278' => 'MTUHA Code',
+            '_13304' => 'Operating Status',
+            '_13294' => 'Service Areas (Villages) ',
+            '_13283' => 'Official Fax',
+            '_13338' => 'Cardiovascular Care and Treatment',
+            '_13295' => 'Service Area Population',
+            '_13284' => 'Official Email',
+            '_13310' => 'Ward Room',
+            '_13339' => 'HIV/AIDS Prevention',
+            '_13311' => 'Observation Room',
+            '_13296' => 'Catchment Area (Villages)',
+            '_13340' => 'HIV/AIDS Care and Treatment',
+            '_13297' => 'Catchment Population',
+            '_13286' => 'Facility In-Charge: Name',
+            '_13312' => 'Remarks',
+            '_13341' => 'Therapeutics',
+            '_13298' => 'Date Opened/Inaugurated/Upgraded (dd/mm/yyyy)',
+            '_2381' => 'Year',
+            '_13287' => 'Facility In-Charge: Cadre',
+            '_13313' => 'Patient Beds',
+            '_13342' => 'Prosthetics and Medical Devices',
+            '_13290' => 'Facility In-Charge: Email',
+            '_13314' => 'Delivery Beds',
+            '_13343' => 'Health Promotion and Disease Prevention',
+            '_13315' => 'Baby Cots',
+            '_13344' => 'Diagnostic Services',
+            '_13288' => 'Facility In-Charge: NID #',
+            '_13289' => 'Facility In-Charge: Mobile Phone #',
+            '_13316' => 'Ambulances',
+            '_13345' => 'Reproductive and Child Health Care Services',
+            '_13317' => 'Cars',
+            '_13346' => 'Growth Monitoring / Nutrition Surveillance',
+            '_13318' => 'Motorcycles',
+            '_13347' => 'Oral Health Service (Dental Services)',
+            '_13319' => 'Specify, Other Transport',
+            '_13348' => 'ENT Services',
+            '_13320' => '# of Other Transport',
+            '_13349' => 'Support Services',
+            '_13321' => 'Sterilization and Infection Control',
+            '_13350' => 'Emergency Preparedness',
+            '_13322' => 'Means of Transport to Referral Point',
+            '_13351' => 'Other Services (Please Specify)',
+            '_13323' => 'Distance to Referral Point',
+            '_13324' => 'Challenges/Remarks to Reach Referral Point',
+            '_13325' => 'Source of Energy',
+            '_13326' => 'Specify Other Energy Source',
+            '_13327' => 'Mobile Networks',
+            '_13328' => 'Specify Other Mobile Network',
+            '_13329' => 'Source of Water',
+            '_13330' => 'Specify Other Water Source',
+            '_13331' => 'Toilet Facility',
+            '_13332' => 'Toilet Remarks',
+            '_13333' => 'Waste Management',
+            '_13334' => 'Specify Other Waste Management',
+            '_13352' => 'Officer Filling Form',
+            '_13353' => 'Form Fill Date',
+            '_13354' => 'Officer Mobile Number',
+            '_13279' => 'MSD ID',
+            '_13293' => 'Altitude (Meters)',
+            '_13299' => 'Year',
+            '_13285' => 'Website',
+            '_13309' => 'Injection Room',
+        );
     }
 
 }

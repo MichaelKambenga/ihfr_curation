@@ -13,96 +13,100 @@
  * @property ChangeRequest $changeRequest
  * @property User $user
  */
-class ChangeRequestNote extends CActiveRecord
-{
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @param string $className active record class name.
-	 * @return ChangeRequestNote the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+class ChangeRequestNote extends CActiveRecord {
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'change_request_note';
-	}
+    /**
+     * Returns the static model of the specified AR class.
+     * @param string $className active record class name.
+     * @return ChangeRequestNote the static model class
+     */
+    public static function model($className = __CLASS__) {
+        return parent::model($className);
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('change_request_id, user_id,note', 'required'),
-			array('change_request_id, user_id', 'numerical', 'integerOnly'=>true),
-			array('note', 'length', 'max'=>255),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('id, change_request_id, user_id, note', 'safe', 'on'=>'search'),
-		);
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName() {
+        return 'change_request_note';
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-			'changeRequest' => array(self::BELONGS_TO, 'ChangeRequest', 'change_request_id'),
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules() {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('change_request_id, user_id,note', 'required'),
+            array('change_request_id, user_id', 'numerical', 'integerOnly' => true),
+            array('note', 'length', 'max' => 255),
+            // The following rule is used by search().
+            // Please remove those attributes that should not be searched.
+            array('id, change_request_id, user_id, note', 'safe', 'on' => 'search'),
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'change_request_id' => 'Change Request',
-			'user_id' => 'User',
-			'note' => 'Note',
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations() {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+            'changeRequest' => array(self::BELONGS_TO, 'ChangeRequest', 'change_request_id'),
+            'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+        );
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels() {
+        return array(
+            'id' => 'ID',
+            'change_request_id' => 'Change Request',
+            'user_id' => 'User',
+            'note' => 'Note',
+        );
+    }
 
-		$criteria=new CDbCriteria;
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     */
+    public function search() {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('change_request_id',$this->change_request_id);
-		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('note',$this->note,true);
+        $criteria = new CDbCriteria;
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
-        
-        public function sanitize(){
-            $sentences ='';
-            $sentencesArray = str_split(CHtml::encode($this->note), 100);
-                foreach($sentencesArray as $sentence){
-                    $sentences.= $sentence."<br >";
-                }
-            return $sentences;
+        $criteria->compare('id', $this->id);
+        $criteria->compare('change_request_id', $this->change_request_id);
+        $criteria->compare('user_id', $this->user_id);
+        $criteria->compare('note', $this->note, true);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
+
+    public function sanitize() {
+        $sentences = '';
+        $sentencesArray = str_split(CHtml::encode($this->note), 100);
+        foreach ($sentencesArray as $sentence) {
+            $sentences.= $sentence . "<br >";
         }
+        return $sentences;
+    }
+
+    public static function getReason($Fac_IDNumber) {
+        $deleteRequest = ChangeRequest::model()->findByAttributes(array('primary_site_code' => $Fac_IDNumber,'request_type' => 3));        
+        $deleteRequestNote = ChangeRequestNote::model()->findByAttributes(array('change_request_id' => $deleteRequest->id));
+        if ($deleteRequestNote) {
+            return $deleteRequestNote->note;
+        }
+        return 'No reason given';
+    }
+
 }

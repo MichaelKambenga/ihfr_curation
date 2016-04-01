@@ -19,11 +19,11 @@ class FieldMapping extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return FieldMapping the static model class
 	 */
-        const PC_HIERARCHY_FIELD_ID = 1629;
-        const CC_HIERARCHY_FIELD_ID = 1810;
+        const PC_HIERARCHY_FIELD_ID = 13164;
+        const CC_HIERARCHY_FIELD_ID = 13274;
         
-        const PC_PRIMARY_SITE_CODE = 1714;
-        const CC_PRIMARY_SITE_CODE = 1814;
+        const PC_PRIMARY_SITE_CODE = 13163;
+        const CC_PRIMARY_SITE_CODE = 13273;
         
 	public static function model($className=__CLASS__)
 	{

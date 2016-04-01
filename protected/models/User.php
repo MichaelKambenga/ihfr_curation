@@ -28,6 +28,7 @@ class User extends CActiveRecord {
     const REGION = 3;
     const DISTRICT = 4;
     const COUNCIL = 5;
+    
 
     /**
      * Returns the static model of the specified AR class.
@@ -51,6 +52,7 @@ class User extends CActiveRecord {
     public $region;
     public $district;
     public $council;
+    public $is_user_active;
 
     /**
      * @return array validation rules for model attributes.
@@ -59,7 +61,7 @@ class User extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('email,position_id,organization_id,phone_number,firstname,lastname,admin_hierarchy', 'required'),
+            array('email,position_id,organization_id,phone_number,firstname,lastname,admin_hierarchy', 'required', 'on' => 'update'),
             array('id, active,position_id, organization_id', 'numerical', 'integerOnly' => true),
             array('admin_hierarchy','validateAdminHierarchy'),
             array('email,firstname,lastname,phone_number,node_id,zone,region,district,council', 'length', 'max' => 45),
@@ -165,6 +167,7 @@ class User extends CActiveRecord {
                $model->organization->organization_name."<br />";
        
     }
+    
     
     public static function getFullLocationName($node_id){
         $userLocation = "";
